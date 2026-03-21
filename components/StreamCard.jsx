@@ -36,7 +36,7 @@ export default function StreamCard({ streamer, index = 0, gridMode = false }) {
     streamer?.viewers || Math.floor(Math.random() * 30000) + 500
   );
 
-  const photo = PHOTOS[index % PHOTOS.length];
+  const photo = streamer?.photo || PHOTOS[index % PHOTOS.length];
   const flag  = streamer?.region || FLAGS[index % FLAGS.length];
   const name  = streamer?.username || `Model_${index + 1}`;
   const isNew = streamer?.isNew || Math.random() < 0.2;

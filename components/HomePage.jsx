@@ -16,8 +16,8 @@ function FeaturedGrid({ category }) {
     if (loading) return;
     setLoading(true);
     try {
-      const res  = await fetch(
-        `http://localhost:4000/api/streams?category=${category}&limit=20&offset=${page * 20}`
+      const res = await fetch(
+        `https://stripchat-backend.onrender.com/api/streams?category=${category}&limit=20&offset=${page * 20}`
       );
       const data = await res.json();
       const fetched = data.streams || [];
@@ -164,7 +164,7 @@ export default function HomePage({ defaultCategory = "girls" }) {
 
           {/* Horizontal scroll rows — NO infinite scroll */}
           <StreamRow title="Today's Recommendations for You" category={activeCategory} />
-          <StreamRow title="African"                          category={activeCategory} />
+          <StreamRow title="African" category={activeCategory} african />
           <StreamRow title="Top Free Live Sex Cams"           category={activeCategory} />
           <StreamRow title="Couples Live Sex Cams"            category="couples" />
           <StreamRow title="Mobile Live Sex Cams"             category={activeCategory} mobile />
