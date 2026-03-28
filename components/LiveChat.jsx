@@ -16,45 +16,27 @@ function randomMsg() {
     username: FAKE_USERS[Math.floor(Math.random() * FAKE_USERS.length)],
     color: COLORS[Math.floor(Math.random() * COLORS.length)],
     message: FAKE_MSGS[Math.floor(Math.random() * FAKE_MSGS.length)],
-    time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    time: new Date().toLocaleTimeString([], { hour:"2-digit", minute:"2-digit" }),
     isTip: Math.random() < 0.08,
     tipAmount: Math.floor(Math.random() * 200) + 10,
   };
 }
 
-export default function LiveChat({ username, onTipClick }) {
-  const [messages, setMessages] = useState(() =>
-    Array.from({ length: 12 }, randomMsg)
-  );
+export default function LiveChat({ username, viewers, onTipClick }) {
+  const [messages, setMessages] = useState(() => Array.from({ length: 12 }, randomMsg));
   const [input, setInput]       = useState("");
-  const [viewers, setViewers]   = useState(247);
+  const [chatTab, setChatTab]   = useState("Public");
   const bottomRef = useRef(null);
-  const chatRef   = useRef(null);
 
-  // Simulate incoming messages
   useEffect(() => {
     const id = setInterval(() => {
-      setMessages(prev => {
-        const next = [...prev, randomMsg()];
-        return next.slice(-80); // keep last 80
-      });
+      setMessages(prev => [...prev, randomMsg()].slice(-80));
     }, 2200 + Math.random() * 2000);
     return () => clearInterval(id);
   }, []);
 
-  // Animate viewer count
   useEffect(() => {
-    const id = setInterval(() => {
-      setViewers(v => Math.max(10, v + Math.floor(Math.random() * 6) - 2));
-    }, 4000);
-    return () => clearInterval(id);
-  }, []);
-
-  // Auto scroll to bottom
-  useEffect(() => {
-    if (bottomRef.current) {
-      bottomRef.current.scrollIntoView({ behavior: "smooth" });
-    }
+    bottomRef.current?.scrollIntoView({ behavior:"smooth" });
   }, [messages]);
 
   const sendMessage = () => {
@@ -64,7 +46,7 @@ export default function LiveChat({ username, onTipClick }) {
       username: "You",
       color: "#e53935",
       message: input.trim(),
-      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      time: new Date().toLocaleTimeString([], { hour:"2-digit", minute:"2-digit" }),
       isTip: false,
       isMe: true,
     }]);
@@ -73,129 +55,142 @@ export default function LiveChat({ username, onTipClick }) {
 
   return (
     <div style={{
-      width: 300, flexShrink: 0,
-      background: "#0f0f0f",
-      borderLeft: "1px solid rgba(255,255,255,0.07)",
-      display: "flex", flexDirection: "column",
-      height: "calc(100vh - 50px)",
+      width:320, flexShrink:0,
+      background:"#0f0f0f",
+      borderLeft:"1px solid rgba(255,255,255,0.07)",
+      display:"flex", flexDirection:"column",
+      height:"100%",
     }}>
-      {/* Chat header */}
+
+      {/* ── CHAT HEADER — Public / Private tabs + viewer count ── */}
       <div style={{
-        padding: "12px 14px",
-        borderBottom: "1px solid rgba(255,255,255,0.07)",
-        display: "flex", alignItems: "center", justifyContent: "space-between",
+        display:"flex", alignItems:"center",
+        borderBottom:"1px solid rgba(255,255,255,0.08)",
+        padding:"0 14px", height:44, flexShrink:0,
+        gap:4,
       }}>
-        <span style={{ fontSize: 13, fontWeight: 600, color: "#fff" }}>Live Chat</span>
-        <span style={{ fontSize: 11, color: "var(--muted)", display: "flex", alignItems: "center", gap: 4 }}>
-          <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#e53935", display: "inline-block", animation: "pulseDot 1.4s infinite" }} />
-          {viewers} in chat
-        </span>
+        {["Public","Private"].map(tab=>(
+          <button key={tab} onClick={()=>setChatTab(tab)} style={{
+            background:"none", border:"none", cursor:"pointer",
+            padding:"0 12px", height:"100%", fontSize:13,
+            color: chatTab===tab ? "#fff" : "#666",
+            borderBottom: chatTab===tab ? "2px solid #e53935" : "2px solid transparent",
+            fontFamily:"inherit", fontWeight: chatTab===tab ? 600 : 400,
+            transition:"color .15s",
+          }}>{tab}</button>
+        ))}
+
+        {/* Viewer count */}
+        <div style={{marginLeft:"auto",display:"flex",alignItems:"center",gap:6,fontSize:12,color:"#888"}}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#888"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+          {viewers?.toLocaleString() || "0"}
+        </div>
+
+        {/* Options dots */}
+        <button style={{background:"none",border:"none",color:"#555",cursor:"pointer",padding:"4px 6px",fontSize:18,lineHeight:1}}>⋮</button>
       </div>
 
-      {/* Messages */}
-      <div ref={chatRef} style={{
-        flex: 1, overflowY: "auto", padding: "10px 12px",
-        display: "flex", flexDirection: "column", gap: 8,
+      {/* ── MESSAGES ── */}
+      <div style={{
+        flex:1, overflowY:"auto", padding:"10px 12px",
+        display:"flex", flexDirection:"column", gap:6,
+        scrollbarWidth:"thin", scrollbarColor:"#333 transparent",
       }}>
-        {messages.map((msg) => (
-          <div key={msg.id} style={{
-            animation: "fadeUp .2s ease both",
-          }}>
-            {msg.isTip ? (
-              /* Tip message */
-              <div style={{
-                background: "linear-gradient(135deg, rgba(240,165,0,0.15), rgba(240,165,0,0.05))",
-                border: "1px solid rgba(240,165,0,0.3)",
-                borderRadius: 8, padding: "7px 10px",
-                display: "flex", alignItems: "center", gap: 7,
-              }}>
-                <span style={{ fontSize: 16 }}>🪙</span>
-                <div>
-                  <span style={{ fontSize: 11, fontWeight: 700, color: "#f0a500" }}>{msg.username}</span>
-                  <span style={{ fontSize: 11, color: "#ccc" }}> tipped </span>
-                  <span style={{ fontSize: 11, fontWeight: 700, color: "#f0a500" }}>{msg.tipAmount} tokens!</span>
-                </div>
-              </div>
-            ) : (
-              /* Regular message */
-              <div style={{ display: "flex", gap: 6, alignItems: "flex-start" }}>
+        {chatTab === "Private" ? (
+          <div style={{flex:1,display:"flex",alignItems:"center",justifyContent:"center",color:"#555",fontSize:13,textAlign:"center",padding:20}}>
+            Private messages are only available during a private show
+          </div>
+        ) : (
+          messages.map((msg) => (
+            <div key={msg.id} style={{animation:"fadeUp .2s ease both"}}>
+              {msg.isTip ? (
                 <div style={{
-                  width: 22, height: 22, borderRadius: "50%",
-                  background: msg.color, flexShrink: 0,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: 9, fontWeight: 700, color: "#fff", marginTop: 1,
+                  background:"rgba(240,165,0,0.08)", border:"1px solid rgba(240,165,0,0.2)",
+                  borderRadius:6, padding:"6px 10px", display:"flex", alignItems:"center", gap:8,
                 }}>
-                  {msg.username[0].toUpperCase()}
+                  <span style={{fontSize:14}}>🪙</span>
+                  <div>
+                    <span style={{fontSize:11,fontWeight:700,color:"#f0a500"}}>{msg.username}</span>
+                    <span style={{fontSize:11,color:"#aaa"}}> tipped </span>
+                    <span style={{fontSize:11,fontWeight:700,color:"#f0a500"}}>{msg.tipAmount} tokens!</span>
+                  </div>
                 </div>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <span style={{ fontSize: 11, fontWeight: 700, color: msg.isMe ? "#e53935" : msg.color }}>
+              ) : (
+                <div style={{display:"flex",gap:6,alignItems:"flex-start"}}>
+                  {/* Colored username badge like reference site */}
+                  <div style={{
+                    background:msg.color, borderRadius:3, padding:"1px 6px",
+                    fontSize:11, fontWeight:700, color:"#fff", flexShrink:0,
+                    marginTop:2, maxWidth:80, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap",
+                  }}>
                     {msg.username}
-                  </span>
-                  <span style={{ fontSize: 11, color: "rgba(255,255,255,0.08)", marginLeft: 4 }}>{msg.time}</span>
-                  <div style={{ fontSize: 12, color: msg.isMe ? "#fff" : "rgba(255,255,255,0.75)", marginTop: 1, wordBreak: "break-word", lineHeight: 1.45 }}>
+                  </div>
+                  <div style={{flex:1,minWidth:0,fontSize:12,color:msg.isMe?"#fff":"rgba(255,255,255,0.8)",lineHeight:1.5,wordBreak:"break-word"}}>
                     {msg.message}
                   </div>
                 </div>
-              </div>
-            )}
-          </div>
-        ))}
-        <div ref={bottomRef} />
+              )}
+            </div>
+          ))
+        )}
+        <div ref={bottomRef}/>
       </div>
 
-      {/* Quick tip buttons */}
+      {/* ── TIP GOAL PROGRESS in chat ── */}
       <div style={{
-        padding: "8px 12px",
-        borderTop: "1px solid rgba(255,255,255,0.05)",
-        display: "flex", gap: 5,
+        padding:"8px 12px", borderTop:"1px solid rgba(255,255,255,0.05)",
+        display:"flex", alignItems:"center", gap:8, flexShrink:0,
       }}>
-        {[10, 25, 50, 100].map(amt => (
-          <button key={amt} onClick={onTipClick} style={{
-            flex: 1, background: "rgba(240,165,0,0.1)",
-            border: "1px solid rgba(240,165,0,0.25)", color: "#f0a500",
-            fontSize: 11, fontWeight: 700, padding: "5px 0", borderRadius: 5,
-            cursor: "pointer", fontFamily: "inherit", transition: "background .15s",
-          }}
-            onMouseEnter={e => e.currentTarget.style.background = "rgba(240,165,0,0.2)"}
-            onMouseLeave={e => e.currentTarget.style.background = "rgba(240,165,0,0.1)"}
-          >
-            🪙{amt}
-          </button>
-        ))}
+        <div style={{width:20,height:20,flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center"}}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#4caf50"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+        </div>
+        <div style={{flex:1,minWidth:0}}>
+          <div style={{fontSize:10,color:"#888",marginBottom:3}}>New goal – <span style={{color:"#f0a500",fontWeight:700}}>222 tk</span></div>
+          <div style={{height:3,background:"rgba(255,255,255,0.08)",borderRadius:3,overflow:"hidden"}}>
+            <div style={{width:"45%",height:"100%",background:"#4caf50",borderRadius:3}}/>
+          </div>
+        </div>
+        <button onClick={onTipClick} style={{
+          background:"#4caf50", border:"none", color:"#fff",
+          fontSize:11, fontWeight:700, padding:"4px 10px", borderRadius:4,
+          cursor:"pointer", fontFamily:"inherit", flexShrink:0,
+          display:"flex", alignItems:"center", gap:4,
+        }}>
+          Tip ›
+        </button>
       </div>
 
-      {/* Input */}
+      {/* ── INPUT ── */}
       <div style={{
-        padding: "10px 12px",
-        borderTop: "1px solid rgba(255,255,255,0.07)",
-        display: "flex", gap: 8,
+        padding:"10px 12px", borderTop:"1px solid rgba(255,255,255,0.07)",
+        display:"flex", gap:8, flexShrink:0,
       }}>
         <input
           value={input}
-          onChange={e => setInput(e.target.value)}
-          onKeyDown={e => e.key === "Enter" && sendMessage()}
-          placeholder="Say something..."
+          onChange={e=>setInput(e.target.value)}
+          onKeyDown={e=>e.key==="Enter"&&sendMessage()}
+          placeholder="Public message..."
           maxLength={200}
           style={{
-            flex: 1, background: "rgba(255,255,255,0.06)",
-            border: "1px solid rgba(255,255,255,0.1)", borderRadius: 7,
-            padding: "8px 12px", color: "#fff", fontSize: 13,
-            fontFamily: "inherit", outline: "none",
-            transition: "border-color .15s",
+            flex:1, background:"rgba(255,255,255,0.06)",
+            border:"1px solid rgba(255,255,255,0.1)", borderRadius:20,
+            padding:"8px 14px", color:"#fff", fontSize:12,
+            fontFamily:"inherit", outline:"none", transition:"border-color .15s",
           }}
-          onFocus={e => e.target.style.borderColor = "rgba(229,57,53,0.5)"}
-          onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.1)"}
+          onFocus={e=>e.target.style.borderColor="rgba(229,57,53,0.4)"}
+          onBlur={e=>e.target.style.borderColor="rgba(255,255,255,0.1)"}
         />
-        <button
-          onClick={sendMessage}
-          style={{
-            background: "#e53935", border: "none", color: "#fff",
-            width: 36, height: 36, borderRadius: 7, cursor: "pointer",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            fontSize: 16, flexShrink: 0, transition: "opacity .15s",
-          }}
-          onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
-          onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+        {/* Emoji button */}
+        <button style={{background:"none",border:"none",color:"#666",cursor:"pointer",padding:4,fontSize:18,lineHeight:1,flexShrink:0}}>😊</button>
+        {/* Send button */}
+        <button onClick={sendMessage} style={{
+          background:"#e53935", border:"none", color:"#fff",
+          width:34, height:34, borderRadius:"50%", cursor:"pointer",
+          display:"flex", alignItems:"center", justifyContent:"center",
+          fontSize:14, flexShrink:0, transition:"opacity .15s",
+        }}
+          onMouseEnter={e=>e.currentTarget.style.opacity=".85"}
+          onMouseLeave={e=>e.currentTarget.style.opacity="1"}
         >➤</button>
       </div>
     </div>

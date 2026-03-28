@@ -124,6 +124,6 @@ export default function AgeGate({ onEnter }) {
           </div>
         </div>
       </footer>
-    </div>
+    </div>    
   );
 }

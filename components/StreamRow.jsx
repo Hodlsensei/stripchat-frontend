@@ -1,5 +1,5 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import StreamCard from "./StreamCard";
 
 const MOCK_NAMES = [
@@ -17,29 +17,86 @@ const AFRICAN_NAMES = [
 ];
 
 const AFRICAN_PHOTOS = [
-  "https://thumb-cdn77.xvideos-cdn.com/31873630-628a-4817-990f-68f2b7f9c2a9/0/xv_27_p.jpg",
-  "https://pbs.twimg.com/media/FqxjJMDXoAMfRVN.jpg",
-  "https://thumb-cdn77.xvideos-cdn.com/1e1fdc91-f540-4f72-acd2-58ce81d27730/0/xv_4_t.jpg",
-  "https://thumb-cdn77.xvideos-cdn.com/07c57345-a6a1-4d10-9b75-8848037d9cb1/0/xv_10_p.jpg",
-  "https://hub.afroporn.net/content/16/261_african_porno.jpg",
-  "https://ei.phncdn.com/videos/202312/05/444203691/original/(m=eGNdHgaaaa)(mh=tAuz5ZntMvhGg582)1.jpg",
-  "https://thumb-cdn77.xvideos-cdn.com/26b7b3a7-1619-479b-8b40-29cb81bf64bb/0/xv_15_t.jpg",
+  "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&h=267&fit=crop",
+  "https://images.unsplash.com/photo-1523824921871-d6f1a15151f1?w=400&h=267&fit=crop",
+  "https://images.unsplash.com/photo-1542596768-5d1d21f1cf98?w=400&h=267&fit=crop",
+  "https://images.unsplash.com/photo-1507081323647-4d250478b919?w=400&h=267&fit=crop",
+  "https://images.unsplash.com/photo-1519764622345-23439dd774f7?w=400&h=267&fit=crop",
+  "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=400&h=267&fit=crop",
+  "https://images.unsplash.com/photo-1589156191108-c762ff4b96ab?w=400&h=267&fit=crop",
 ];
 
-export default function StreamRow({ title, category, vr, mobile, trending, african }) {
+// Maps continent code → region tag used in streamer data
+const CONTINENT_REGION_MAP = {
+  AF: ["NG", "ZA", "KE", "GH", "ET", "TZ", "EG", "SN", "CM", "CI"],  // Africa
+  EU: ["RU", "UA", "RO", "PL", "DE", "FR", "GB", "IT", "ES", "GR"],  // Europe
+  NA: ["US", "MX", "CA"],                                               // North America
+  SA: ["BR", "CO", "AR", "PE", "VE"],                                  // South America
+  AS: ["JP", "TH", "KR", "CN", "IN", "PH"],                           // Asia
+  OC: ["AU", "NZ"],                                                     // Oceania
+};
+
+// Detect user continent via free IP API
+async function detectContinent() {
+  try {
+    const res = await fetch("https://ipapi.co/json/", { signal: AbortSignal.timeout(3000) });
+    const data = await res.json();
+    return { continent: data.continent_code, country: data.country_code };
+  } catch {
+    return { continent: null, country: null };
+  }
+}
+
+// Sort streamers so those matching user's region come first
+function geoSort(cards, continent) {
+  if (!continent || !CONTINENT_REGION_MAP[continent]) return cards;
+  const preferredRegions = CONTINENT_REGION_MAP[continent];
+  const local  = cards.filter(c => preferredRegions.includes(c.region));
+  const others = cards.filter(c => !preferredRegions.includes(c.region));
+  return [...local, ...others];
+}
+
+export default function StreamRow({ title, category, vr, mobile, trending, african, userContinent }) {
   const scrollRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [continent, setContinent] = useState(userContinent || null);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  // Detect geo if not passed in as prop
+  useEffect(() => {
+    if (!userContinent) {
+      detectContinent().then(({ continent: c }) => {
+        if (c) setContinent(c);
+      });
+    }
+  }, [userContinent]);
 
   const names = african ? AFRICAN_NAMES : MOCK_NAMES;
 
-  const cards = names.map((username, i) => ({
+  const ALL_REGIONS = ["NG","ZA","US","BR","RU","UA","JP","FR","DE","GB","MX","KE","TH","RO","PL","CO","GR","IT","ES","GH"];
+
+  const rawCards = names.map((username, i) => ({
     username,
     viewers: Math.floor(Math.random() * 30000) + 500,
     isNew: trending || Math.random() < 0.2,
     vr: !!vr,
     mobile: !!mobile,
     hd: Math.random() > 0.4,
+    hasPrivate: Math.random() < 0.5,
+    region: african
+      ? ["NG","ZA","GH","KE","ET","TZ","EG","SN","CM","CI","NG","ZA","GH","KE","ET"][i % 15]
+      : ALL_REGIONS[i % ALL_REGIONS.length],
     photo: african ? AFRICAN_PHOTOS[i % AFRICAN_PHOTOS.length] : undefined,
   }));
+
+  // Apply geo sorting
+  const cards = geoSort(rawCards, continent);
 
   const scroll = (dir) => {
     if (!scrollRef.current) return;
@@ -60,25 +117,26 @@ export default function StreamRow({ title, category, vr, mobile, trending, afric
       {/* Scroll wrapper */}
       <div style={{ position: "relative" }}>
 
-        {/* Left arrow */}
-        <button onClick={() => scroll(-1)} style={{
-          position: "absolute", left: 0, top: 0, bottom: 0, zIndex: 10, width: 36,
-          background: "linear-gradient(to right, rgba(247,247,249,0.97) 60%, transparent)",
-          border: "none", cursor: "pointer",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          color: "var(--text)", fontSize: 24,
-        }}>‹</button>
+        {/* Left arrow — desktop only */}
+        {!isMobile && (
+          <button onClick={() => scroll(-1)} style={{
+            position: "absolute", left: 0, top: 0, bottom: 0, zIndex: 10, width: 36,
+            background: "transparent", border: "none", cursor: "pointer",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            color: "var(--text)", fontSize: 24,
+          }}>‹</button>
+        )}
 
         {/* 2-row horizontal scroll */}
         <div ref={scrollRef} style={{
           display: "grid",
           gridTemplateRows: "1fr 1fr",
           gridAutoFlow: "column",
-          gridAutoColumns: 175,
+          gridAutoColumns: isMobile ? "calc(50% - 6px)" : 175,
           gap: 4,
           overflowX: "scroll",
           overflowY: "hidden",
-          padding: "0 16px 4px",
+          padding: isMobile ? "0 8px 4px" : "0 16px 4px",
           scrollBehavior: "smooth",
           msOverflowStyle: "none",
           scrollbarWidth: "none",
@@ -89,14 +147,15 @@ export default function StreamRow({ title, category, vr, mobile, trending, afric
           ))}
         </div>
 
-        {/* Right arrow */}
-        <button onClick={() => scroll(1)} style={{
-          position: "absolute", right: 0, top: 0, bottom: 0, zIndex: 10, width: 36,
-          background: "linear-gradient(to left, rgba(247,247,249,0.97) 60%, transparent)",
-          border: "none", cursor: "pointer",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          color: "var(--text)", fontSize: 24,
-        }}>›</button>
+        {/* Right arrow — desktop only */}
+        {!isMobile && (
+          <button onClick={() => scroll(1)} style={{
+            position: "absolute", right: 0, top: 0, bottom: 0, zIndex: 10, width: 36,
+            background: "transparent", border: "none", cursor: "pointer",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            color: "var(--text)", fontSize: 24,
+          }}>›</button>
+        )}
 
       </div>
     </div>

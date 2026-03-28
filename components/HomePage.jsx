@@ -1,167 +1,431 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
-import Topbar from "./Topbar";
-import Sidebar from "./Sidebar";
-import StreamRow from "./StreamRow";
 import StreamCard from "./StreamCard";
-import BuyTokensModal from "./BuyTokensModal";
+import { useCategory } from "./CategoryContext";
 
-function FeaturedGrid({ category }) {
-  const [items,setItems]=useState([]);
-  const [page,setPage]=useState(0);
-  const [loading,setLoading]=useState(false);
-  const [cols,setCols]=useState(4);
-  const loaderRef=useRef(null);
+const PHOTO_POOLS = {
+  african: [
+    "https://thumb-cdn77.xvideos-cdn.com/7cf709be-1545-4f75-b7b2-91a2bf3c5eff/0/xv_9_p.jpg",
+    "https://thumb-cdn77.xvideos-cdn.com/bcc3ad5f-e56d-4031-89dd-9e57b0fb8a66/0/xv_18_p.jpg",
+    "https://thumb-cdn77.xvideos-cdn.com/109c8f67-92b4-4462-a1ff-557a9c24fec9/0/xv_8_p.jpg",
+    "https://thumb-cdn77.xvideos-cdn.com/1270c747-9119-4cec-a851-5939b0fffb38/0/xv_30_p.jpg",
+    "https://thumb-cdn77.xvideos-cdn.com/31873630-628a-4817-990f-68f2b7f9c2a9/0/xv_27_p.jpg",
+    "https://thumb-cdn77.xnxx-cdn.com/ae3716e7-d734-4131-86aa-23c4a7e239db/0/xn_24_t.jpg",
+    "https://ic-nss.flixcdn.com/a/Yzg5MmRiZmM3Y2Q5MzgzODhjNWE3ZDYzMjk5ZTAwOWM/webp%2Cs%28w%3A704%2Ch%3A440%29/xc/nw/nwpmaQ/frame/original/18.jpg",
+    "https://ic-vt-nss.xhcdn.com/a/MjZiODkxNmQ2NzJkMWJhajhiZmYxNmE0YTBjNzI0NGQ/s(w:2560,h:1440),webp/024/801/642/v2/2560x1440.245.webp",
+    "https://www.tongabonga.com/media/thumbs_200/1/320/20060.jpg",
+    "https://thumb-cdn77.xvideos-cdn.com/1e1fdc91-f540-4f72-acd2-58ce81d27730/0/xv_4_t.jpg",
+    "https://ic-vt-nss.xhcdn.com/a/YTdiZmYwMDk0NTM4Y2IwMTk0NjY3ZTBkY2IzZDJiYmI/s(w:2560,h:1440),webp/024/319/667/v2/2560x1440.218.webp",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQl3kh_xcjfbqmRbuqy4fdyzWGL2VYjOg4zYQ&s",
+    "https://cdn1.44sex.com/upload/photos/2025/04/INCREDIBLE%20SEX%20South%20African%20Porn%20Star%20German%20Machine%20Drilled%20Pussy%20Melani%20xgmtl%20%5B44sex.com%5D.jpg",
+  ],
+  top: [
+    "https://cdni.pornpics.com/460/7/63/91904270/91904270_064_e2e2.jpg",
+    "https://thepornlinks.com/storage/2022/09/Stella-Cox1.jpeg",
+    "https://cdni.pornpics.com/460/7/365/76559543/76559543_011_dc39.jpg",
+    "https://ei-ph.rdtcdn.com/videos/202011/29/374970362/original/(m=eag28f)(mh=hcHGTXVg6minXVAC)15.jpg",
+    "https://cdni.pornpics.com/460/7/284/63140195/63140195_093_8298.jpg",
+    "https://m.theartporn.com/contents/videos_screenshots/6000/6477/360x240/32.jpg",
+    "https://m.theartporn.com/contents/videos_screenshots/6000/6402/360x240/6.jpg",
+    "https://lh3.googleusercontent.com/proxy/LNfMmbL0gCruHMuk77UbO31lTO8xo9bIQykxti23qQMLhjOi2WmdnU6kErs4l8Yc5ra4r9NtR4HEmWGaejnYY7ve5CAMCB8y0rH-1YzhKvR7v5UtAc0",
+    "https://cdni.pornpics.com/460/7/764/26553342/26553342_060_0a5f.jpg",
+    "https://cdni.pornpics.de/460/7/349/19684933/19684933_054_ac5c.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpPQK3lCD49XqZlAAXSVYy57sPJtOhDlFGxw&s",
+    "https://cdni.pornpics.com/460/7/837/64902410/64902410_052_5e18.jpg",
+    "https://cdni.pornpics.com/460/7/246/32095369/32095369_121_3e72.jpg",
+  ],
+  couples: [
+    "https://cdni.pornpics.com/460/7/63/91904270/91904270_064_e2e2.jpg",
+    "https://cdni.pornpics.com/460/7/365/76559543/76559543_011_dc39.jpg",
+    "https://cdni.pornpics.com/460/7/284/63140195/63140195_093_8298.jpg",
+    "https://m.theartporn.com/contents/videos_screenshots/6000/6477/360x240/32.jpg",
+    "https://m.theartporn.com/contents/videos_screenshots/6000/6402/360x240/6.jpg",
+    "https://cdni.pornpics.com/460/7/764/26553342/26553342_060_0a5f.jpg",
+    "https://cdni.pornpics.de/460/7/349/19684933/19684933_054_ac5c.jpg",
+    "https://cdni.pornpics.com/460/7/837/64902410/64902410_052_5e18.jpg",
+    "https://cdni.pornpics.com/460/7/246/32095369/32095369_121_3e72.jpg",
+    "https://thepornlinks.com/storage/2022/09/Stella-Cox1.jpeg",
+    "https://ei-ph.rdtcdn.com/videos/202011/29/374970362/original/(m=eag28f)(mh=hcHGTXVg6minXVAC)15.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpPQK3lCD49XqZlAAXSVYy57sPJtOhDlFGxw&s",
+  ],
+  mobile: [
+    "https://m.theartporn.com/contents/videos_screenshots/6000/6477/360x240/32.jpg",
+    "https://m.theartporn.com/contents/videos_screenshots/6000/6402/360x240/6.jpg",
+    "https://cdni.pornpics.com/460/7/63/91904270/91904270_064_e2e2.jpg",
+    "https://cdni.pornpics.com/460/7/365/76559543/76559543_011_dc39.jpg",
+    "https://cdni.pornpics.com/460/7/284/63140195/63140195_093_8298.jpg",
+    "https://cdni.pornpics.com/460/7/764/26553342/26553342_060_0a5f.jpg",
+    "https://cdni.pornpics.de/460/7/349/19684933/19684933_054_ac5c.jpg",
+    "https://cdni.pornpics.com/460/7/837/64902410/64902410_052_5e18.jpg",
+    "https://thepornlinks.com/storage/2022/09/Stella-Cox1.jpeg",
+    "https://ei-ph.rdtcdn.com/videos/202011/29/374970362/original/(m=eag28f)(mh=hcHGTXVg6minXVAC)15.jpg",
+    "https://cdni.pornpics.com/460/7/246/32095369/32095369_121_3e72.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpPQK3lCD49XqZlAAXSVYy57sPJtOhDlFGxw&s",
+  ],
+  trending: [
+    "https://cdni.pornpics.com/460/7/837/64902410/64902410_052_5e18.jpg",
+    "https://cdni.pornpics.com/460/7/246/32095369/32095369_121_3e72.jpg",
+    "https://cdni.pornpics.com/460/7/63/91904270/91904270_064_e2e2.jpg",
+    "https://thepornlinks.com/storage/2022/09/Stella-Cox1.jpeg",
+    "https://cdni.pornpics.com/460/7/365/76559543/76559543_011_dc39.jpg",
+    "https://ei-ph.rdtcdn.com/videos/202011/29/374970362/original/(m=eag28f)(mh=hcHGTXVg6minXVAC)15.jpg",
+    "https://cdni.pornpics.com/460/7/284/63140195/63140195_093_8298.jpg",
+    "https://m.theartporn.com/contents/videos_screenshots/6000/6477/360x240/32.jpg",
+    "https://m.theartporn.com/contents/videos_screenshots/6000/6402/360x240/6.jpg",
+    "https://cdni.pornpics.com/460/7/764/26553342/26553342_060_0a5f.jpg",
+    "https://cdni.pornpics.de/460/7/349/19684933/19684933_054_ac5c.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpPQK3lCD49XqZlAAXSVYy57sPJtOhDlFGxw&s",
+  ],
+  vr: [
+    "https://cdni.pornpics.com/460/7/365/76559543/76559543_011_dc39.jpg",
+    "https://cdni.pornpics.com/460/7/284/63140195/63140195_093_8298.jpg",
+    "https://cdni.pornpics.com/460/7/63/91904270/91904270_064_e2e2.jpg",
+    "https://thepornlinks.com/storage/2022/09/Stella-Cox1.jpeg",
+    "https://ei-ph.rdtcdn.com/videos/202011/29/374970362/original/(m=eag28f)(mh=hcHGTXVg6minXVAC)15.jpg",
+    "https://m.theartporn.com/contents/videos_screenshots/6000/6477/360x240/32.jpg",
+    "https://m.theartporn.com/contents/videos_screenshots/6000/6402/360x240/6.jpg",
+    "https://cdni.pornpics.com/460/7/764/26553342/26553342_060_0a5f.jpg",
+    "https://cdni.pornpics.de/460/7/349/19684933/19684933_054_ac5c.jpg",
+    "https://cdni.pornpics.com/460/7/837/64902410/64902410_052_5e18.jpg",
+    "https://cdni.pornpics.com/460/7/246/32095369/32095369_121_3e72.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpPQK3lCD49XqZlAAXSVYy57sPJtOhDlFGxw&s",
+  ],
+  featured: [
+    "https://cdni.pornpics.com/460/7/63/91904270/91904270_064_e2e2.jpg",
+    "https://thepornlinks.com/storage/2022/09/Stella-Cox1.jpeg",
+    "https://cdni.pornpics.com/460/7/365/76559543/76559543_011_dc39.jpg",
+    "https://ei-ph.rdtcdn.com/videos/202011/29/374970362/original/(m=eag28f)(mh=hcHGTXVg6minXVAC)15.jpg",
+    "https://cdni.pornpics.com/460/7/284/63140195/63140195_093_8298.jpg",
+    "https://m.theartporn.com/contents/videos_screenshots/6000/6477/360x240/32.jpg",
+    "https://m.theartporn.com/contents/videos_screenshots/6000/6402/360x240/6.jpg",
+    "https://lh3.googleusercontent.com/proxy/LNfMmbL0gCruHMuk77UbO31lTO8xo9bIQykxti23qQMLhjOi2WmdnU6kErs4l8Yc5ra4r9NtR4HEmWGaejnYY7ve5CAMCB8y0rH-1YzhKvR7v5UtAc0",
+    "https://cdni.pornpics.com/460/7/764/26553342/26553342_060_0a5f.jpg",
+    "https://cdni.pornpics.de/460/7/349/19684933/19684933_054_ac5c.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpPQK3lCD49XqZlAAXSVYy57sPJtOhDlFGxw&s",
+    "https://cdni.pornpics.com/460/7/837/64902410/64902410_052_5e18.jpg",
+    "https://cdni.pornpics.com/460/7/246/32095369/32095369_121_3e72.jpg",
+    "https://thumb-cdn77.xvideos-cdn.com/7cf709be-1545-4f75-b7b2-91a2bf3c5eff/0/xv_9_p.jpg",
+    "https://thumb-cdn77.xvideos-cdn.com/bcc3ad5f-e56d-4031-89dd-9e57b0fb8a66/0/xv_18_p.jpg",
+    "https://thumb-cdn77.xvideos-cdn.com/109c8f67-92b4-4462-a1ff-557a9c24fec9/0/xv_8_p.jpg",
+    "https://thumb-cdn77.xvideos-cdn.com/1270c747-9119-4cec-a851-5939b0fffb38/0/xv_30_p.jpg",
+    "https://thumb-cdn77.xvideos-cdn.com/31873630-628a-4817-990f-68f2b7f9c2a9/0/xv_27_p.jpg",
+    "https://thumb-cdn77.xnxx-cdn.com/ae3716e7-d734-4131-86aa-23c4a7e239db/0/xn_24_t.jpg",
+    "https://ic-nss.flixcdn.com/a/Yzg5MmRiZmM3Y2Q5MzgzODhjNWE3ZDYzMjk5ZTAwOWM/webp%2Cs%28w%3A704%2Ch%3A440%29/xc/nw/nwpmaQ/frame/original/18.jpg",
+    "https://www.tongabonga.com/media/thumbs_200/1/320/20060.jpg",
+    "https://thumb-cdn77.xvideos-cdn.com/1e1fdc91-f540-4f72-acd2-58ce81d27730/0/xv_4_t.jpg",
+    "https://cdn1.44sex.com/upload/photos/2025/04/INCREDIBLE%20SEX%20South%20African%20Porn%20Star%20German%20Machine%20Drilled%20Pussy%20Melani%20xgmtl%20%5B44sex.com%5D.jpg",
+    "https://m.theartporn.com/contents/videos_screenshots/6000/6477/360x240/32.jpg",
+    "https://cdni.pornpics.com/460/7/837/64902410/64902410_052_5e18.jpg",
+  ],
+};
 
-  useEffect(()=>{
-    const check=()=>setCols(window.innerWidth<=480?2:window.innerWidth<=768?3:4);
-    check();
-    window.addEventListener("resize",check);
-    return()=>window.removeEventListener("resize",check);
-  },[]);
+const FLAGS = ["🇿🇦","🇺🇸","🇧🇷","🇨🇴","🇷🇺","🇺🇦","🇯🇵","🇫🇷","🇩🇪","🇬🇧","🇲🇽","🇳🇬","🇹🇭","🇷🇴","🇵🇱","🇬🇷","🇮🇹","🇪🇸","🇨🇿","🇸🇪"];
+const CATS  = ["girls","girls","girls","guys","couples","trans"];
+const NAMES = [
+  "AuroraBliss","KiraStorm","LunaRaven","NatashaFire","CherryBlossom","VioletDream",
+  "MeiLingHot","RosePetal","ScarletVR","CocoLove","IvyRose","StellaX","NubiaNights",
+  "EbonyQueen","SaharaHot","ZuluPrincess","BongoBeauty","LagosLove","CairoNights",
+  "MobileQueen","PhoneFlirt","TrendingNow","HotNew2024","ViralStar","FreshFace",
+  "VRQueenX","VirtualVixen","VRStar360","ImmersiveAlex","MetaLove","FireAndIce",
+  "HoneyAndBear","JadeAndRex","AlexAndMia","TokyoCouple","RioNights","MadridPair",
+  "MikeThunder","AlexGreek","DanteXXX","StarBoy","GuyOnPhone","NovaMale",
+  "ZoeTransQueen","TransMobile","JustStarted","NewcomerX","BreakoutStar","FreshHeat",
+];
 
-  const loadMore=useCallback(async()=>{
-    if(loading)return;
-    setLoading(true);
-    try{
-      const res=await fetch(`https://stripchat-backend.onrender.com/api/streams?category=${category}&limit=20&offset=${page*20}`);
-      const data=await res.json();
-      const fetched=data.streams||[];
-      const extras=Array.from({length:Math.max(0,20-fetched.length)},(_,i)=>({id:9000+page*20+i,username:`Model_${page*20+fetched.length+i+1}`,viewers:Math.floor(Math.random()*20000)+300,hd:Math.random()>0.4,isNew:Math.random()<0.15,region:["🇺🇸","🇧🇷","🇨🇴","🇷🇺","🇺🇦","🇷🇴","🇩🇪","🇬🇧"][Math.floor(Math.random()*8)]}));
-      setItems(prev=>[...prev,...fetched,...extras]);
-      setPage(prev=>prev+1);
-    }catch{
-      const dummy=Array.from({length:20},(_,i)=>({id:9000+page*20+i,username:`Model_${page*20+i+1}`,viewers:Math.floor(Math.random()*20000)+300,hd:Math.random()>0.4,isNew:Math.random()<0.15,region:["🇺🇸","🇧🇷","🇨🇴","🇷🇺","🇺🇦"][Math.floor(Math.random()*5)]}));
-      setItems(prev=>[...prev,...dummy]);
-      setPage(prev=>prev+1);
-    }
-    setLoading(false);
-  },[loading,page,category]);
+function generateCard(tag, index) {
+  const pool = PHOTO_POOLS[tag] || PHOTO_POOLS.featured;
+  const name = NAMES[index % NAMES.length] + (index >= NAMES.length ? `_${Math.floor(index / NAMES.length)}` : "");
+  return {
+    id:         `${tag}_${index}`,
+    username:   name,
+    photo:      pool[index % pool.length],
+    region:     FLAGS[index % FLAGS.length],
+    category:   CATS[index % CATS.length],
+    viewers:    Math.max(300, 35000 - index * 79 + (index % 7) * 1100),
+    isNew:      index % 9 === 0,
+    hd:         index % 3 !== 0,
+    mobile:     index % 5 === 0,
+    hasPrivate: index % 4 !== 0,
+    vr:         tag === "vr",
+    tags:       [tag],
+  };
+}
 
-  useEffect(()=>{loadMore();},[]);// eslint-disable-line
-  useEffect(()=>{
-    const observer=new IntersectionObserver(entries=>{if(entries[0].isIntersecting)loadMore();},{rootMargin:"300px"});
-    if(loaderRef.current)observer.observe(loaderRef.current);
-    return()=>observer.disconnect();
-  },[loadMore]);
+const SECTIONS = [
+  { key:"african",  title:"African"                    },
+  { key:"top",      title:"Top Free Live Sex Cams"     },
+  { key:"couples",  title:"Couples Live Sex Cams"      },
+  { key:"mobile",   title:"Mobile Live Sex Cams"       },
+  { key:"trending", title:"New Trending Live Sex Cams" },
+  { key:"vr",       title:"VR Cams"                    },
+];
 
-  return(
-    <div style={{padding:"0 8px"}}>
-      <div style={{display:"grid",gridTemplateColumns:`repeat(${cols},1fr)`,gap:4}}>
-        {items.map((streamer,i)=><StreamCard key={`${streamer.id}-${i}`} streamer={streamer} index={i} gridMode={true}/>)}
+const COLS    = 6;
+const GAP     = 8;
+const BATCH_H = 12;
+const BATCH_V = 24;
+
+function HorizontalSection({ title, tag }) {
+  const containerRef = useRef(null);
+  const scrollRef    = useRef(null);
+  const sentinelRef  = useRef(null);
+  const loadingRef   = useRef(false);
+  const nextRef      = useRef(BATCH_H);
+
+  const [cards,   setCards]   = useState(() => Array.from({ length: BATCH_H * 2 }, (_, i) => generateCard(tag, i)));
+  const [loading, setLoading] = useState(false);
+  const [cardW,   setCardW]   = useState(0);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const compute = () => {
+      const w = containerRef.current.offsetWidth;
+      setCardW(Math.floor((w - (COLS - 1) * GAP) / COLS));
+    };
+    compute();
+    const ro = new ResizeObserver(compute);
+    ro.observe(containerRef.current);
+    return () => ro.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const container = scrollRef.current;
+    const sentinel  = sentinelRef.current;
+    if (!container || !sentinel) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !loadingRef.current) {
+          loadingRef.current = true;
+          setLoading(true);
+          setTimeout(() => {
+            const start = nextRef.current;
+            const batch = Array.from({ length: BATCH_H }, (_, i) => generateCard(tag, start + i));
+            nextRef.current = start + BATCH_H;
+            setCards(prev => [...prev, ...batch]);
+            setLoading(false);
+            loadingRef.current = false;
+          }, 250);
+        }
+      },
+      { root: container, rootMargin: "0px 400px 0px 0px", threshold: 0 }
+    );
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [tag, cardW]);
+
+  const scrollRight = () => {
+    scrollRef.current?.scrollBy({ left: (cardW + GAP) * COLS, behavior: "smooth" });
+  };
+
+  const colCount = Math.ceil(cards.length / 2);
+
+  return (
+    <div style={{ marginBottom: 32 }}>
+      <div style={{
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        marginBottom: 10, paddingBottom: 8, borderBottom: "2px solid #f0f0f0",
+      }}>
+        <span style={{ fontSize: 16, fontWeight: 700, color: "#1a1a1a" }}>{title}</span>
+        <button style={{
+          background: "none", border: "1px solid #e0e0e0", cursor: "pointer",
+          color: "#e53935", fontSize: 12, fontFamily: "inherit",
+          padding: "4px 12px", borderRadius: 20, fontWeight: 600,
+        }}>See All</button>
       </div>
-      <div ref={loaderRef} style={{height:40,display:"flex",alignItems:"center",justifyContent:"center",marginTop:16}}>
-        {loading&&<div style={{display:"flex",gap:6}}>{[0,1,2].map(i=>(<div key={i} style={{width:8,height:8,borderRadius:"50%",background:"var(--red2)",animation:`pulseDot 1s ${i*0.2}s infinite`}}/>))}</div>}
+
+      <div ref={containerRef} style={{ position: "relative", overflow: "hidden" }}>
+        <div ref={scrollRef} style={{ overflowX: "auto", overflowY: "hidden", scrollbarWidth: "none", msOverflowStyle: "none" }}>
+          <style>{`
+            .hscroll::-webkit-scrollbar { display: none; }
+            @keyframes shimmer {
+              0%   { background-position: 200% 0; }
+              100% { background-position: -200% 0; }
+            }
+          `}</style>
+
+          {cardW > 0 && (
+            <div
+              className="hscroll"
+              style={{
+                display: "grid",
+                gridTemplateRows: "repeat(2, auto)",
+                gridAutoFlow: "column",
+                gridAutoColumns: cardW,
+                gap: GAP,
+                width: colCount * cardW + (colCount - 1) * GAP,
+              }}
+            >
+              {cards.map(s => (
+                <div key={s.id} style={{ width: cardW }}>
+                  <StreamCard streamer={s} gridMode />
+                </div>
+              ))}
+
+              {loading && Array.from({ length: BATCH_H }).map((_, i) => (
+                <div key={`sk-${i}`} style={{
+                  width: cardW, aspectRatio: "3/2", borderRadius: 8,
+                  background: "linear-gradient(90deg,#f0f0f0 25%,#e8e8e8 50%,#f0f0f0 75%)",
+                  backgroundSize: "200% 100%", animation: "shimmer 1.2s infinite",
+                }}/>
+              ))}
+
+              <div ref={sentinelRef} style={{ width: 1, height: "100%", gridRow: "1 / span 2" }} />
+            </div>
+          )}
+        </div>
+
+        <button
+          onClick={scrollRight}
+          style={{
+            position: "absolute", right: 6, top: "50%", transform: "translateY(-50%)",
+            background: "none", border: "none", cursor: "pointer", padding: 0,
+            lineHeight: 1, color: "#555", fontSize: 28, fontWeight: 300, zIndex: 10, userSelect: "none",
+          }}
+          onMouseEnter={e => e.currentTarget.style.color = "#e53935"}
+          onMouseLeave={e => e.currentTarget.style.color = "#555"}
+          aria-label="Scroll right"
+        >›</button>
       </div>
     </div>
   );
 }
 
-export default function HomePage({ defaultCategory="girls" }) {
-  const [activeCategory,setActiveCategory]=useState(defaultCategory);
-  const [liveCount,setLiveCount]=useState(11162);
-  const [showPromo,setShowPromo]=useState(true);
-  const [showTokens,setShowTokens]=useState(false);
-  const [sidebarOpen,setSidebarOpen]=useState(false);
-  const [isMobile,setIsMobile]=useState(false);
+function FeaturedSection({ cols }) {
+  const [cards,   setCards]   = useState(() => Array.from({ length: BATCH_V }, (_, i) => generateCard("featured", i)));
+  const [loading, setLoading] = useState(false);
+  const nextRef    = useRef(BATCH_V);
+  const loadingRef = useRef(false);
+  const sentinelRef= useRef(null);
 
-  useEffect(()=>{
-    const check=()=>setIsMobile(window.innerWidth<=768);
-    check();
-    window.addEventListener("resize",check);
-    return()=>window.removeEventListener("resize",check);
-  },[]);
+  const loadMore = useCallback(() => {
+    if (loadingRef.current) return;
+    loadingRef.current = true;
+    setLoading(true);
+    setTimeout(() => {
+      const start = nextRef.current;
+      const batch = Array.from({ length: BATCH_V }, (_, i) => generateCard("featured", start + i));
+      nextRef.current = start + BATCH_V;
+      setCards(prev => [...prev, ...batch]);
+      setLoading(false);
+      loadingRef.current = false;
+    }, 300);
+  }, []);
 
-  useEffect(()=>{
-    const id=setInterval(()=>{setLiveCount(v=>Math.max(10000,v+Math.floor(Math.random()*10)-4));},3000);
-    return()=>clearInterval(id);
-  },[]);
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) loadMore(); },
+      { rootMargin: "0px 0px 600px 0px", threshold: 0 }
+    );
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [loadMore]);
 
-  const mainLeft = isMobile ? 0 : 220;
-  const mainTop  = isMobile ? 90 : 90; // topbar(50) + tabs(40)
-
-  return(
-    <div style={{position:"fixed",inset:0,background:"var(--bg)"}}>
-      {showTokens&&<BuyTokensModal onClose={()=>setShowTokens(false)}/>}
-
-      {/* Topbar */}
-      <Topbar liveCount={liveCount} onMenuToggle={()=>setSidebarOpen(o=>!o)}/>
-
-      {/* Gender tabs */}
+  return (
+    <div>
       <div style={{
-        position:"fixed", top:50, left:0, right:0, zIndex:998,
-        background:"#fff", borderBottom:"2px solid var(--border)",
-        display:"flex", alignItems:"center",
-        paddingLeft: isMobile ? 8 : 220,
-        height:40, overflowX:"auto", scrollbarWidth:"none",
+        display: "flex", alignItems: "center", marginBottom: 10,
+        paddingBottom: 8, borderBottom: "2px solid #f0f0f0",
       }}>
-        {["girls","couples","guys","trans"].map(tab=>(
-          <div key={tab} onClick={()=>setActiveCategory(tab)} style={{
-            padding:"0 16px", height:"100%", display:"flex", alignItems:"center",
-            fontSize:14, fontWeight:500, cursor:"pointer", whiteSpace:"nowrap",
-            color:activeCategory===tab?"var(--text)":"var(--muted)",
-            borderBottom:activeCategory===tab?"2px solid var(--red2)":"2px solid transparent",
-            marginBottom:-2, textTransform:"capitalize", transition:"color .15s",
-          }}>
-            {tab.charAt(0).toUpperCase()+tab.slice(1)}
-          </div>
-        ))}
+        <span style={{ fontSize: 16, fontWeight: 700, color: "#1a1a1a" }}>Featured Live Sex Shows</span>
       </div>
+      <div style={{ display: "grid", gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: GAP }}>
+        {cards.map(s => <StreamCard key={s.id} streamer={s} gridMode />)}
+      </div>
+      <div ref={sentinelRef} style={{ height: 1, marginTop: 8 }} aria-hidden="true" />
+      {loading && (
+        <div style={{ display: "grid", gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: GAP, marginTop: 8 }}>
+          {Array.from({ length: BATCH_V }).map((_, i) => (
+            <div key={`sk-${i}`} style={{
+              aspectRatio: "3/2", borderRadius: 8,
+              background: "linear-gradient(90deg,#f0f0f0 25%,#e8e8e8 50%,#f0f0f0 75%)",
+              backgroundSize: "200% 100%", animation: "shimmer 1.2s infinite",
+            }}/>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
-      {/* Sidebar */}
-      <Sidebar isOpen={sidebarOpen} onClose={()=>setSidebarOpen(false)}/>
+export default function HomePage() {
+  const { category } = useCategory();
+  const [isMobile,  setIsMobile]  = useState(false);
+  const [showPromo, setShowPromo] = useState(true);
 
-      {/* Main */}
-      <main style={{
-        position:"fixed",
-        top: mainTop,
-        left: mainLeft,
-        right:0,
-        bottom:0,
-        overflowY:"auto",
-        overflowX:"hidden",
-        paddingBottom:70,
-        background:"var(--bg)",
-        transition:"left .25s ease",
-      }}>
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 820);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
-        {/* Promo banner */}
-        {showPromo&&(
-          <div style={{margin:"12px 12px 16px",background:"linear-gradient(135deg,#7b1010,#a00,#7b1010)",borderRadius:10,padding:"12px 14px",display:"flex",alignItems:"center",gap:10}}>
-            <span style={{fontSize:22}}>🎁</span>
-            <div style={{flex:1,minWidth:0}}>
-              <div style={{fontSize:13,fontWeight:600,marginBottom:2,color:"#fff"}}>Special for You</div>
-              <div style={{fontSize:11,color:"#ffcdd2"}}>Get tokens with <span style={{color:"#ffeb3b",fontWeight:700}}>25% OFF!</span></div>
-            </div>
-            <button onClick={()=>setShowTokens(true)} style={{background:"#f5a623",border:"none",color:"#000",fontSize:11,fontWeight:700,padding:"7px 12px",borderRadius:6,cursor:"pointer",fontFamily:"inherit",whiteSpace:"nowrap"}}>GET TOKENS</button>
-            <button onClick={()=>setShowPromo(false)} style={{background:"none",border:"none",color:"rgba(255,255,255,0.5)",fontSize:18,cursor:"pointer",padding:4,flexShrink:0}}>✕</button>
+  const cols = isMobile ? 2 : COLS;
+
+  return (
+    <div style={{ background: "#fff", minHeight: "100%", color: "#1a1a1a", fontFamily: "Inter, system-ui, sans-serif" }}>
+      <main style={{ padding: isMobile ? "16px 8px 80px" : "16px 16px 80px" }}>
+
+        {showPromo && (
+          <div style={{
+            background: "linear-gradient(90deg,#b71c1c 0%,#e53935 30%,#e53935 70%,#b71c1c 100%)",
+            borderRadius: 8, padding: "10px 14px 10px 12px",
+            marginBottom: 24, display: "flex", alignItems: "center", gap: 12,
+            boxShadow: "0 2px 8px rgba(229,57,53,0.25)",
+          }}>
+            <div style={{
+              background: "linear-gradient(135deg,#f57c00,#ff8f00)",
+              borderRadius: 7, width: 36, height: 36,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              flexShrink: 0, fontSize: 20,
+            }}>🎁</div>
+            <span style={{ fontWeight: 700, fontSize: 14, color: "#fff", whiteSpace: "nowrap", flexShrink: 0 }}>Special for You</span>
+            <div style={{ flex: 1 }} />
+            <span style={{ fontSize: 13, color: "rgba(255,255,255,0.9)", whiteSpace: "nowrap", marginRight: 10 }}>
+              Get tokens now with <span style={{ fontWeight: 700, color: "#ffe082" }}>25% OFF!</span>
+            </span>
+            <button style={{
+              background: "transparent", border: "1.5px solid rgba(255,255,255,0.7)",
+              color: "#fff", fontWeight: 700, fontSize: 12,
+              padding: "5px 16px", borderRadius: 20, cursor: "pointer",
+              whiteSpace: "nowrap", fontFamily: "inherit", flexShrink: 0,
+            }}
+              onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.2)"}
+              onMouseLeave={e => e.currentTarget.style.background = "transparent"}
+            >GET TOKENS</button>
+            <div style={{ flex: 1 }} />
+            <button onClick={() => setShowPromo(false)} style={{
+              background: "none", border: "none", color: "rgba(255,255,255,0.6)",
+              cursor: "pointer", fontSize: 14, padding: 0, fontFamily: "inherit", flexShrink: 0,
+            }}
+              onMouseEnter={e => e.currentTarget.style.color = "#fff"}
+              onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.6)"}
+            >✕</button>
           </div>
         )}
 
-        <StreamRow title="Today's Recommendations for You" category={activeCategory}/>
-        <StreamRow title="African" category={activeCategory} african/>
-        <StreamRow title="Top Free Live Sex Cams" category={activeCategory}/>
-        <StreamRow title="Couples Live Sex Cams" category="couples"/>
-        <StreamRow title="Mobile Live Sex Cams" category={activeCategory} mobile/>
-        <StreamRow title="New &amp; Trending" category={activeCategory} trending/>
-        <StreamRow title="VR Cams" category={activeCategory} vr/>
+        {SECTIONS.map(sec => (
+          <HorizontalSection key={sec.key} title={sec.title} tag={sec.key} />
+        ))}
 
-        <div style={{marginBottom:28}}>
-          <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"0 12px",marginBottom:10}}>
-            <span style={{fontSize:16,fontWeight:600}}>Featured Live Sex Shows</span>
-            <span style={{fontSize:12,color:"var(--muted)",cursor:"pointer"}}>See All</span>
-          </div>
-          <FeaturedGrid category={activeCategory}/>
-        </div>
+        <FeaturedSection cols={cols} />
+
       </main>
 
-      {/* Bottom join banner */}
-      <div style={{position:"fixed",bottom:0,left:0,right:0,zIndex:500,background:"var(--red2)",padding:isMobile?"8px 12px":"10px 20px",display:"flex",alignItems:"center",justifyContent:"center",gap:isMobile?8:16}}>
-        <span style={{fontSize:isMobile?16:20}}>💬</span>
-        <span style={{fontSize:isMobile?12:14,fontWeight:500}}>
-          {isMobile?"Join to interact with models!":"Join Stripchatbate to interact with models!"}
-        </span>
-        <button style={{background:"#fff",color:"#c0392b",fontSize:isMobile?11:13,fontWeight:700,padding:isMobile?"5px 14px":"7px 20px",borderRadius:20,border:"none",cursor:"pointer",fontFamily:"inherit",flexShrink:0}}>Join FREE</button>
+      <div style={{
+        position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 999,
+        background: "#e53935", padding: "10px 20px",
+        display: "flex", alignItems: "center", justifyContent: "center", gap: 12,
+        boxShadow: "0 -2px 12px rgba(229,57,53,0.3)",
+      }}>
+        <span style={{ fontSize: 18 }}>💬</span>
+        <span style={{ color: "#fff", fontWeight: 600, fontSize: 13 }}>Join Stripchatbate to interact with models!</span>
+        <button style={{
+          background: "#fff", border: "none", color: "#e53935",
+          fontWeight: 700, fontSize: 13, padding: "6px 18px",
+          borderRadius: 20, cursor: "pointer", boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+        }}>Join FREE</button>
       </div>
     </div>
   );
