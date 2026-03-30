@@ -1,67 +1,34 @@
 "use client";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Topbar from "./Topbar";
 import { CategoryProvider, useCategory } from "./CategoryContext";
 
 const CATEGORIES = ["girls", "couples", "guys", "trans"];
-
-function CategoryTabs() {
-  const { category, setCategory } = useCategory();
-  return (
-    <div style={{
-      background: "#1a1a1a",
-      borderBottom: "1px solid #2a2a2a",
-      display: "flex",
-      alignItems: "center",
-      paddingLeft: 4,
-      height: 44,
-      flexShrink: 0,
-      zIndex: 90,
-    }}>
-      {CATEGORIES.map(cat => (
-        <button
-          key={cat}
-          onClick={() => setCategory(cat)}
-          style={{
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            color: category === cat ? "#fff" : "#888",
-            fontSize: 14,
-            fontWeight: category === cat ? 700 : 400,
-            padding: "0 20px",
-            height: "100%",
-            textTransform: "capitalize",
-            borderBottom: category === cat ? "2px solid #e53935" : "2px solid transparent",
-            fontFamily: "inherit",
-            marginBottom: -1,
-            transition: "color 0.15s",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {cat}
-        </button>
-      ))}
-    </div>
-  );
-}
+const NO_SIDEBAR_ROUTES = ["/top-models"];
 
 export default function LayoutShell({ children, sidebar }) {
-  const [liveCount,    setLiveCount]    = useState(11284);
-  const [sidebarOpen,  setSidebarOpen]  = useState(true);
-  const [isMobile,     setIsMobile]     = useState(false);
+  const pathname = usePathname();
+  const isTopModels = pathname?.startsWith("/top-models");
+
+  const [liveCount,   setLiveCount]   = useState(11284);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isMobile,    setIsMobile]    = useState(false);
 
   useEffect(() => {
     const check = () => {
       const mobile = window.innerWidth <= 768;
       setIsMobile(mobile);
-      if (mobile) setSidebarOpen(false);
-      else setSidebarOpen(true);
+      setSidebarOpen(!mobile && !isTopModels);
     };
     check();
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
-  }, []);
+  }, [isTopModels]);
+
+  useEffect(() => {
+    if (isTopModels) setSidebarOpen(false);
+  }, [isTopModels]);
 
   useEffect(() => {
     fetch("http://localhost:4000/api/streams/meta/count")
@@ -69,6 +36,8 @@ export default function LayoutShell({ children, sidebar }) {
       .then(d => setLiveCount(d.liveCount))
       .catch(() => {});
   }, []);
+
+  const showSidebar = sidebarOpen && !isTopModels;
 
   return (
     <CategoryProvider>
@@ -81,29 +50,23 @@ export default function LayoutShell({ children, sidebar }) {
         fontFamily: "Inter, system-ui, sans-serif",
       }}>
 
-        {/* ── TOPBAR — full width ── */}
-        <Topbar liveCount={liveCount} onMenuToggle={() => setSidebarOpen(o => !o)} />
+        <Topbar
+          liveCount={liveCount}
+          onMenuToggle={() => !isTopModels && setSidebarOpen(o => !o)}
+        />
 
-        {/* ── CATEGORY TABS — full width, below topbar ── */}
-        <CategoryTabs />
+        {/* ← REMOVED the duplicate <CategoryTabs /> line that was here */}
 
-        {/* ── SIDEBAR + CONTENT — side by side ── */}
         <div style={{ display: "flex", flex: 1, overflow: "hidden", position: "relative" }}>
 
-          {/* Mobile overlay backdrop */}
-          {isMobile && sidebarOpen && (
+          {isMobile && showSidebar && (
             <div
               onClick={() => setSidebarOpen(false)}
-              style={{
-                position: "absolute", inset: 0,
-                background: "rgba(0,0,0,0.6)",
-                zIndex: 150,
-              }}
+              style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.6)", zIndex: 150 }}
             />
           )}
 
-          {/* Sidebar */}
-          {sidebarOpen && (
+          {showSidebar && (
             <div style={{
               width: 220,
               flexShrink: 0,
@@ -113,9 +76,7 @@ export default function LayoutShell({ children, sidebar }) {
               height: "100%",
               background: "#1a1a1a",
               position: isMobile ? "absolute" : "relative",
-              top: 0,
-              left: 0,
-              bottom: 0,
+              top: 0, left: 0, bottom: 0,
               zIndex: isMobile ? 200 : "auto",
               scrollbarWidth: "thin",
               scrollbarColor: "#333 transparent",
@@ -124,7 +85,6 @@ export default function LayoutShell({ children, sidebar }) {
             </div>
           )}
 
-          {/* Main content */}
           <div style={{
             flex: 1,
             minWidth: 0,

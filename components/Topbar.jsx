@@ -1,19 +1,23 @@
 "use client";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect, useRef } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import AuthModal from "./AuthModal";
 import { useCategory } from "./CategoryContext";
 
 const GENDER_TABS = ["Girls", "Couples", "Guys", "Trans"];
 
 export default function Topbar({ liveCount, onMenuToggle }) {
-  const router = useRouter();
+  const router   = useRouter();
+  const pathname = usePathname();
+  const isTopModels = pathname?.startsWith("/top-models");
+
   const [query, setQuery]           = useState("");
   const [showAuth, setShowAuth]     = useState(false);
   const [authTab, setAuthTab]       = useState("login");
   const [user, setUser]             = useState(null);
   const [showSearch, setShowSearch] = useState(false);
   const [isMobile, setIsMobile]     = useState(false);
+  const inputRef = useRef(null);
 
   const { category, setCategory } = useCategory();
 
@@ -43,8 +47,21 @@ export default function Topbar({ liveCount, onMenuToggle }) {
     setUser(null);
   };
 
+  const handleSearch = (e) => {
+    if (e.key === "Enter" && query.trim()) {
+      router.push(`/search?q=${encodeURIComponent(query.trim())}`);
+    }
+  };
+
   return (
     <>
+      <style>{`
+        .search-input::placeholder { color: rgba(255,255,255,0.45); }
+        .search-input { caret-color: #fff; }
+        .search-input-light::placeholder { color: #aaa; }
+        .search-input-light { caret-color: #222; }
+      `}</style>
+
       <div style={{
         position: "sticky",
         top: 0,
@@ -62,10 +79,10 @@ export default function Topbar({ liveCount, onMenuToggle }) {
           display: "flex",
           alignItems: "center",
           padding: "0 16px",
-          gap: 0,               /* we control spacing manually per group */
+          gap: 0,
         }}>
 
-          {/* ── LEFT GROUP: Hamburger + Logo + Live + Top Models ── */}
+          {/* ── LEFT GROUP ── */}
           <div style={{ display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
 
             {/* Hamburger */}
@@ -86,10 +103,7 @@ export default function Topbar({ liveCount, onMenuToggle }) {
               <img src="/stripchatbate-rd.png" alt="Stripchatbate" style={{ height: 30, objectFit: "contain" }}/>
             </div>
 
-            {/* Divider */}
-            {!isMobile && (
-              <div style={{ width: 1, height: 20, background: "#e5e7eb", flexShrink: 0 }}/>
-            )}
+            {!isMobile && <div style={{ width: 1, height: 20, background: "#e5e7eb", flexShrink: 0 }}/>}
 
             {/* Live count */}
             <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: isMobile ? 11 : 12, fontWeight: 700, color: "#222", flexShrink: 0 }}>
@@ -97,22 +111,13 @@ export default function Topbar({ liveCount, onMenuToggle }) {
               {(liveCount ?? 11304).toLocaleString()} LIVE
             </div>
 
-            {/* Divider */}
-            {!isMobile && (
-              <div style={{ width: 1, height: 20, background: "#e5e7eb", flexShrink: 0 }}/>
-            )}
+            {!isMobile && <div style={{ width: 1, height: 20, background: "#e5e7eb", flexShrink: 0 }}/>}
 
             {/* Top Models */}
             {!isMobile && (
               <div
                 onClick={() => router.push("/top-models")}
-                style={{
-                  display: "flex", alignItems: "center", gap: 6,
-                  fontSize: 14, color: "#222", cursor: "pointer",
-                  flexShrink: 0, fontWeight: 600,
-                  padding: "0 4px",
-                  transition: "opacity .15s",
-                }}
+                style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 14, color: "#222", cursor: "pointer", flexShrink: 0, fontWeight: 600, padding: "0 4px", transition: "opacity .15s" }}
                 onMouseEnter={e => e.currentTarget.style.opacity = "0.65"}
                 onMouseLeave={e => e.currentTarget.style.opacity = "1"}
               >
@@ -130,102 +135,128 @@ export default function Topbar({ liveCount, onMenuToggle }) {
           {isMobile ? (
             <>
               {showSearch ? (
-                <div style={{ flex: 1, display: "flex", alignItems: "center", gap: 8, background: "#f5f5f5", borderRadius: 8, padding: "0 12px", height: 32, marginLeft: 8 }}>
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="11" cy="11" r="8"/>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                  </svg>
-                  <input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search..." autoFocus
-                    style={{ background: "none", border: "none", outline: "none", fontSize: 13, fontFamily: "inherit", width: "100%", color: "#222" }}/>
-                  <button onClick={() => setShowSearch(false)} style={{ background: "none", border: "none", cursor: "pointer", color: "#999", fontSize: 18, padding: 0 }}>✕</button>
+                <div style={{
+                  flex: 1, display: "flex", alignItems: "center",
+                  background: "#7a1515", borderRadius: 20,
+                  height: 34, marginLeft: 8, overflow: "hidden",
+                }}>
+                  <div style={{ padding: "0 6px 0 12px", display: "flex", alignItems: "center" }}>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                  </div>
+                  <input
+                    className="search-input"
+                    value={query}
+                    onChange={e => setQuery(e.target.value)}
+                    onKeyDown={handleSearch}
+                    placeholder="Find anything you want"
+                    autoFocus
+                    style={{ background: "none", border: "none", outline: "none", fontSize: 13, fontFamily: "inherit", flex: 1, color: "#fff" }}
+                  />
+                  <button onClick={() => { setShowSearch(false); setQuery(""); }}
+                    style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.7)", fontSize: 16, padding: "0 10px" }}>✕</button>
                 </div>
               ) : (
                 <button onClick={() => setShowSearch(true)} style={{ background: "none", border: "none", cursor: "pointer", padding: 6, display: "flex", marginLeft: "auto" }}>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="11" cy="11" r="8"/>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
                   </svg>
                 </button>
               )}
             </>
           ) : (
 
-            /* ── DESKTOP: Search — truly centered ── */
+            /* ── DESKTOP SEARCH ── */
             <>
               <div style={{ flex: 1 }} />
 
-              {/* Search pill */}
-              <div style={{
-                display: "flex", alignItems: "center",
-                background: "#f5f5f5",
-                border: "1px solid #e5e7eb",
-                borderRadius: 20,
-                height: 34,
-                width: 420,
-                flexShrink: 0,
-                overflow: "hidden",
-              }}>
-                {/* Magnifying glass */}
-                <div style={{ padding: "0 7px 0 12px", display: "flex", alignItems: "center", flexShrink: 0 }}>
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  background: "#fff",
+                  border: "1px solid #e5e7eb",
+                  borderRadius: 24,
+                  height: 38,
+                  width: 460,
+                  flexShrink: 0,
+                  overflow: "hidden",
+                  cursor: "text",
+                  boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
+                }}
+                onClick={() => inputRef.current?.focus()}
+              >
+                <div style={{ padding: "0 8px 0 14px", display: "flex", alignItems: "center", flexShrink: 0 }}>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="11" cy="11" r="8"/>
                     <line x1="21" y1="21" x2="16.65" y2="16.65"/>
                   </svg>
                 </div>
 
-                {/* Input */}
                 <input
+                  ref={inputRef}
+                  className="search-input-light"
                   value={query}
                   onChange={e => setQuery(e.target.value)}
+                  onKeyDown={handleSearch}
                   placeholder="Find anything you want"
                   style={{
-                    background: "none", border: "none", outline: "none",
-                    fontSize: 12, fontFamily: "inherit", flex: 1, color: "#222",
+                    background: "none",
+                    border: "none",
+                    outline: "none",
+                    fontSize: 13,
+                    fontFamily: "inherit",
+                    flex: 1,
+                    color: "#222",
                     minWidth: 0,
                   }}
                 />
 
-                {/* Filter icon */}
-                <div style={{ padding: "0 8px", display: "flex", alignItems: "center", flexShrink: 0 }}>
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2.2" strokeLinecap="round">
-                    <line x1="21" y1="4"  x2="14" y2="4"/>
-                    <line x1="10" y1="4"  x2="3"  y2="4"/>
-                    <line x1="21" y1="12" x2="12" y2="12"/>
-                    <line x1="8"  y1="12" x2="3"  y2="12"/>
-                    <line x1="21" y1="20" x2="16" y2="20"/>
-                    <line x1="12" y1="20" x2="3"  y2="20"/>
-                    <circle cx="12" cy="4"  r="2" fill="#888" stroke="none"/>
-                    <circle cx="10" cy="12" r="2" fill="#888" stroke="none"/>
-                    <circle cx="14" cy="20" r="2" fill="#888" stroke="none"/>
+                <div style={{ padding: "0 10px", display: "flex", alignItems: "center", flexShrink: 0 }}>
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2" strokeLinecap="round">
+                    <line x1="3" y1="6"  x2="21" y2="6"/>
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                    <circle cx="7"  cy="6"  r="2.2" fill="#fff" stroke="#999" strokeWidth="2"/>
+                    <circle cx="15" cy="12" r="2.2" fill="#fff" stroke="#999" strokeWidth="2"/>
+                    <circle cx="10" cy="18" r="2.2" fill="#fff" stroke="#999" strokeWidth="2"/>
                   </svg>
                 </div>
 
-                {/* Divider */}
-                <div style={{ width: 1, height: 18, background: "#ddd", flexShrink: 0 }}/>
-
-                {/* Magic Search */}
                 <div
                   style={{
-                    display: "flex", alignItems: "center", gap: 5,
-                    background: "#fff",
-                    padding: "0 12px",
-                    height: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 5,
+                    background: "#e53935",
+                    borderRadius: 20,
+                    padding: "0 10px 0 9px",
+                    height: 28,
+                    margin: "0 5px",
                     cursor: "pointer",
                     flexShrink: 0,
-                    transition: "background .15s",
                     whiteSpace: "nowrap",
+                    transition: "background .15s",
                   }}
-                  onMouseEnter={e => e.currentTarget.style.background = "#f5f5f5"}
-                  onMouseLeave={e => e.currentTarget.style.background = "#fff"}
+                  onMouseEnter={e => e.currentTarget.style.background = "#c62828"}
+                  onMouseLeave={e => e.currentTarget.style.background = "#e53935"}
                 >
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="#f5a623">
-                    <path d="M12 2 C12 2 13 9 14 10 C15 11 22 12 22 12 C22 12 15 13 14 14 C13 15 12 22 12 22 C12 22 11 15 10 14 C9 13 2 12 2 12 C2 12 9 11 10 10 C11 9 12 2 12 2 Z"/>
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="#fff">
+                    <path d="M12 2C12 2 13.2 8.8 14.2 9.8C15.2 10.8 22 12 22 12C22 12 15.2 13.2 14.2 14.2C13.2 15.2 12 22 12 22C12 22 10.8 15.2 9.8 14.2C8.8 13.2 2 12 2 12C2 12 8.8 10.8 9.8 9.8C10.8 8.8 12 2 12 2Z"/>
                   </svg>
-                  <span style={{ fontSize: 12, fontWeight: 600, color: "#222" }}>Magic Search</span>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: "#fff" }}>Magic Search</span>
                   <span style={{
-                    background: "#e53935", color: "#fff",
-                    fontSize: 9, fontWeight: 700,
-                    padding: "1px 5px", borderRadius: 10,
+                    background: "rgba(0,0,0,0.3)",
+                    color: "#fff",
+                    fontSize: 11,
+                    fontWeight: 800,
+                    padding: "0 5px",
+                    borderRadius: 8,
+                    lineHeight: "17px",
+                    display: "inline-block",
+                    minWidth: 17,
+                    textAlign: "center",
                   }}>3</span>
                 </div>
               </div>
@@ -260,17 +291,10 @@ export default function Topbar({ liveCount, onMenuToggle }) {
                   <button
                     onClick={openRegister}
                     style={{
-                      background: "#e53935",
-                      border: "none",
-                      color: "#fff",
-                      fontSize: 12,
-                      padding: "6px 16px",
-                      borderRadius: 6,
-                      cursor: "pointer",
-                      fontFamily: "inherit",
-                      whiteSpace: "nowrap",
-                      fontWeight: 700,
-                      boxShadow: "0 2px 6px rgba(229,57,53,0.35)",
+                      background: "#e53935", border: "none", color: "#fff",
+                      fontSize: 12, padding: "6px 16px", borderRadius: 6,
+                      cursor: "pointer", fontFamily: "inherit", whiteSpace: "nowrap",
+                      fontWeight: 700, boxShadow: "0 2px 6px rgba(229,57,53,0.35)",
                       transition: "background .15s",
                     }}
                     onMouseEnter={e => e.currentTarget.style.background = "#c62828"}
@@ -282,15 +306,9 @@ export default function Topbar({ liveCount, onMenuToggle }) {
                 <button
                   onClick={openLogin}
                   style={{
-                    background: "transparent",
-                    border: "1px solid #e5e7eb",
-                    color: "#222",
-                    fontSize: 12,
-                    padding: "5px 14px",
-                    borderRadius: 6,
-                    cursor: "pointer",
-                    fontFamily: "inherit",
-                    whiteSpace: "nowrap",
+                    background: "transparent", border: "1px solid #e5e7eb", color: "#222",
+                    fontSize: 12, padding: "5px 14px", borderRadius: 6,
+                    cursor: "pointer", fontFamily: "inherit", whiteSpace: "nowrap",
                     transition: "border-color .15s",
                   }}
                   onMouseEnter={e => e.currentTarget.style.borderColor = "#aaa"}
@@ -303,46 +321,48 @@ export default function Topbar({ liveCount, onMenuToggle }) {
           </div>
         </header>
 
-        {/* ══ GENDER TAB BAR ══ */}
-        <div style={{
-          background: "#fff",
-          borderTop: "1px solid #f0f0f0",
-          display: "flex",
-          alignItems: "center",
-          padding: "0 16px",
-          gap: 4,
-          height: 38,
-        }}>
-          {GENDER_TABS.map(tab => {
-            const key    = tab.toLowerCase();
-            const active = category === key;
-            return (
-              <button
-                key={tab}
-                onClick={() => setCategory(key)}
-                style={{
-                  background: "none",
-                  border: "none",
-                  borderBottom: active ? "3px solid #e53935" : "3px solid transparent",
-                  color: active ? "#e53935" : "#555",
-                  fontSize: 14,
-                  fontWeight: active ? 700 : 500,
-                  padding: "0 14px",
-                  height: "100%",
-                  cursor: "pointer",
-                  fontFamily: "inherit",
-                  letterSpacing: "0.01em",
-                  transition: "color .15s, border-color .15s",
-                  whiteSpace: "nowrap",
-                }}
-                onMouseEnter={e => { if (!active) e.currentTarget.style.color = "#222"; }}
-                onMouseLeave={e => { if (!active) e.currentTarget.style.color = "#555"; }}
-              >
-                {tab}
-              </button>
-            );
-          })}
-        </div>
+        {/* ══ GENDER TAB BAR — hidden on /top-models ══ */}
+        {!isTopModels && (
+          <div style={{
+            background: "#fff",
+            borderTop: "1px solid #f0f0f0",
+            display: "flex",
+            alignItems: "center",
+            padding: "0 16px",
+            gap: 4,
+            height: 38,
+          }}>
+            {GENDER_TABS.map(tab => {
+              const key    = tab.toLowerCase();
+              const active = category === key;
+              return (
+                <button
+                  key={tab}
+                  onClick={() => setCategory(key)}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    borderBottom: active ? "3px solid #e53935" : "3px solid transparent",
+                    color: active ? "#e53935" : "#555",
+                    fontSize: 14,
+                    fontWeight: active ? 700 : 500,
+                    padding: "0 14px",
+                    height: "100%",
+                    cursor: "pointer",
+                    fontFamily: "inherit",
+                    letterSpacing: "0.01em",
+                    transition: "color .15s, border-color .15s",
+                    whiteSpace: "nowrap",
+                  }}
+                  onMouseEnter={e => { if (!active) e.currentTarget.style.color = "#222"; }}
+                  onMouseLeave={e => { if (!active) e.currentTarget.style.color = "#555"; }}
+                >
+                  {tab}
+                </button>
+              );
+            })}
+          </div>
+        )}
 
       </div>
 

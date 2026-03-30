@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import StreamCard from "./StreamCard";
 import { useCategory } from "./CategoryContext";
 
+// ── Photo pools ────────────────────────────────────────────────────────────
 const PHOTO_POOLS = {
   african: [
     "https://thumb-cdn77.xvideos-cdn.com/7cf709be-1545-4f75-b7b2-91a2bf3c5eff/0/xv_9_p.jpg",
@@ -119,6 +120,47 @@ const PHOTO_POOLS = {
   ],
 };
 
+// ── Sections config per gender tab ─────────────────────────────────────────
+const SECTIONS_BY_CATEGORY = {
+  girls: [
+    { key: "african",  title: "African"                    },
+    { key: "top",      title: "Top Free Live Sex Cams"     },
+    { key: "couples",  title: "Couples Live Sex Cams"      },
+    { key: "mobile",   title: "Mobile Live Sex Cams"       },
+    { key: "trending", title: "New Trending Live Sex Cams" },
+    { key: "vr",       title: "VR Cams"                    },
+  ],
+  couples: [
+    { key: "couples",  title: "Top Couples Live Now"       },
+    { key: "trending", title: "Trending Couples"           },
+    { key: "mobile",   title: "Mobile Couples"             },
+    { key: "vr",       title: "Couples VR Cams"            },
+    { key: "african",  title: "African Couples"            },
+  ],
+  guys: [
+    { key: "top",      title: "Top Guys Live Now"          },
+    { key: "trending", title: "Trending Guys"              },
+    { key: "mobile",   title: "Mobile Guys"                },
+    { key: "vr",       title: "Guys VR Cams"               },
+    { key: "african",  title: "African Guys"               },
+  ],
+  trans: [
+    { key: "top",      title: "Top Trans Live Now"         },
+    { key: "trending", title: "Trending Trans"             },
+    { key: "mobile",   title: "Mobile Trans"               },
+    { key: "vr",       title: "Trans VR Cams"              },
+    { key: "couples",  title: "Trans Couples"              },
+  ],
+};
+
+// ── Featured section title per tab ─────────────────────────────────────────
+const FEATURED_TITLE = {
+  girls:   "Featured Live Sex Shows",
+  couples: "Featured Couples Live Shows",
+  guys:    "Featured Guys Live Shows",
+  trans:   "Featured Trans Live Shows",
+};
+
 const FLAGS = ["🇿🇦","🇺🇸","🇧🇷","🇨🇴","🇷🇺","🇺🇦","🇯🇵","🇫🇷","🇩🇪","🇬🇧","🇲🇽","🇳🇬","🇹🇭","🇷🇴","🇵🇱","🇬🇷","🇮🇹","🇪🇸","🇨🇿","🇸🇪"];
 const CATS  = ["girls","girls","girls","guys","couples","trans"];
 const NAMES = [
@@ -151,20 +193,12 @@ function generateCard(tag, index) {
   };
 }
 
-const SECTIONS = [
-  { key:"african",  title:"African"                    },
-  { key:"top",      title:"Top Free Live Sex Cams"     },
-  { key:"couples",  title:"Couples Live Sex Cams"      },
-  { key:"mobile",   title:"Mobile Live Sex Cams"       },
-  { key:"trending", title:"New Trending Live Sex Cams" },
-  { key:"vr",       title:"VR Cams"                    },
-];
-
 const COLS    = 6;
 const GAP     = 8;
 const BATCH_H = 12;
 const BATCH_V = 24;
 
+// ── Horizontal scrolling section ───────────────────────────────────────────
 function HorizontalSection({ title, tag }) {
   const containerRef = useRef(null);
   const scrollRef    = useRef(null);
@@ -290,7 +324,8 @@ function HorizontalSection({ title, tag }) {
   );
 }
 
-function FeaturedSection({ cols }) {
+// ── Vertical infinite-scroll featured grid ─────────────────────────────────
+function FeaturedSection({ cols, title }) {
   const [cards,   setCards]   = useState(() => Array.from({ length: BATCH_V }, (_, i) => generateCard("featured", i)));
   const [loading, setLoading] = useState(false);
   const nextRef    = useRef(BATCH_V);
@@ -328,7 +363,7 @@ function FeaturedSection({ cols }) {
         display: "flex", alignItems: "center", marginBottom: 10,
         paddingBottom: 8, borderBottom: "2px solid #f0f0f0",
       }}>
-        <span style={{ fontSize: 16, fontWeight: 700, color: "#1a1a1a" }}>Featured Live Sex Shows</span>
+        <span style={{ fontSize: 16, fontWeight: 700, color: "#1a1a1a" }}>{title}</span>
       </div>
       <div style={{ display: "grid", gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: GAP }}>
         {cards.map(s => <StreamCard key={s.id} streamer={s} gridMode />)}
@@ -349,6 +384,7 @@ function FeaturedSection({ cols }) {
   );
 }
 
+// ── Main page ──────────────────────────────────────────────────────────────
 export default function HomePage() {
   const { category } = useCategory();
   const [isMobile,  setIsMobile]  = useState(false);
@@ -363,10 +399,15 @@ export default function HomePage() {
 
   const cols = isMobile ? 2 : COLS;
 
+  // Pick sections for the active tab; fall back to girls
+  const sections = SECTIONS_BY_CATEGORY[category] ?? SECTIONS_BY_CATEGORY.girls;
+  const featuredTitle = FEATURED_TITLE[category] ?? FEATURED_TITLE.girls;
+
   return (
     <div style={{ background: "#fff", minHeight: "100%", color: "#1a1a1a", fontFamily: "Inter, system-ui, sans-serif" }}>
       <main style={{ padding: isMobile ? "16px 8px 80px" : "16px 16px 80px" }}>
 
+        {/* Promo banner */}
         {showPromo && (
           <div style={{
             background: "linear-gradient(90deg,#b71c1c 0%,#e53935 30%,#e53935 70%,#b71c1c 100%)",
@@ -405,14 +446,17 @@ export default function HomePage() {
           </div>
         )}
 
-        {SECTIONS.map(sec => (
-          <HorizontalSection key={sec.key} title={sec.title} tag={sec.key} />
+        {/* Horizontal sections — re-renders when category changes */}
+        {sections.map(sec => (
+          <HorizontalSection key={`${category}-${sec.key}-${sec.title}`} title={sec.title} tag={sec.key} />
         ))}
 
-        <FeaturedSection cols={cols} />
+        {/* Vertical infinite featured grid */}
+        <FeaturedSection key={category} cols={cols} title={featuredTitle} />
 
       </main>
 
+      {/* Bottom join banner */}
       <div style={{
         position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 999,
         background: "#e53935", padding: "10px 20px",

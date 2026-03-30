@@ -1,9 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import AllCategoriesModal from "./AllCategoriesModal";
 
-// ── SVG helper ─────────────────────────────────────────────────────
 const SvgIcon = ({ children, size = 17 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
     stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
@@ -11,7 +11,6 @@ const SvgIcon = ({ children, size = 17 }) => (
   </svg>
 );
 
-// ── Nav icons (matching reference site exactly) ────────────────────
 const NAV_ICONS = {
   home: (
     <svg width={17} height={17} viewBox="0 0 24 24" fill="currentColor" stroke="none">
@@ -51,7 +50,6 @@ const NAV_ICONS = {
   ),
 };
 
-// ── Data ───────────────────────────────────────────────────────────
 const NAV = [
   { label: "Home",              href: "/",            icon: "home" },
   { label: "Gallery",           href: "/gallery",     icon: "gallery" },
@@ -132,13 +130,12 @@ const POPULAR = [
   { label: "Office",          count: 1038 },
   { label: "Foot Fetish",     count: 4281, hot: true },
 ];
-const FOOTER = [
+const FOOTER_LINKS = [
   "About Us","Blog","Support & FAQ","Billing Support",
   "Report Content","Media Inquiries","Privacy Policy",
   "Terms of Use","All Models","18 U.S.C. 2257 Record-Keeping Statement",
 ];
 
-// ── Special icon renderer ──────────────────────────────────────────
 function SpecialIcon({ flagCode, vr, type }) {
   if (flagCode) return (
     <img
@@ -159,22 +156,10 @@ function SpecialIcon({ flagCode, vr, type }) {
       <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
     </svg>
   );
-  if (type === "bdsm") return (
-    <svg width={15} height={15} viewBox="0 0 24 24" fill="#9ca3af" stroke="none">
-      <path d="M12 2C7 2 3 6 3 11c0 2.5 1 4.7 2.6 6.3L4 20h2l1.3-2H12h4.7L18 20h2l-1.6-2.7C20 15.7 21 13.5 21 11c0-5-4-9-9-9zm-3 9a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm6 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" />
-    </svg>
-  );
-  if (type === "ticket") return (
-    <svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth={2}>
-      <path d="M2 9a2 2 0 012-2h16a2 2 0 012 2v1a2 2 0 000 4v1a2 2 0 01-2 2H4a2 2 0 01-2-2v-1a2 2 0 000-4V9z" />
-      <line x1="9" y1="7" x2="9" y2="17" strokeDasharray="2 2" />
-    </svg>
-  );
   if (type === "toy") return (
     <svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
       <circle cx="17" cy="7" r="3" />
       <path d="M14.5 9.5L3 21" />
-      <path d="M13 11l1.5 1.5" />
     </svg>
   );
   if (type === "mobile") return (
@@ -186,7 +171,6 @@ function SpecialIcon({ flagCode, vr, type }) {
   return null;
 }
 
-// ── Reusable pieces ────────────────────────────────────────────────
 const Divider = () => (
   <div style={{ height: 1, background: "#f3f4f6", margin: "6px 0" }} />
 );
@@ -200,7 +184,6 @@ function SecLabel({ text }) {
   );
 }
 
-// ── Plain row: NO icon slot (Age, Ethnicity, Body Type, Hair, Private Shows) ──
 function PlainRow({ label, count, hot, href = "#" }) {
   const [hov, setHov] = useState(false);
   return (
@@ -213,7 +196,10 @@ function PlainRow({ label, count, hot, href = "#" }) {
       transition: "background .1s",
     }}
     onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}>
-      <span style={{ flex: 1 }}>{label}{hot && <span style={{ color: "#f472b6", fontSize: 11, marginLeft: 4 }}>✦✦</span>}</span>
+      <span style={{ flex: 1 }}>
+        {label}
+        {hot && <span style={{ color: "#f472b6", fontSize: 11, marginLeft: 4 }}>✦✦</span>}
+      </span>
       <span style={{ fontSize: 11, color: "#9ca3af", fontWeight: 500 }}>
         {count.toLocaleString()}
       </span>
@@ -221,8 +207,7 @@ function PlainRow({ label, count, hot, href = "#" }) {
   );
 }
 
-// ── Icon row: has icon slot (Specials, Popular) ────────────────────
-function IconRow({ label, count, flagCode, vr, specialIcon, emoji, hot, href = "#" }) {
+function IconRow({ label, count, flagCode, vr, specialIcon, hot, href = "#" }) {
   const [hov, setHov] = useState(false);
   return (
     <Link href={href} style={{
@@ -235,12 +220,7 @@ function IconRow({ label, count, flagCode, vr, specialIcon, emoji, hot, href = "
     }}
     onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}>
       <span style={{ width: 20, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-        {flagCode || vr || specialIcon
-          ? <SpecialIcon flagCode={flagCode} vr={vr} type={specialIcon} />
-          : emoji
-            ? <span style={{ fontSize: 14, lineHeight: 1 }}>{emoji}</span>
-            : null
-        }
+        {(flagCode || vr || specialIcon) && <SpecialIcon flagCode={flagCode} vr={vr} type={specialIcon} />}
       </span>
       <span style={{ flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
         {label}
@@ -296,44 +276,43 @@ function FooterLink({ label }) {
   );
 }
 
-function AllCatsBtn({ iconOnly }) {
+function TokensBanner({ collapsed }) {
   const [hov, setHov] = useState(false);
+  if (collapsed) return null;
   return (
-    <Link href="/categories" style={{
-      display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
-      width: "100%", padding: iconOnly ? "8px 0" : "8px 12px",
-      border: "1.5px solid",
-      borderColor: hov ? "#e5192b" : "#e5e7eb",
-      borderRadius: 8,
-      background: hov ? "#fff0f0" : "white",
-      color: hov ? "#e5192b" : "#374151",
-      fontSize: 11, fontWeight: 700, cursor: "pointer",
-      textTransform: "uppercase", letterSpacing: ".06em",
-      transition: "all .12s", textDecoration: "none",
-      boxSizing: "border-box",
-    }}
-    onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}>
-      <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
-        <rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" />
-        <rect x="3" y="14" width="7" height="7" /><rect x="14" y="14" width="7" height="7" />
+    <div
+      onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+      style={{
+        margin: "10px 10px 4px", borderRadius: 8,
+        background: hov
+          ? "linear-gradient(135deg,#2e7d32,#43a047)"
+          : "linear-gradient(135deg,#388e3c,#4caf50)",
+        padding: "10px 12px",
+        display: "flex", alignItems: "center", gap: 10,
+        cursor: "pointer", transition: "background .2s",
+        boxShadow: "0 2px 8px rgba(76,175,80,0.3)",
+      }}>
+      <svg width={38} height={38} viewBox="0 0 38 38" fill="none" style={{ flexShrink: 0 }}>
+        <ellipse cx="19" cy="29" rx="11" ry="5" fill="#e6a817" />
+        <rect x="8" y="24" width="22" height="5" fill="#e6a817" />
+        <ellipse cx="19" cy="24" rx="11" ry="5" fill="#fdd835" />
+        <ellipse cx="19" cy="24" rx="8" ry="3.2" fill="#f9a825" />
+        <ellipse cx="19" cy="21" rx="11" ry="5" fill="#e6a817" />
+        <rect x="8" y="16" width="22" height="5" fill="#e6a817" />
+        <ellipse cx="19" cy="16" rx="11" ry="5" fill="#fdd835" />
+        <ellipse cx="19" cy="16" rx="8" ry="3.2" fill="#f9a825" />
+        <ellipse cx="19" cy="13" rx="11" ry="5" fill="#e6a817" />
+        <rect x="8" y="8" width="22" height="5" fill="#e6a817" />
+        <ellipse cx="19" cy="8" rx="11" ry="5" fill="#fdd835" />
+        <ellipse cx="19" cy="8" rx="8" ry="3.2" fill="#f9a825" />
+        <text x="19" y="11" textAnchor="middle" fontSize="6" fontWeight="bold" fill="#e6a817" fontFamily="Arial">$</text>
       </svg>
-      {!iconOnly && "All Categories"}
-    </Link>
-  );
-}
-
-function LangRow() {
-  const [hov, setHov] = useState(false);
-  return (
-    <div style={{
-      display: "flex", alignItems: "center", gap: 8,
-      padding: "10px 16px 16px", cursor: "pointer",
-      background: hov ? "#f9fafb" : "transparent", transition: "background .1s",
-    }}
-    onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}>
-      <span style={{ fontSize: 15 }}>🌐</span>
-      <span style={{ fontSize: 13, color: "#374151" }}>English</span>
-      <span style={{ marginLeft: "auto", color: "#9ca3af", fontSize: 11 }}>▾</span>
+      <div style={{ lineHeight: 1.25 }}>
+        <div style={{ color: "#fff", fontWeight: 800, fontSize: 18, letterSpacing: "-0.5px" }}>
+          50 <span style={{ fontSize: 13, fontWeight: 600 }}>Tokens</span>
+        </div>
+        <div style={{ color: "rgba(255,255,255,0.85)", fontSize: 11, fontWeight: 500 }}>to Win Now</div>
+      </div>
     </div>
   );
 }
@@ -358,151 +337,176 @@ function CollapseBtn({ collapsed, onClick }) {
   );
 }
 
-function TokensBanner({ collapsed }) {
+/* ── ALL CATEGORIES Button ── */
+function AllCatsBtn({ collapsed, onClick }) {
   const [hov, setHov] = useState(false);
-  if (collapsed) return null;
   return (
-    <div
-      onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+    <button
+      onClick={onClick}
       style={{
-        margin: "10px 10px 4px", borderRadius: 8,
-        background: hov
-          ? "linear-gradient(135deg,#2e7d32,#43a047)"
-          : "linear-gradient(135deg,#388e3c,#4caf50)",
-        padding: "10px 12px",
-        display: "flex", alignItems: "center", gap: 10,
-        cursor: "pointer", transition: "background .2s",
-        boxShadow: "0 2px 8px rgba(76,175,80,0.3)",
-      }}>
-      {/* Stacked coins SVG matching reference site */}
-      <svg width={38} height={38} viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
-        {/* Bottom coin */}
-        <ellipse cx="19" cy="29" rx="11" ry="5" fill="#e6a817" />
-        <rect x="8" y="24" width="22" height="5" fill="#e6a817" />
-        <ellipse cx="19" cy="24" rx="11" ry="5" fill="#fdd835" />
-        <ellipse cx="19" cy="24" rx="8" ry="3.2" fill="#f9a825" />
-        {/* Middle coin */}
-        <ellipse cx="19" cy="21" rx="11" ry="5" fill="#e6a817" />
-        <rect x="8" y="16" width="22" height="5" fill="#e6a817" />
-        <ellipse cx="19" cy="16" rx="11" ry="5" fill="#fdd835" />
-        <ellipse cx="19" cy="16" rx="8" ry="3.2" fill="#f9a825" />
-        {/* Top coin */}
-        <ellipse cx="19" cy="13" rx="11" ry="5" fill="#e6a817" />
-        <rect x="8" y="8" width="22" height="5" fill="#e6a817" />
-        <ellipse cx="19" cy="8" rx="11" ry="5" fill="#fdd835" />
-        <ellipse cx="19" cy="8" rx="8" ry="3.2" fill="#f9a825" />
-        {/* $ symbol on top coin */}
-        <text x="19" y="11" textAnchor="middle" fontSize="6" fontWeight="bold" fill="#e6a817" fontFamily="Arial">$</text>
+        display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+        width: "100%", padding: collapsed ? "8px 0" : "8px 12px",
+        border: "1.5px solid",
+        borderColor: hov ? "#e5192b" : "#e5e7eb",
+        borderRadius: 8,
+        background: hov ? "#fff0f0" : "white",
+        color: hov ? "#e5192b" : "#374151",
+        fontSize: 11, fontWeight: 700, cursor: "pointer",
+        textTransform: "uppercase", letterSpacing: ".06em",
+        transition: "all .12s",
+        boxSizing: "border-box",
+      }}
+      onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+    >
+      <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+        <rect x="3" y="3" width="7" height="7" />
+        <rect x="14" y="3" width="7" height="7" />
+        <rect x="3" y="14" width="7" height="7" />
+        <rect x="14" y="14" width="7" height="7" />
       </svg>
-      <div style={{ lineHeight: 1.25 }}>
-        <div style={{ color: "#fff", fontWeight: 800, fontSize: 18, letterSpacing: "-0.5px" }}>
-          50 <span style={{ fontSize: 13, fontWeight: 600 }}>Tokens</span>
-        </div>
-        <div style={{ color: "rgba(255,255,255,0.85)", fontSize: 11, fontWeight: 500 }}>to Win Now</div>
-      </div>
-    </div>
+      {!collapsed && "All Categories"}
+    </button>
   );
 }
 
-// ── Main Sidebar ───────────────────────────────────────────────────
+/* ── Main Sidebar ── */
 export default function Sidebar() {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
+  const [showCategories, setShowCategories] = useState(false);
+
+  // ── FIX: Browser back button support for the modal ──────────────────────
+  // 1. When modal opens → push a history entry so Back has somewhere to go
+  const openCategories = () => {
+    history.pushState({ categoriesModal: true }, "", "#categories");
+    setShowCategories(true);
+  };
+
+  // 2. When modal closes via ✕ or backdrop → remove the history entry too
+  const closeCategories = () => {
+    if (location.hash === "#categories") {
+      history.back(); // this will fire popstate and setShowCategories(false)
+    } else {
+      setShowCategories(false);
+    }
+  };
+
+  // 3. When user presses Back → close the modal instead of leaving the page
+  useEffect(() => {
+    const handlePopState = (e) => {
+      if (showCategories) {
+        setShowCategories(false);
+      }
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, [showCategories]);
+  // ────────────────────────────────────────────────────────────────────────
 
   return (
-    <aside style={{
-      width: "100%", height: "100%", background: "#fff",
-      display: "flex", flexDirection: "column", overflow: "hidden",
-      fontFamily: "-apple-system,'Segoe UI',sans-serif",
-    }}>
-      <div style={{
-        flex: 1, overflowY: "auto", overflowX: "hidden",
-        padding: "8px 0 16px",
-        scrollbarWidth: "thin", scrollbarColor: "#e5e7eb transparent",
+    <>
+      {/* Categories Modal — opens as overlay when button clicked */}
+      {showCategories && (
+        <AllCategoriesModal onClose={closeCategories} />
+      )}
+
+      <aside style={{
+        width: "100%", height: "100%", background: "#fff",
+        display: "flex", flexDirection: "column", overflow: "hidden",
+        fontFamily: "-apple-system,'Segoe UI',sans-serif",
       }}>
+        <div style={{
+          flex: 1, overflowY: "auto", overflowX: "hidden",
+          padding: "8px 0 16px",
+          scrollbarWidth: "thin", scrollbarColor: "#e5e7eb transparent",
+        }}>
 
-        <TokensBanner collapsed={collapsed} />
+          <TokensBanner collapsed={collapsed} />
 
-        {/* Main nav */}
-        {NAV.map(item => (
-          <NavItem key={item.href} item={item} active={pathname === item.href} collapsed={collapsed} />
-        ))}
+          {/* Main nav */}
+          {NAV.map(item => (
+            <NavItem key={item.href} item={item} active={pathname === item.href} collapsed={collapsed} />
+          ))}
 
-        <Divider />
+          <Divider />
 
-        {/* Specials */}
-        {!collapsed && <SecLabel text="Specials" />}
-        {SPECIALS.map(s =>
-          collapsed ? (
-            <div key={s.label} style={{ padding: "8px 0", textAlign: "center" }}>
-              {s.flagCode
-                ? <img src={`https://flagcdn.com/w20/${s.flagCode}.png`} width={20} height={14} alt={s.flagCode} style={{ borderRadius: 2, display: "inline-block" }} />
-                : s.vr
-                  ? <span style={{ fontSize: 10, fontWeight: 700, padding: "1px 3px", borderRadius: 3, background: "#8b5cf6", color: "#fff" }}>VR</span>
-                  : s.specialIcon === "bolt"
-                    ? <span style={{ color: "#f59e0b", fontSize: 14 }}>⚡</span>
-                    : null}
-            </div>
-          ) : (
-            <IconRow key={s.label} label={s.label} count={s.count}
-              flagCode={s.flagCode} vr={s.vr} specialIcon={s.specialIcon} />
-          )
-        )}
+          {/* Specials */}
+          {!collapsed && <SecLabel text="Specials" />}
+          {SPECIALS.map(s =>
+            collapsed ? (
+              <div key={s.label} style={{ padding: "8px 0", textAlign: "center" }}>
+                {s.flagCode
+                  ? <img src={`https://flagcdn.com/w20/${s.flagCode}.png`} width={20} height={14} alt={s.flagCode} style={{ borderRadius: 2, display: "inline-block" }} />
+                  : s.vr
+                    ? <span style={{ fontSize: 10, fontWeight: 700, padding: "1px 3px", borderRadius: 3, background: "#8b5cf6", color: "#fff" }}>VR</span>
+                    : s.specialIcon === "bolt"
+                      ? <span style={{ color: "#f59e0b", fontSize: 14 }}>⚡</span>
+                      : null}
+              </div>
+            ) : (
+              <IconRow key={s.label} label={s.label} count={s.count}
+                flagCode={s.flagCode} vr={s.vr} specialIcon={s.specialIcon} />
+            )
+          )}
 
-        {!collapsed && (
-          <>
-            <Divider />
-            <SecLabel text="Age" />
-            {AGE.map(s => <PlainRow key={s.label} {...s} />)}
+          {!collapsed && (
+            <>
+              <Divider />
+              <SecLabel text="Age" />
+              {AGE.map(s => <PlainRow key={s.label} {...s} />)}
 
-            <Divider />
-            <SecLabel text="Ethnicity" />
-            {ETHNICITY.map(s => <PlainRow key={s.label} {...s} />)}
+              <Divider />
+              <SecLabel text="Ethnicity" />
+              {ETHNICITY.map(s => <PlainRow key={s.label} {...s} />)}
 
-            <Divider />
-            <SecLabel text="Body Type" />
-            {BODY_TYPE.map(s => <PlainRow key={s.label} {...s} />)}
+              <Divider />
+              <SecLabel text="Body Type" />
+              {BODY_TYPE.map(s => <PlainRow key={s.label} {...s} />)}
 
-            <Divider />
-            <SecLabel text="Hair" />
-            {HAIR.map(s => <PlainRow key={s.label} {...s} />)}
+              <Divider />
+              <SecLabel text="Hair" />
+              {HAIR.map(s => <PlainRow key={s.label} {...s} />)}
 
-            <Divider />
-            <SecLabel text="Private Shows" />
-            {PRIVATE_SHOWS.map(s => <PlainRow key={s.label} {...s} />)}
+              <Divider />
+              <SecLabel text="Private Shows" />
+              {PRIVATE_SHOWS.map(s => <PlainRow key={s.label} {...s} />)}
 
-            <Divider />
-            <SecLabel text="Popular" />
-            {POPULAR.map(s =>
-              s.specialIcon || s.flagCode || s.vr
-                ? <IconRow key={s.label} {...s} />
-                : <PlainRow key={s.label} label={s.label} count={s.count} hot={s.hot} />
-            )}
+              <Divider />
+              <SecLabel text="Popular" />
+              {POPULAR.map(s =>
+                s.specialIcon
+                  ? <IconRow key={s.label} {...s} />
+                  : <PlainRow key={s.label} label={s.label} count={s.count} hot={s.hot} />
+              )}
 
-            <div style={{
-              padding: "8px 12px",
-              position: "sticky",
-              bottom: 0,
-              background: "#fff",
-              borderTop: "1px solid #f3f4f6",
-              zIndex: 10,
-            }}>
-              <AllCatsBtn />
-            </div>
+              <Divider />
 
-            <Divider />
-            <div style={{ padding: "4px 0 8px" }}>
-              {FOOTER.map(l => <FooterLink key={l} label={l} />)}
-            </div>
-            <Divider />
-            <LangRow />
-          </>
-        )}
+              {/* Footer links */}
+              {FOOTER_LINKS.map(l => <FooterLink key={l} label={l} />)}
 
+              <Divider />
 
-      </div>
+              {/* Language */}
+              <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 16px 16px", cursor: "pointer" }}>
+                <span style={{ fontSize: 15 }}>🌐</span>
+                <span style={{ fontSize: 13, color: "#374151" }}>English</span>
+                <span style={{ marginLeft: "auto", color: "#9ca3af", fontSize: 11 }}>▾</span>
+              </div>
+            </>
+          )}
+        </div>
 
-      <CollapseBtn collapsed={collapsed} onClick={() => setCollapsed(c => !c)} />
-    </aside>
+        {/* ALL CATEGORIES button pinned to bottom */}
+        <div style={{
+          padding: "8px 12px",
+          background: "#fff",
+          borderTop: "1px solid #f3f4f6",
+        }}>
+          <AllCatsBtn collapsed={collapsed} onClick={openCategories} />
+        </div>
+
+        <CollapseBtn collapsed={collapsed} onClick={() => setCollapsed(c => !c)} />
+      </aside>
+    </>
   );
 }
