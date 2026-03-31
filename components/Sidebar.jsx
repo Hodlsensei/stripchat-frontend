@@ -276,12 +276,14 @@ function FooterLink({ label }) {
   );
 }
 
-function TokensBanner({ collapsed }) {
+function TokensBanner({ collapsed, onClick }) {
   const [hov, setHov] = useState(false);
   if (collapsed) return null;
   return (
     <div
-      onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      onClick={onClick}
       style={{
         margin: "10px 10px 4px", borderRadius: 8,
         background: hov
@@ -337,7 +339,6 @@ function CollapseBtn({ collapsed, onClick }) {
   );
 }
 
-/* ── ALL CATEGORIES Button ── */
 function AllCatsBtn({ collapsed, onClick }) {
   const [hov, setHov] = useState(false);
   return (
@@ -369,46 +370,35 @@ function AllCatsBtn({ collapsed, onClick }) {
   );
 }
 
-/* ── Main Sidebar ── */
-export default function Sidebar() {
+export default function Sidebar({ onOpenAuth }) {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
 
-  // ── FIX: Browser back button support for the modal ──────────────────────
-  // 1. When modal opens → push a history entry so Back has somewhere to go
   const openCategories = () => {
     history.pushState({ categoriesModal: true }, "", "#categories");
     setShowCategories(true);
   };
 
-  // 2. When modal closes via ✕ or backdrop → remove the history entry too
   const closeCategories = () => {
     if (location.hash === "#categories") {
-      history.back(); // this will fire popstate and setShowCategories(false)
+      history.back();
     } else {
       setShowCategories(false);
     }
   };
 
-  // 3. When user presses Back → close the modal instead of leaving the page
   useEffect(() => {
-    const handlePopState = (e) => {
-      if (showCategories) {
-        setShowCategories(false);
-      }
+    const handlePopState = () => {
+      if (showCategories) setShowCategories(false);
     };
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
   }, [showCategories]);
-  // ────────────────────────────────────────────────────────────────────────
 
   return (
     <>
-      {/* Categories Modal — opens as overlay when button clicked */}
-      {showCategories && (
-        <AllCategoriesModal onClose={closeCategories} />
-      )}
+      {showCategories && <AllCategoriesModal onClose={closeCategories} />}
 
       <aside style={{
         width: "100%", height: "100%", background: "#fff",
@@ -421,16 +411,14 @@ export default function Sidebar() {
           scrollbarWidth: "thin", scrollbarColor: "#e5e7eb transparent",
         }}>
 
-          <TokensBanner collapsed={collapsed} />
+          <TokensBanner collapsed={collapsed} onClick={onOpenAuth} />
 
-          {/* Main nav */}
           {NAV.map(item => (
             <NavItem key={item.href} item={item} active={pathname === item.href} collapsed={collapsed} />
           ))}
 
           <Divider />
 
-          {/* Specials */}
           {!collapsed && <SecLabel text="Specials" />}
           {SPECIALS.map(s =>
             collapsed ? (
@@ -481,12 +469,10 @@ export default function Sidebar() {
 
               <Divider />
 
-              {/* Footer links */}
               {FOOTER_LINKS.map(l => <FooterLink key={l} label={l} />)}
 
               <Divider />
 
-              {/* Language */}
               <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 16px 16px", cursor: "pointer" }}>
                 <span style={{ fontSize: 15 }}>🌐</span>
                 <span style={{ fontSize: 13, color: "#374151" }}>English</span>
@@ -496,12 +482,7 @@ export default function Sidebar() {
           )}
         </div>
 
-        {/* ALL CATEGORIES button pinned to bottom */}
-        <div style={{
-          padding: "8px 12px",
-          background: "#fff",
-          borderTop: "1px solid #f3f4f6",
-        }}>
+        <div style={{ padding: "8px 12px", background: "#fff", borderTop: "1px solid #f3f4f6" }}>
           <AllCatsBtn collapsed={collapsed} onClick={openCategories} />
         </div>
 

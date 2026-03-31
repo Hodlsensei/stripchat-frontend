@@ -452,7 +452,7 @@ export default function HomePage() {
         ))}
 
         {/* Vertical infinite featured grid */}
-        <FeaturedSection key={category} cols={cols} title={featuredTitle} />
+        <FeaturedSection key={category} cols={isMobile ? 2 : 4} title={featuredTitle} />
 
       </main>
 

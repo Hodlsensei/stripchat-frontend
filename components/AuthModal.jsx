@@ -1,376 +1,413 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function AuthModal({ onClose, defaultTab = "login" }) {
-  const [tab, setTab]             = useState(defaultTab);
-  const [loading, setLoading]     = useState(false);
-  const [error, setError]         = useState("");
-  const [success, setSuccess]     = useState("");
+// ── Icons ─────────────────────────────────────────────────────────────────
+const IcoClose = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="#aaa">
+    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+  </svg>
+);
+const IcoWand = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="#aaa">
+    <path d="M7.5 5.6L10 7 8.6 4.5 10 2 7.5 3.4 5 2l1.4 2.5L5 7zm12 9.8L17 14l1.4 2.5L17 19l2.5-1.4L22 19l-1.4-2.5L22 14zM22 2l-2.5 1.4L17 2l1.4 2.5L17 7l2.5-1.4L22 7l-1.4-2.5zm-7.63 5.29a1 1 0 00-1.41 0L1.29 18.96a1 1 0 000 1.41l2.34 2.34c.39.39 1.02.39 1.41 0L16.7 11.05a1 1 0 000-1.41l-2.33-2.35zm-1.03 5.49l-2.12-2.12 2.44-2.44 2.12 2.12-2.44 2.44z"/>
+  </svg>
+);
+const IcoEye = ({ show }) => (
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#aaa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    {show ? (
+      <>
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+        <circle cx="12" cy="12" r="3"/>
+      </>
+    ) : (
+      <>
+        <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/>
+        <path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/>
+        <line x1="1" y1="1" x2="23" y2="23"/>
+      </>
+    )}
+  </svg>
+);
+const IcoStar = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="#a78bfa" stroke="none">
+    <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>
+  </svg>
+);
+const GoogleIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24">
+    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+  </svg>
+);
+const XIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+  </svg>
+);
 
-  // Login fields
-  const [loginEmail, setLoginEmail]       = useState("");
-  const [loginPassword, setLoginPassword] = useState("");
-  const [showLoginPw, setShowLoginPw]     = useState(false);
+// ── Slideshow images ──────────────────────────────────────────────────────
+const SLIDE_IMAGES = [
+  { url: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&q=80", name: "lianh_benet" },
+  { url: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=80", name: "aurora_x" },
+  { url: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80", name: "kira_storm" },
+  { url: "https://images.unsplash.com/photo-1488716820095-cbe80883c496?w=600&q=80", name: "luna_rose" },
+  { url: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80", name: "violet_dream" },
+  { url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80", name: "scarlet_vr" },
+];
 
-  // Register fields
-  const [regUsername, setRegUsername]   = useState("");
-  const [regEmail, setRegEmail]         = useState("");
-  const [regPassword, setRegPassword]   = useState("");
-  const [regConfirm, setRegConfirm]     = useState("");
-  const [showRegPw, setShowRegPw]       = useState(false);
-  const [regRole, setRegRole]           = useState("viewer");
-  const [agreed, setAgreed]             = useState(false);
+// ── Cloudflare widget ─────────────────────────────────────────────────────
+function CloudflareVerify({ verified, onToggle }) {
+  return (
+    <div onClick={onToggle} style={{
+      width: "100%", display: "flex", alignItems: "center",
+      justifyContent: "space-between", padding: "13px 16px",
+      background: "#2a1a1a", border: "1px solid #3a2a2a",
+      borderRadius: 6, cursor: "pointer", boxSizing: "border-box",
+    }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <div style={{
+          width: 20, height: 20, borderRadius: 3,
+          border: verified ? "none" : "2px solid #555",
+          background: verified ? "#4caf50" : "transparent",
+          display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+        }}>
+          {verified && (
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M2 6l3 3 5-5" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          )}
+        </div>
+        <span style={{ fontSize: 13, color: "#ccc" }}>Verify you are human</span>
+      </div>
+      <div style={{ textAlign: "right" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+          <svg width="22" height="16" viewBox="0 0 100 70">
+            <path d="M78 44c0-8-6-14-14-14-1 0-2 0-3 1C59 24 52 18 44 18c-10 0-18 8-18 18 0 1 0 2 1 3C20 40 16 45 16 51c0 7 6 12 13 12h49c7 0 12-5 12-12 0-4-3-7-6-8l-6 1z" fill="#f6821f"/>
+          </svg>
+          <span style={{ fontSize: 10, fontWeight: 700, color: "#aaa" }}>CLOUDFLARE</span>
+        </div>
+        <span style={{ fontSize: 9, color: "#666" }}>Privacy • Help</span>
+      </div>
+    </div>
+  );
+}
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setError(""); setSuccess("");
-    if (!loginEmail || !loginPassword) return setError("Please fill in all fields.");
-    setLoading(true);
-    try {
-      const res = await fetch("http://localhost:4000/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: loginEmail, password: loginPassword }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Login failed");
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      setSuccess(`Welcome back, ${data.user.username}! 👋`);
-      setTimeout(() => onClose(data.user), 1200);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+// ── Social buttons ────────────────────────────────────────────────────────
+function SocialButtons() {
+  return (
+    <div style={{ width: "100%", display: "flex", gap: 10 }}>
+      {[<GoogleIcon key="g"/>, <XIcon key="x"/>].map((Icon, i) => (
+        <button key={i} style={{
+          flex: 1, padding: "11px 0", borderRadius: 8, background: "#2a1a1a",
+          border: "1px solid #3a2a2a", display: "flex", alignItems: "center",
+          justifyContent: "center", cursor: "pointer",
+        }}
+          onMouseEnter={e => e.currentTarget.style.borderColor = "#555"}
+          onMouseLeave={e => e.currentTarget.style.borderColor = "#3a2a2a"}
+        >{Icon}</button>
+      ))}
+    </div>
+  );
+}
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    setError(""); setSuccess("");
-    if (!regUsername || !regEmail || !regPassword || !regConfirm)
-      return setError("Please fill in all fields.");
-    if (regPassword !== regConfirm)
-      return setError("Passwords do not match.");
-    if (regPassword.length < 6)
-      return setError("Password must be at least 6 characters.");
-    if (!agreed)
-      return setError("You must agree to the Terms of Use.");
-    setLoading(true);
-    try {
-      const res = await fetch("http://localhost:4000/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: regUsername, email: regEmail, password: regPassword }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Registration failed");
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      setSuccess(`Account created! Welcome, ${data.user.username} 🎉`);
-      setTimeout(() => onClose(data.user), 1200);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+// ── Perks list ────────────────────────────────────────────────────────────
+const PERKS = [
+  { icon: "💬", text: "Chat with ",     bold: "models" },
+  { icon: "🎮", text: "Play with ",     bold: "interactive sex toys" },
+  { icon: "❤️", text: "Have fun in ",   bold: "Private shows" },
+  { icon: "🎁", text: "Take part in ",  bold: "giveaways" },
+  { icon: "🔖", text: "Save favorite ", bold: "models & content" },
+];
+
+// ── Right panel with auto-rotating slideshow ──────────────────────────────
+function RightPanel() {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent(prev => (prev + 1) % SLIDE_IMAGES.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    /* Backdrop */
-    <div
-      onClick={onClose}
-      style={{
-        position: "fixed", inset: 0, zIndex: 3000,
-        background: "rgba(0,0,0,0.82)",
-        backdropFilter: "blur(6px)",
-        display: "flex", alignItems: "center", justifyContent: "center",
-        padding: 20,
-      }}
-    >
-      {/* Modal box */}
-      <div
-        onClick={e => e.stopPropagation()}
-        style={{
-          background: "#161616",
-          border: "1px solid rgba(255,255,255,0.1)",
-          borderRadius: 16, width: "100%", maxWidth: 420,
-          animation: "fadeUp .25s ease both",
-          overflow: "hidden",
-        }}
-      >
-        {/* Header */}
-        <div style={{
-          padding: "20px 24px 0",
-          display: "flex", alignItems: "center", justifyContent: "space-between",
-        }}>
-          {/* Logo */}
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <div style={{
-              width: 28, height: 28, background: "#fff", borderRadius: "50%",
-              display: "flex", alignItems: "center", justifyContent: "center",
+    <div style={{
+      position: "relative", overflow: "hidden",
+      background: "#0d0d0d",
+      display: "flex", flexDirection: "column", justifyContent: "flex-end",
+    }}>
+      {/* All images stacked, fade between them */}
+      {SLIDE_IMAGES.map((img, i) => (
+        <img
+          key={img.url}
+          src={img.url}
+          alt=""
+          style={{
+            position: "absolute", inset: 0, width: "100%", height: "100%",
+            objectFit: "cover", objectPosition: "top center",
+            opacity: i === current ? 1 : 0,
+            transition: "opacity 0.8s ease-in-out",
+          }}
+        />
+      ))}
+
+      {/* Dark gradient over image */}
+      <div style={{
+        position: "absolute", inset: 0, zIndex: 1,
+        background: "linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.45) 45%, rgba(0,0,0,0.93) 100%)",
+      }}/>
+
+      {/* Dot indicators */}
+      <div style={{
+        position: "absolute", top: 12, left: 0, right: 0, zIndex: 2,
+        display: "flex", justifyContent: "center", gap: 5,
+      }}>
+        {SLIDE_IMAGES.map((_, i) => (
+          <div key={i} onClick={() => setCurrent(i)} style={{
+            width: i === current ? 20 : 6, height: 6, borderRadius: 3,
+            background: i === current ? "#fff" : "rgba(255,255,255,0.35)",
+            cursor: "pointer", transition: "all 0.3s ease",
+          }}/>
+        ))}
+      </div>
+
+      {/* Perks — centered */}
+      <div style={{
+        position: "relative", zIndex: 2,
+        padding: "0 20px 28px",
+        display: "flex", flexDirection: "column", alignItems: "center",
+      }}>
+        {PERKS.map(p => (
+          <div key={p.bold} style={{
+            display: "flex", alignItems: "center", gap: 10,
+            marginBottom: 9, width: "100%", justifyContent: "center",
+          }}>
+            <span style={{ fontSize: 16, flexShrink: 0, width: 22, textAlign: "center" }}>{p.icon}</span>
+            <span style={{
+              fontSize: 13, color: "rgba(255,255,255,0.85)",
+              fontFamily: "Inter, -apple-system, sans-serif",
+              letterSpacing: "0.01em", minWidth: 0,
             }}>
-              <svg width="17" height="17" viewBox="0 0 22 22" fill="none">
-                <circle cx="11" cy="11" r="9" fill="#c62828"/>
-                <path d="M7 11c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" fill="none"/>
-                <circle cx="11" cy="11" r="1.5" fill="#fff"/>
-              </svg>
-            </div>
-            <span style={{ fontFamily: "var(--font-display)", fontSize: 17, fontWeight: 700, color: "#fff" }}>
-              STRIP<span style={{ fontWeight: 300, color: "#bbb" }}>CHAT</span>
+              {p.text}<strong style={{ color: "#fff", fontWeight: 700 }}>{p.bold}</strong>
             </span>
           </div>
-
-          {/* Close */}
-          <button onClick={onClose} style={{
-            background: "rgba(255,255,255,0.07)", border: "none", color: "#fff",
-            width: 30, height: 30, borderRadius: "50%", cursor: "pointer",
-            fontSize: 16, display: "flex", alignItems: "center", justifyContent: "center",
-            transition: "background .15s",
-          }}
-            onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.14)"}
-            onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.07)"}
-          >✕</button>
-        </div>
-
-        {/* Tabs */}
-        <div style={{
-          display: "flex", margin: "18px 24px 0",
-          background: "rgba(255,255,255,0.05)",
-          borderRadius: 10, padding: 4,
-        }}>
-          {["login","register"].map(t => (
-            <button key={t} onClick={() => { setTab(t); setError(""); setSuccess(""); }} style={{
-              flex: 1, padding: "9px 0", borderRadius: 7, border: "none",
-              background: tab === t ? "#e53935" : "transparent",
-              color: tab === t ? "#fff" : "var(--muted)",
-              fontSize: 13, fontWeight: 600, cursor: "pointer",
-              fontFamily: "inherit", transition: "all .15s",
-              textTransform: "capitalize",
-            }}>
-              {t === "login" ? "Log In" : "Create Account"}
-            </button>
-          ))}
-        </div>
-
-        {/* Form area */}
-        <div style={{ padding: "20px 24px 24px" }}>
-
-          {/* Error / Success messages */}
-          {error && (
-            <div style={{
-              background: "rgba(229,57,53,0.12)", border: "1px solid rgba(229,57,53,0.3)",
-              borderRadius: 8, padding: "10px 14px", marginBottom: 16,
-              fontSize: 13, color: "#ff6b6b", display: "flex", alignItems: "center", gap: 7,
-            }}>
-              ⚠️ {error}
-            </div>
-          )}
-          {success && (
-            <div style={{
-              background: "rgba(76,175,80,0.12)", border: "1px solid rgba(76,175,80,0.3)",
-              borderRadius: 8, padding: "10px 14px", marginBottom: 16,
-              fontSize: 13, color: "#81c784", display: "flex", alignItems: "center", gap: 7,
-            }}>
-              ✅ {success}
-            </div>
-          )}
-
-          {/* ── LOGIN FORM ── */}
-          {tab === "login" && (
-            <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              <Field
-                label="Email Address"
-                type="email"
-                placeholder="your@email.com"
-                value={loginEmail}
-                onChange={e => setLoginEmail(e.target.value)}
-              />
-              <PasswordField
-                label="Password"
-                placeholder="Your password"
-                value={loginPassword}
-                onChange={e => setLoginPassword(e.target.value)}
-                show={showLoginPw}
-                toggle={() => setShowLoginPw(s => !s)}
-              />
-
-              <div style={{ textAlign: "right", marginTop: -6 }}>
-                <span style={{ fontSize: 12, color: "#e53935", cursor: "pointer" }}>
-                  Forgot password?
-                </span>
-              </div>
-
-              <SubmitBtn loading={loading} label="Log In" />
-
-              <div style={{ textAlign: "center", fontSize: 12, color: "var(--muted)" }}>
-                Don't have an account?{" "}
-                <span onClick={() => setTab("register")} style={{ color: "#e53935", cursor: "pointer", fontWeight: 600 }}>
-                  Create one free
-                </span>
-              </div>
-            </form>
-          )}
-
-          {/* ── REGISTER FORM ── */}
-          {tab === "register" && (
-            <form onSubmit={handleRegister} style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-
-              {/* Role selector */}
-              <div>
-                <div style={{ fontSize: 12, color: "var(--muted)", marginBottom: 8, fontWeight: 600 }}>I want to join as</div>
-                <div style={{ display: "flex", gap: 8 }}>
-                  {[
-                    { id: "viewer",  label: "👁️ Viewer",  desc: "Watch streams" },
-                    { id: "model",   label: "🎥 Model",   desc: "Go live & earn" },
-                  ].map(r => (
-                    <button key={r.id} type="button" onClick={() => setRegRole(r.id)} style={{
-                      flex: 1, padding: "10px 8px", borderRadius: 8, border: "none",
-                      background: regRole === r.id ? "rgba(229,57,53,0.15)" : "rgba(255,255,255,0.04)",
-                      border: `1px solid ${regRole === r.id ? "#e53935" : "rgba(255,255,255,0.08)"}`,
-                      color: regRole === r.id ? "#fff" : "var(--muted)",
-                      cursor: "pointer", fontFamily: "inherit", transition: "all .15s",
-                    }}>
-                      <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 2 }}>{r.label}</div>
-                      <div style={{ fontSize: 10, opacity: .7 }}>{r.desc}</div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <Field
-                label="Username"
-                type="text"
-                placeholder="Choose a username"
-                value={regUsername}
-                onChange={e => setRegUsername(e.target.value)}
-              />
-              <Field
-                label="Email Address"
-                type="email"
-                placeholder="your@email.com"
-                value={regEmail}
-                onChange={e => setRegEmail(e.target.value)}
-              />
-              <PasswordField
-                label="Password"
-                placeholder="At least 6 characters"
-                value={regPassword}
-                onChange={e => setRegPassword(e.target.value)}
-                show={showRegPw}
-                toggle={() => setShowRegPw(s => !s)}
-              />
-              <PasswordField
-                label="Confirm Password"
-                placeholder="Repeat your password"
-                value={regConfirm}
-                onChange={e => setRegConfirm(e.target.value)}
-                show={showRegPw}
-                toggle={() => setShowRegPw(s => !s)}
-              />
-
-              {/* Age + Terms */}
-              <label style={{ display: "flex", alignItems: "flex-start", gap: 10, cursor: "pointer" }}>
-                <input
-                  type="checkbox" checked={agreed}
-                  onChange={e => setAgreed(e.target.checked)}
-                  style={{ accentColor: "#e53935", width: 15, height: 15, marginTop: 2, flexShrink: 0 }}
-                />
-                <span style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.6 }}>
-                  I confirm I am 18+ years old and agree to the{" "}
-                  <span style={{ color: "#e53935" }}>Terms of Use</span> and{" "}
-                  <span style={{ color: "#e53935" }}>Privacy Policy</span>
-                </span>
-              </label>
-
-              <SubmitBtn loading={loading} label="Create Free Account" />
-
-              <div style={{ textAlign: "center", fontSize: 12, color: "var(--muted)" }}>
-                Already have an account?{" "}
-                <span onClick={() => setTab("login")} style={{ color: "#e53935", cursor: "pointer", fontWeight: 600 }}>
-                  Log in
-                </span>
-              </div>
-            </form>
-          )}
-        </div>
+        ))}
+        <p style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", marginTop: 8, marginBottom: 0 }}>
+          Model on photo: {SLIDE_IMAGES[current].name}
+        </p>
       </div>
     </div>
   );
 }
 
-// ── Reusable field components ─────────────────────────────────────────────────
-
-function Field({ label, type, placeholder, value, onChange }) {
+// ── DarkInput ─────────────────────────────────────────────────────────────
+function DarkInput({ placeholder, type = "text", value, onChange, rightIcon }) {
   return (
-    <div>
-      <div style={{ fontSize: 12, color: "var(--muted)", marginBottom: 6, fontWeight: 600 }}>{label}</div>
+    <div style={{ position: "relative", width: "100%" }}>
       <input
-        type={type} value={value} onChange={onChange}
-        placeholder={placeholder} required
+        type={type} value={value} onChange={onChange} placeholder={placeholder}
         style={{
-          width: "100%", background: "rgba(255,255,255,0.06)",
-          border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8,
-          padding: "10px 14px", color: "#fff", fontSize: 13,
-          fontFamily: "inherit", outline: "none", transition: "border-color .15s",
+          width: "100%", padding: "13px 44px 13px 16px",
+          background: "#2a1a1a", border: "1px solid #3a2a2a",
+          borderRadius: 8, color: "#fff", fontSize: 14, outline: "none",
+          fontFamily: "inherit", boxSizing: "border-box",
         }}
-        onFocus={e => e.target.style.borderColor = "rgba(229,57,53,0.6)"}
-        onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.1)"}
+        onFocus={e => e.target.style.borderColor = "#4caf50"}
+        onBlur={e => e.target.style.borderColor = "#3a2a2a"}
       />
+      {rightIcon && (
+        <span style={{
+          position: "absolute", right: 14, top: "50%", transform: "translateY(-50%)",
+          cursor: rightIcon.onClick ? "pointer" : "default",
+        }} onClick={rightIcon.onClick}>
+          {rightIcon.node}
+        </span>
+      )}
     </div>
   );
 }
 
-function PasswordField({ label, placeholder, value, onChange, show, toggle }) {
+// ── LOGIN view ────────────────────────────────────────────────────────────
+function LoginView({ onSwitch, onClose }) {
+  const [identifier, setIdentifier] = useState("");
+  const [password,   setPassword]   = useState("");
+  const [showPw,     setShowPw]     = useState(false);
+  const [verified,   setVerified]   = useState(false);
+  const ready = identifier.trim() && password.trim() && verified;
+
   return (
-    <div>
-      <div style={{ fontSize: 12, color: "var(--muted)", marginBottom: 6, fontWeight: 600 }}>{label}</div>
-      <div style={{ position: "relative" }}>
-        <input
-          type={show ? "text" : "password"}
-          value={value} onChange={onChange}
-          placeholder={placeholder} required
-          style={{
-            width: "100%", background: "rgba(255,255,255,0.06)",
-            border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8,
-            padding: "10px 42px 10px 14px", color: "#fff", fontSize: 13,
-            fontFamily: "inherit", outline: "none", transition: "border-color .15s",
-          }}
-          onFocus={e => e.target.style.borderColor = "rgba(229,57,53,0.6)"}
-          onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.1)"}
+    <div style={{
+      width: "min(480px,94vw)", background: "#1a0a0a", borderRadius: 14,
+      padding: "52px 40px 36px", position: "relative",
+      fontFamily: "Inter, -apple-system, 'Segoe UI', sans-serif",
+    }} onClick={e => e.stopPropagation()}>
+
+      <button onClick={onClose} style={{
+        position: "absolute", top: 14, right: 14,
+        background: "rgba(255,255,255,0.1)", border: "none", cursor: "pointer",
+        width: 32, height: 32, borderRadius: "50%",
+        display: "flex", alignItems: "center", justifyContent: "center",
+      }}
+        onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.2)"}
+        onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.1)"}
+      ><IcoClose/></button>
+
+      <h2 style={{ color: "#fff", fontSize: 22, fontWeight: 800, textAlign: "center", marginBottom: 24, marginTop: 0 }}>
+        Log In
+      </h2>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        <DarkInput placeholder="Username or Email" value={identifier} onChange={e => setIdentifier(e.target.value)}/>
+        <DarkInput
+          placeholder="Password"
+          type={showPw ? "text" : "password"}
+          value={password} onChange={e => setPassword(e.target.value)}
+          rightIcon={{ node: <IcoEye show={showPw}/>, onClick: () => setShowPw(p => !p) }}
         />
-        <button type="button" onClick={toggle} style={{
-          position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)",
-          background: "none", border: "none", color: "var(--muted)",
-          cursor: "pointer", fontSize: 15, padding: 0, lineHeight: 1,
-        }}>{show ? "🙈" : "👁️"}</button>
+        <CloudflareVerify verified={verified} onToggle={() => setVerified(v => !v)} />
+
+        <button style={{
+          width: "100%", padding: "14px 0", borderRadius: 8,
+          background: ready ? "linear-gradient(135deg,#4caf50,#2e7d32)" : "#2a1a1a",
+          border: "none", color: ready ? "#fff" : "#555",
+          fontSize: 15, fontWeight: 700, cursor: ready ? "pointer" : "not-allowed",
+          fontFamily: "inherit", transition: "all .2s",
+        }}>Log In</button>
+
+        <div style={{ textAlign: "center" }}>
+          <span style={{ fontSize: 13, color: "#4caf50", cursor: "pointer", fontWeight: 500 }}
+            onMouseEnter={e => e.currentTarget.style.textDecoration = "underline"}
+            onMouseLeave={e => e.currentTarget.style.textDecoration = "none"}
+          >Forgot password?</span>
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <div style={{ flex: 1, height: 1, background: "#333" }}/>
+          <span style={{ fontSize: 12, color: "#666" }}>or log in with</span>
+          <div style={{ flex: 1, height: 1, background: "#333" }}/>
+        </div>
+
+        <SocialButtons/>
+
+        <button style={{
+          width: "100%", padding: "11px 0", borderRadius: 8,
+          background: "#2a1a1a", border: "1px solid #3a2a2a",
+          color: "#bbb", fontSize: 13, cursor: "pointer", fontFamily: "inherit",
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+        }}
+          onMouseEnter={e => e.currentTarget.style.borderColor = "#555"}
+          onMouseLeave={e => e.currentTarget.style.borderColor = "#3a2a2a"}
+        >
+          <IcoStar/>
+          Log In without Password
+        </button>
+
+        <div style={{ fontSize: 13, color: "#888", textAlign: "center", marginTop: 4 }}>
+          Don&apos;t have an account?{" "}
+          <span style={{ color: "#4caf50", cursor: "pointer", fontWeight: 600 }}
+            onClick={onSwitch}
+            onMouseEnter={e => e.currentTarget.style.textDecoration = "underline"}
+            onMouseLeave={e => e.currentTarget.style.textDecoration = "none"}
+          >Sign Up</span>
+        </div>
       </div>
     </div>
   );
 }
 
-function SubmitBtn({ loading, label }) {
+// ── REGISTER view ─────────────────────────────────────────────────────────
+function RegisterView({ onSwitch, onClose }) {
+  const [username, setUsername] = useState("");
+  const [verified, setVerified] = useState(false);
+
   return (
-    <button type="submit" disabled={loading} style={{
-      width: "100%", background: loading ? "#555" : "#e53935",
-      border: "none", color: "#fff", fontSize: 14, fontWeight: 700,
-      padding: "13px 0", borderRadius: 8, cursor: loading ? "not-allowed" : "pointer",
-      fontFamily: "inherit", transition: "opacity .15s",
-      boxShadow: loading ? "none" : "0 2px 16px rgba(229,57,53,0.35)",
-      display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-    }}
-      onMouseEnter={e => { if (!loading) e.currentTarget.style.opacity = ".88"; }}
-      onMouseLeave={e => e.currentTarget.style.opacity = "1"}
-    >
-      {loading && (
-        <div style={{
-          width: 16, height: 16,
-          border: "2px solid rgba(255,255,255,0.3)",
-          borderTopColor: "#fff", borderRadius: "50%",
-          animation: "spin .7s linear infinite",
-        }} />
-      )}
-      {loading ? "Please wait..." : label}
-    </button>
+    <div style={{
+      width: "min(860px,96vw)", background: "#1a0a0a", borderRadius: 14,
+      overflow: "hidden", display: "grid", gridTemplateColumns: "1fr 1fr",
+      position: "relative", fontFamily: "Inter, -apple-system, 'Segoe UI', sans-serif",
+      minHeight: 520,
+    }} onClick={e => e.stopPropagation()}>
+
+      <button onClick={onClose} style={{
+        position: "absolute", top: 14, right: 14, zIndex: 10,
+        background: "rgba(255,255,255,0.1)", border: "none", cursor: "pointer",
+        width: 32, height: 32, borderRadius: "50%",
+        display: "flex", alignItems: "center", justifyContent: "center",
+      }}
+        onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.2)"}
+        onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.1)"}
+      ><IcoClose/></button>
+
+      {/* Left: form */}
+      <div style={{ padding: "48px 40px 40px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <h2 style={{ color: "#fff", fontSize: 22, fontWeight: 800, marginBottom: 24, marginTop: 0, textAlign: "center" }}>
+          Create Free Account
+        </h2>
+        <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 12 }}>
+          <DarkInput
+            placeholder="Username"
+            value={username} onChange={e => setUsername(e.target.value)}
+            rightIcon={{ node: <IcoWand/> }}
+          />
+          <CloudflareVerify verified={verified} onToggle={() => setVerified(v => !v)} />
+          <button style={{
+            width: "100%", padding: "14px 0", borderRadius: 8,
+            background: verified ? "linear-gradient(135deg,#4caf50,#2e7d32)" : "#2a1a1a",
+            border: "none", color: verified ? "#fff" : "#555",
+            fontSize: 15, fontWeight: 700, cursor: verified ? "pointer" : "not-allowed",
+            fontFamily: "inherit", transition: "all .2s",
+          }}>Create Account</button>
+
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <div style={{ flex: 1, height: 1, background: "#333" }}/>
+            <span style={{ fontSize: 12, color: "#666" }}>or continue with</span>
+            <div style={{ flex: 1, height: 1, background: "#333" }}/>
+          </div>
+
+          <SocialButtons/>
+
+          <button style={{
+            width: "100%", padding: "11px 0", borderRadius: 8,
+            background: "#2a1a1a", border: "1px solid #3a2a2a",
+            color: "#bbb", fontSize: 13, cursor: "pointer", fontFamily: "inherit",
+          }}
+            onMouseEnter={e => e.currentTarget.style.borderColor = "#555"}
+            onMouseLeave={e => e.currentTarget.style.borderColor = "#3a2a2a"}
+          >Continue Without Email</button>
+
+          <div style={{ fontSize: 13, color: "#888", textAlign: "center" }}>
+            Already have an account?{" "}
+            <span style={{ color: "#4caf50", cursor: "pointer", fontWeight: 600 }}
+              onClick={onSwitch}
+              onMouseEnter={e => e.currentTarget.style.textDecoration = "underline"}
+              onMouseLeave={e => e.currentTarget.style.textDecoration = "none"}
+            >Log In</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Right: slideshow */}
+      <RightPanel/>
+    </div>
+  );
+}
+
+// ── Main export ───────────────────────────────────────────────────────────
+export default function AuthModal({ onClose, defaultTab = "register" }) {
+  const [view, setView] = useState(defaultTab);
+
+  return (
+    <div style={{
+      position: "fixed", inset: 0, zIndex: 99999,
+      background: "rgba(0,0,0,0.82)",
+      display: "flex", alignItems: "center", justifyContent: "center", padding: 16,
+    }} onClick={onClose}>
+      {view === "login"
+        ? <LoginView  onSwitch={() => setView("register")} onClose={onClose}/>
+        : <RegisterView onSwitch={() => setView("login")}  onClose={onClose}/>
+      }
+    </div>
   );
 }

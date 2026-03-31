@@ -268,19 +268,38 @@ export default function Topbar({ liveCount, onMenuToggle }) {
           {/* ── RIGHT GROUP ── */}
           <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
 
+            {/* About Stripchatbate — navigates to /about */}
             {!isMobile && (
-              <span style={{ fontSize: 12, color: "#888", cursor: "pointer", whiteSpace: "nowrap", marginRight: 2 }}>
+              <span
+                onClick={() => router.push("/about")}
+                style={{
+                  fontSize: 12, color: "#888", cursor: "pointer",
+                  whiteSpace: "nowrap", marginRight: 2,
+                  transition: "color .15s",
+                }}
+                onMouseEnter={e => e.currentTarget.style.color = "#222"}
+                onMouseLeave={e => e.currentTarget.style.color = "#888"}
+              >
                 About Stripchatbate
               </span>
             )}
 
             {user ? (
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <div style={{ width: 30, height: 30, borderRadius: "50%", background: "linear-gradient(135deg,#e53935,#8e24aa)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: "#fff", flexShrink: 0 }}>
+                <div style={{
+                  width: 30, height: 30, borderRadius: "50%",
+                  background: "linear-gradient(135deg,#e53935,#8e24aa)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: 12, fontWeight: 700, color: "#fff", flexShrink: 0,
+                }}>
                   {user.username?.[0]?.toUpperCase()}
                 </div>
                 {!isMobile && (
-                  <button onClick={handleLogout} style={{ background: "transparent", border: "1px solid #ddd", color: "#666", fontSize: 11, padding: "5px 12px", borderRadius: 6, cursor: "pointer", fontFamily: "inherit" }}>
+                  <button onClick={handleLogout} style={{
+                    background: "transparent", border: "1px solid #ddd",
+                    color: "#666", fontSize: 11, padding: "5px 12px",
+                    borderRadius: 6, cursor: "pointer", fontFamily: "inherit",
+                  }}>
                     Log Out
                   </button>
                 )}
@@ -321,8 +340,8 @@ export default function Topbar({ liveCount, onMenuToggle }) {
           </div>
         </header>
 
-        {/* ══ GENDER TAB BAR — hidden on /top-models ══ */}
-        {!isTopModels && (
+        {/* ══ GENDER TAB BAR — hidden on /top-models and /about ══ */}
+        {!isTopModels && !pathname?.startsWith("/about") && (
           <div style={{
             background: "#fff",
             borderTop: "1px solid #f0f0f0",

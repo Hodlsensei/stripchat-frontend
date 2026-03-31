@@ -5,7 +5,7 @@ import Topbar from "./Topbar";
 import SidebarWrapper from "./SidebarWrapper";
 
 // Routes that show topbar but NO sidebar
-const NO_SIDEBAR_ROUTES = ["/top-models", "/categories"];
+const NO_SIDEBAR_ROUTES = ["/top-models", "/categories", "/about"];
 
 export default function RootLayoutClient({ children }) {
   const pathname = usePathname();

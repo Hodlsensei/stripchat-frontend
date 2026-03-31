@@ -177,11 +177,7 @@ export default function StreamCard({ streamer, index = 0, gridMode = false }) {
           </div>
         )}
 
-        {/* ── BOTTOM: viewer count + name + flag ── */}
-        <div style={{ position: "absolute", bottom: 20, left: 6, display: "flex", alignItems: "center", gap: 3 }}>
-          <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#e53935", display: "inline-block", animation: "pulseDot 1.4s infinite" }} />
-          <span style={{ fontSize: 9, color: "rgba(255,255,255,0.85)", fontWeight: 600 }}>{fmtViewers(viewers)}</span>
-        </div>
+      
 
         <div style={{
           position: "absolute", bottom: 5, left: 6, right: 22,

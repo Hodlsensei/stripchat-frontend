@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 
+// ── Icons ─────────────────────────────────────────────────────────────────
 const IcoClose = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="#aaa">
     <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
@@ -9,6 +10,27 @@ const IcoClose = () => (
 const IcoWand = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="#aaa">
     <path d="M7.5 5.6L10 7 8.6 4.5 10 2 7.5 3.4 5 2l1.4 2.5L5 7zm12 9.8L17 14l1.4 2.5L17 19l2.5-1.4L22 19l-1.4-2.5L22 14zM22 2l-2.5 1.4L17 2l1.4 2.5L17 7l2.5-1.4L22 7l-1.4-2.5zm-7.63 5.29a1 1 0 00-1.41 0L1.29 18.96a1 1 0 000 1.41l2.34 2.34c.39.39 1.02.39 1.41 0L16.7 11.05a1 1 0 000-1.41l-2.33-2.35zm-1.03 5.49l-2.12-2.12 2.44-2.44 2.12 2.12-2.44 2.44z"/>
+  </svg>
+);
+const IcoEye = ({ show }) => (
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#aaa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    {show ? (
+      <>
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+        <circle cx="12" cy="12" r="3"/>
+      </>
+    ) : (
+      <>
+        <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/>
+        <path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/>
+        <line x1="1" y1="1" x2="23" y2="23"/>
+      </>
+    )}
+  </svg>
+);
+const IcoStar = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="#a78bfa" stroke="none">
+    <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>
   </svg>
 );
 const GoogleIcon = () => (
@@ -25,175 +47,365 @@ const XIcon = () => (
   </svg>
 );
 
-// ── 50 FREE TOKENS graphic ────────────────────────────────────────────────────
-const FreeTokensGraphic = () => (
-  <div style={{ display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"20px 0 10px" }}>
-    {/* Big 50 with coins */}
-    <div style={{ position:"relative", width:220, height:180, display:"flex", alignItems:"center", justifyContent:"center" }}>
-      {/* Floating coins */}
-      <div style={{ position:"absolute", top:10, left:20, fontSize:32 }}>🪙</div>
-      <div style={{ position:"absolute", top:0, left:60, fontSize:26 }}>🪙</div>
-      <div style={{ position:"absolute", top:5, right:25, fontSize:30 }}>🪙</div>
-      <div style={{ position:"absolute", top:30, right:10, fontSize:22 }}>🪙</div>
-      <div style={{ position:"absolute", bottom:30, left:10, fontSize:24 }}>🪙</div>
-      <div style={{ position:"absolute", bottom:20, right:20, fontSize:28 }}>🪙</div>
-      <div style={{ position:"absolute", bottom:10, left:50, fontSize:20 }}>🪙</div>
-      {/* Big 50 text */}
-      <div style={{
-        fontSize: 120,
-        fontWeight: 900,
-        color: "#2e7d32",
-        lineHeight: 1,
-        textShadow: "4px 4px 0px #1b5e20, 8px 8px 0px rgba(0,0,0,0.3)",
-        fontFamily: "Arial Black, Arial, sans-serif",
-        letterSpacing: -4,
-        zIndex: 1,
-      }}>50</div>
+// ── Cloudflare widget ─────────────────────────────────────────────────────
+function CloudflareVerify({ verified, onToggle }) {
+  return (
+    <div
+      onClick={onToggle}
+      style={{
+        width: "100%", display: "flex", alignItems: "center",
+        justifyContent: "space-between", padding: "13px 16px",
+        background: "#2a1a1a", border: "1px solid #3a2a2a",
+        borderRadius: 6, cursor: "pointer", boxSizing: "border-box",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <div style={{
+          width: 20, height: 20, borderRadius: 3,
+          border: verified ? "none" : "2px solid #555",
+          background: verified ? "#4caf50" : "transparent",
+          display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+        }}>
+          {verified && (
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M2 6l3 3 5-5" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          )}
+        </div>
+        <span style={{ fontSize: 13, color: "#ccc" }}>Verify you are human</span>
+      </div>
+      <div style={{ textAlign: "right" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+          <svg width="22" height="16" viewBox="0 0 100 70">
+            <path d="M78 44c0-8-6-14-14-14-1 0-2 0-3 1C59 24 52 18 44 18c-10 0-18 8-18 18 0 1 0 2 1 3C20 40 16 45 16 51c0 7 6 12 13 12h49c7 0 12-5 12-12 0-4-3-7-6-8l-6 1z" fill="#f6821f"/>
+          </svg>
+          <span style={{ fontSize: 10, fontWeight: 700, color: "#aaa" }}>CLOUDFLARE</span>
+        </div>
+        <span style={{ fontSize: 9, color: "#666" }}>Privacy • Help</span>
+      </div>
     </div>
+  );
+}
 
-    {/* FREE TOKENS text */}
-    <div style={{ textAlign:"center", marginTop:-10 }}>
-      <div style={{ fontSize:28, fontWeight:900, color:"#4caf50", letterSpacing:2, fontFamily:"Arial Black, Arial, sans-serif" }}>FREE</div>
-      <div style={{ fontSize:28, fontWeight:900, color:"#4caf50", letterSpacing:2, fontFamily:"Arial Black, Arial, sans-serif" }}>TOKENS</div>
-      <div style={{ fontSize:14, color:"#aaa", fontStyle:"italic", marginTop:4 }}>in the hourly draw</div>
+// ── Social buttons row ────────────────────────────────────────────────────
+function SocialButtons() {
+  return (
+    <div style={{ width: "100%", display: "flex", gap: 10 }}>
+      <button
+        style={{ flex: 1, padding: "11px 0", borderRadius: 8, background: "#2a1a1a", border: "1px solid #3a2a2a", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", gap: 8 }}
+        onMouseEnter={e => e.currentTarget.style.borderColor = "#555"}
+        onMouseLeave={e => e.currentTarget.style.borderColor = "#3a2a2a"}
+      >
+        <GoogleIcon/>
+      </button>
+      <button
+        style={{ flex: 1, padding: "11px 0", borderRadius: 8, background: "#2a1a1a", border: "1px solid #3a2a2a", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", gap: 8 }}
+        onMouseEnter={e => e.currentTarget.style.borderColor = "#555"}
+        onMouseLeave={e => e.currentTarget.style.borderColor = "#3a2a2a"}
+      >
+        <XIcon/>
+      </button>
     </div>
-  </div>
-);
+  );
+}
 
-// ── Perks list ────────────────────────────────────────────────────────────────
-const perks = [
-  { icon:"💬", text:"Chat with", bold:"models" },
-  { icon:"🎮", text:"Play with", bold:"interactive sex toys" },
-  { icon:"❤️", text:"Have fun in", bold:"Private shows" },
-  { icon:"🎁", text:"Take part in", bold:"giveaways" },
-  { icon:"🔖", text:"Save favorite", bold:"models & content" },
+// ── Right panel: model photo + perks ─────────────────────────────────────
+const PERKS = [
+  { icon: "💬", text: "Chat with",      bold: "models" },
+  { icon: "🎮", text: "Play with",      bold: "interactive sex toys" },
+  { icon: "❤️", text: "Have fun in",    bold: "Private shows" },
+  { icon: "🎁", text: "Take part in",   bold: "giveaways" },
+  { icon: "🔖", text: "Save favorite",  bold: "models & content" },
 ];
 
-export default function FreeTokensModal({ onClose }) {
+function RightPanel() {
+  return (
+    <div style={{
+      position: "relative", overflow: "hidden",
+      background: "#0d0d0d",
+      display: "flex", flexDirection: "column", justifyContent: "flex-end",
+    }}>
+      {/* Model photo */}
+      <img
+        src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&q=80"
+        alt=""
+        style={{
+          position: "absolute", inset: 0, width: "100%", height: "100%",
+          objectFit: "cover", objectPosition: "top center",
+        }}
+      />
+      {/* Gradient overlay */}
+      <div style={{
+        position: "absolute", inset: 0,
+        background: "linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.92) 100%)",
+      }}/>
+      {/* Perks */}
+      <div style={{ position: "relative", zIndex: 1, padding: "0 28px 32px" }}>
+        {PERKS.map(p => (
+          <div key={p.bold} style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
+            <span style={{ fontSize: 17, flexShrink: 0 }}>{p.icon}</span>
+            <span style={{ fontSize: 13, color: "rgba(255,255,255,0.8)" }}>
+              {p.text} <strong style={{ color: "#fff" }}>{p.bold}</strong>
+            </span>
+          </div>
+        ))}
+        <p style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", marginTop: 12, marginBottom: 0 }}>
+          Model on photo: lianh_benet
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// ── DarkInput ─────────────────────────────────────────────────────────────
+function DarkInput({ placeholder, type = "text", value, onChange, rightIcon }) {
+  return (
+    <div style={{ position: "relative", width: "100%" }}>
+      <input
+        type={type} value={value} onChange={onChange} placeholder={placeholder}
+        style={{
+          width: "100%", padding: "13px 44px 13px 16px",
+          background: "#2a1a1a", border: "1px solid #3a2a2a",
+          borderRadius: 8, color: "#fff", fontSize: 14, outline: "none",
+          fontFamily: "inherit", boxSizing: "border-box",
+        }}
+        onFocus={e => e.target.style.borderColor = "#4caf50"}
+        onBlur={e => e.target.style.borderColor = "#3a2a2a"}
+      />
+      {rightIcon && (
+        <span style={{ position: "absolute", right: 14, top: "50%", transform: "translateY(-50%)", cursor: rightIcon.onClick ? "pointer" : "default" }}
+          onClick={rightIcon.onClick}>
+          {rightIcon.node}
+        </span>
+      )}
+    </div>
+  );
+}
+
+// ── Logo bar ──────────────────────────────────────────────────────────────
+function LogoBar() {
+  return (
+    <div style={{
+      position: "fixed", top: 0, left: 0, right: 0, height: 50,
+      display: "flex", alignItems: "center", justifyContent: "center",
+      zIndex: 100000, pointerEvents: "none",
+    }}>
+      <div style={{
+        background: "rgba(20,20,20,0.97)", padding: "6px 20px",
+        borderRadius: 8, display: "flex", alignItems: "center", gap: 8,
+      }}>
+        <svg width="26" height="26" viewBox="0 0 40 40">
+          <circle cx="20" cy="20" r="20" fill="#e5342a"/>
+          <text x="20" y="26" textAnchor="middle" fontSize="14" fontWeight="900" fill="#fff" fontFamily="Arial">SC</text>
+        </svg>
+        <span style={{ fontSize: 15, fontWeight: 800, color: "#fff", letterSpacing: 0.5 }}>STRIPCHATBATE</span>
+      </div>
+    </div>
+  );
+}
+
+// ── LOGIN view ────────────────────────────────────────────────────────────
+function LoginView({ onSwitch, onClose }) {
+  const [identifier, setIdentifier] = useState("");
+  const [password,   setPassword]   = useState("");
+  const [showPw,     setShowPw]     = useState(false);
+  const [verified,   setVerified]   = useState(false);
+  const ready = identifier.trim() && password.trim() && verified;
+
+  return (
+    <div style={{
+      width: "min(480px,94vw)", background: "#1a0a0a", borderRadius: 14,
+      padding: "52px 40px 36px", position: "relative",
+      fontFamily: "-apple-system,'Segoe UI',sans-serif",
+    }}
+      onClick={e => e.stopPropagation()}
+    >
+      {/* Close */}
+      <button onClick={onClose} style={{
+        position: "absolute", top: 14, right: 14,
+        background: "rgba(255,255,255,0.1)", border: "none", cursor: "pointer",
+        width: 32, height: 32, borderRadius: "50%",
+        display: "flex", alignItems: "center", justifyContent: "center",
+      }}
+        onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.2)"}
+        onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.1)"}
+      ><IcoClose/></button>
+
+      <h2 style={{ color: "#fff", fontSize: 22, fontWeight: 800, textAlign: "center", marginBottom: 24, marginTop: 0 }}>
+        Log In
+      </h2>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        <DarkInput
+          placeholder="Username or Email"
+          value={identifier} onChange={e => setIdentifier(e.target.value)}
+        />
+        <DarkInput
+          placeholder="Password"
+          type={showPw ? "text" : "password"}
+          value={password} onChange={e => setPassword(e.target.value)}
+          rightIcon={{ node: <IcoEye show={showPw}/>, onClick: () => setShowPw(p => !p) }}
+        />
+        <CloudflareVerify verified={verified} onToggle={() => setVerified(v => !v)} />
+
+        {/* Log In button */}
+        <button style={{
+          width: "100%", padding: "14px 0", borderRadius: 8,
+          background: ready ? "linear-gradient(135deg,#4caf50,#2e7d32)" : "#2a1a1a",
+          border: "none", color: ready ? "#fff" : "#555",
+          fontSize: 15, fontWeight: 700, cursor: ready ? "pointer" : "not-allowed",
+          fontFamily: "inherit", transition: "all .2s",
+        }}>Log In</button>
+
+        {/* Forgot password */}
+        <div style={{ textAlign: "center" }}>
+          <span style={{ fontSize: 13, color: "#4caf50", cursor: "pointer", fontWeight: 500 }}
+            onMouseEnter={e => e.currentTarget.style.textDecoration = "underline"}
+            onMouseLeave={e => e.currentTarget.style.textDecoration = "none"}
+          >Forgot password?</span>
+        </div>
+
+        {/* Divider */}
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <div style={{ flex: 1, height: 1, background: "#333" }}/>
+          <span style={{ fontSize: 12, color: "#666" }}>or log in with</span>
+          <div style={{ flex: 1, height: 1, background: "#333" }}/>
+        </div>
+
+        <SocialButtons/>
+
+        {/* Log in without password */}
+        <button style={{
+          width: "100%", padding: "11px 0", borderRadius: 8,
+          background: "#2a1a1a", border: "1px solid #3a2a2a",
+          color: "#bbb", fontSize: 13, cursor: "pointer", fontFamily: "inherit",
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+        }}
+          onMouseEnter={e => e.currentTarget.style.borderColor = "#555"}
+          onMouseLeave={e => e.currentTarget.style.borderColor = "#3a2a2a"}
+        >
+          <IcoStar/>
+          Log In without Password
+        </button>
+
+        {/* Switch to register */}
+        <div style={{ fontSize: 13, color: "#888", textAlign: "center", marginTop: 4 }}>
+          Don&apos;t have an account?{" "}
+          <span style={{ color: "#4caf50", cursor: "pointer", fontWeight: 600 }}
+            onClick={onSwitch}
+            onMouseEnter={e => e.currentTarget.style.textDecoration = "underline"}
+            onMouseLeave={e => e.currentTarget.style.textDecoration = "none"}
+          >Sign Up</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── REGISTER view ─────────────────────────────────────────────────────────
+function RegisterView({ onSwitch, onClose }) {
   const [username, setUsername] = useState("");
   const [verified, setVerified] = useState(false);
 
   return (
-    <div
-      style={{ position:"fixed", inset:0, zIndex:99999, background:"rgba(0,0,0,0.75)", display:"flex", alignItems:"center", justifyContent:"center", padding:16 }}
-      onClick={onClose}
+    <div style={{
+      width: "min(860px,96vw)", background: "#1a0a0a", borderRadius: 14,
+      overflow: "hidden", display: "grid", gridTemplateColumns: "1fr 1fr",
+      position: "relative", fontFamily: "-apple-system,'Segoe UI',sans-serif",
+      minHeight: 520,
+    }}
+      onClick={e => e.stopPropagation()}
     >
-      {/* Logo bar at top */}
-      <div style={{ position:"fixed", top:0, left:0, right:0, height:50, display:"flex", alignItems:"center", justifyContent:"center", zIndex:100000, pointerEvents:"none" }}>
-        <div style={{ background:"rgba(20,20,20,0.95)", padding:"6px 20px", borderRadius:8, display:"flex", alignItems:"center", gap:8 }}>
-          {/* Stripchatbate logo */}
-          <svg width="28" height="28" viewBox="0 0 40 40">
-            <circle cx="20" cy="20" r="20" fill="#e5342a"/>
-            <text x="20" y="26" textAnchor="middle" fontSize="16" fontWeight="900" fill="#fff" fontFamily="Arial">SC</text>
-          </svg>
-          <span style={{ fontSize:16, fontWeight:800, color:"#fff", letterSpacing:0.5 }}>STRIPCHATBATE</span>
-        </div>
-      </div>
+      {/* Close */}
+      <button onClick={onClose} style={{
+        position: "absolute", top: 14, right: 14, zIndex: 10,
+        background: "rgba(255,255,255,0.1)", border: "none", cursor: "pointer",
+        width: 32, height: 32, borderRadius: "50%",
+        display: "flex", alignItems: "center", justifyContent: "center",
+      }}
+        onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.2)"}
+        onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.1)"}
+      ><IcoClose/></button>
 
-      <div
-        style={{ width:"min(860px,96vw)", background:"#1a0a0a", borderRadius:14, overflow:"hidden", display:"grid", gridTemplateColumns:"1fr 1fr", position:"relative" }}
-        onClick={e => e.stopPropagation()}
-      >
-        {/* Close button */}
-        <button onClick={onClose} style={{ position:"absolute", top:14, right:14, background:"rgba(255,255,255,0.1)", border:"none", cursor:"pointer", width:32, height:32, borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", zIndex:10 }}
-          onMouseEnter={e => e.currentTarget.style.background="rgba(255,255,255,0.2)"}
-          onMouseLeave={e => e.currentTarget.style.background="rgba(255,255,255,0.1)"}
-        >
-          <IcoClose/>
-        </button>
+      {/* Left: form */}
+      <div style={{ padding: "48px 40px 40px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <h2 style={{ color: "#fff", fontSize: 22, fontWeight: 800, marginBottom: 24, marginTop: 0, textAlign: "center" }}>
+          Create Free Account
+        </h2>
 
-        {/* ── LEFT: Form ── */}
-        <div style={{ padding:"48px 40px 40px", display:"flex", flexDirection:"column", alignItems:"center" }}>
-          <div style={{ fontSize:22, fontWeight:800, color:"#fff", marginBottom:24, textAlign:"center" }}>
-            Create Free Account
-          </div>
+        <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 12 }}>
+          <DarkInput
+            placeholder="Username"
+            value={username} onChange={e => setUsername(e.target.value)}
+            rightIcon={{ node: <IcoWand/> }}
+          />
 
-          {/* Username */}
-          <div style={{ position:"relative", width:"100%", marginBottom:14 }}>
-            <input value={username} onChange={e => setUsername(e.target.value)} placeholder="Username"
-              style={{ width:"100%", padding:"13px 44px 13px 16px", background:"#2a1a1a", border:"1px solid #3a2a2a", borderRadius:8, color:"#fff", fontSize:14, outline:"none", fontFamily:"inherit", boxSizing:"border-box" }}
-              onFocus={e => e.target.style.borderColor="#4caf50"}
-              onBlur={e => e.target.style.borderColor="#3a2a2a"}
-            />
-            <span style={{ position:"absolute", right:14, top:"50%", transform:"translateY(-50%)", pointerEvents:"none" }}><IcoWand/></span>
-          </div>
+          <CloudflareVerify verified={verified} onToggle={() => setVerified(v => !v)} />
 
-          {/* Cloudflare */}
-          <div onClick={() => setVerified(!verified)} style={{ width:"100%", display:"flex", alignItems:"center", justifyContent:"space-between", padding:"14px 16px", background:"#2a1a1a", border:"1px solid #3a2a2a", borderRadius:6, marginBottom:14, cursor:"pointer", boxSizing:"border-box" }}>
-            <div style={{ display:"flex", alignItems:"center", gap:12 }}>
-              <div style={{ width:20, height:20, borderRadius:3, border: verified?"none":"2px solid #555", background: verified?"#4caf50":"transparent", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
-                {verified && <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
-              </div>
-              <span style={{ fontSize:13, color:"#ccc" }}>Verify you are human</span>
-            </div>
-            <div style={{ textAlign:"right" }}>
-              <div style={{ display:"flex", alignItems:"center", gap:4 }}>
-                <svg width="22" height="16" viewBox="0 0 100 70"><path d="M78 44c0-8-6-14-14-14-1 0-2 0-3 1C59 24 52 18 44 18c-10 0-18 8-18 18 0 1 0 2 1 3C20 40 16 45 16 51c0 7 6 12 13 12h49c7 0 12-5 12-12 0-4-3-7-6-8l-6 1z" fill="#f6821f"/></svg>
-                <span style={{ fontSize:10, fontWeight:700, color:"#aaa" }}>CLOUDFLARE</span>
-              </div>
-              <span style={{ fontSize:9, color:"#666" }}>Privacy • Help</span>
-            </div>
-          </div>
-
-          {/* Create Account button */}
-          <button style={{ width:"100%", padding:"14px 0", borderRadius:8, background: verified?"linear-gradient(135deg,#4caf50,#2e7d32)":"#2a1a1a", border:"none", color: verified?"#fff":"#555", fontSize:15, fontWeight:700, cursor: verified?"pointer":"not-allowed", fontFamily:"inherit", marginBottom:20, transition:"all .2s" }}>
-            Create Account
-          </button>
+          {/* Create Account */}
+          <button style={{
+            width: "100%", padding: "14px 0", borderRadius: 8,
+            background: verified ? "linear-gradient(135deg,#4caf50,#2e7d32)" : "#2a1a1a",
+            border: "none", color: verified ? "#fff" : "#555",
+            fontSize: 15, fontWeight: 700, cursor: verified ? "pointer" : "not-allowed",
+            fontFamily: "inherit", transition: "all .2s",
+          }}>Create Account</button>
 
           {/* Divider */}
-          <div style={{ width:"100%", display:"flex", alignItems:"center", gap:12, marginBottom:14 }}>
-            <div style={{ flex:1, height:1, background:"#333" }}/>
-            <span style={{ fontSize:12, color:"#666" }}>or continue with</span>
-            <div style={{ flex:1, height:1, background:"#333" }}/>
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <div style={{ flex: 1, height: 1, background: "#333" }}/>
+            <span style={{ fontSize: 12, color: "#666" }}>or continue with</span>
+            <div style={{ flex: 1, height: 1, background: "#333" }}/>
           </div>
 
-          {/* Social */}
-          <div style={{ width:"100%", display:"flex", gap:10, marginBottom:14 }}>
-            <button style={{ flex:1, padding:"11px 0", borderRadius:8, background:"#2a1a1a", border:"1px solid #3a2a2a", display:"flex", alignItems:"center", justifyContent:"center", cursor:"pointer" }}
-              onMouseEnter={e => e.currentTarget.style.borderColor="#555"}
-              onMouseLeave={e => e.currentTarget.style.borderColor="#3a2a2a"}
-            ><GoogleIcon/></button>
-            <button style={{ flex:1, padding:"11px 0", borderRadius:8, background:"#2a1a1a", border:"1px solid #3a2a2a", display:"flex", alignItems:"center", justifyContent:"center", cursor:"pointer" }}
-              onMouseEnter={e => e.currentTarget.style.borderColor="#555"}
-              onMouseLeave={e => e.currentTarget.style.borderColor="#3a2a2a"}
-            ><XIcon/></button>
-          </div>
+          <SocialButtons/>
 
           {/* Continue without email */}
-          <button style={{ width:"100%", padding:"11px 0", borderRadius:8, background:"#2a1a1a", border:"1px solid #3a2a2a", color:"#bbb", fontSize:13, cursor:"pointer", fontFamily:"inherit", marginBottom:14 }}
-            onMouseEnter={e => e.currentTarget.style.borderColor="#555"}
-            onMouseLeave={e => e.currentTarget.style.borderColor="#3a2a2a"}
-          >
-            Continue Without Email
-          </button>
+          <button style={{
+            width: "100%", padding: "11px 0", borderRadius: 8,
+            background: "#2a1a1a", border: "1px solid #3a2a2a",
+            color: "#bbb", fontSize: 13, cursor: "pointer", fontFamily: "inherit",
+          }}
+            onMouseEnter={e => e.currentTarget.style.borderColor = "#555"}
+            onMouseLeave={e => e.currentTarget.style.borderColor = "#3a2a2a"}
+          >Continue Without Email</button>
 
-          {/* Log in */}
-          <div style={{ fontSize:13, color:"#888", textAlign:"center" }}>
+          {/* Switch to login */}
+          <div style={{ fontSize: 13, color: "#888", textAlign: "center" }}>
             Already have an account?{" "}
-            <span style={{ color:"#4caf50", cursor:"pointer", fontWeight:600 }}
-              onMouseEnter={e => e.currentTarget.style.textDecoration="underline"}
-              onMouseLeave={e => e.currentTarget.style.textDecoration="none"}
+            <span style={{ color: "#4caf50", cursor: "pointer", fontWeight: 600 }}
+              onClick={onSwitch}
+              onMouseEnter={e => e.currentTarget.style.textDecoration = "underline"}
+              onMouseLeave={e => e.currentTarget.style.textDecoration = "none"}
             >Log In</span>
           </div>
         </div>
-
-        {/* ── RIGHT: 50 Free Tokens ── */}
-        <div style={{ background:"linear-gradient(160deg, #3a0a0a 0%, #1a0505 60%, #0d1a0d 100%)", padding:"40px 32px", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center" }}>
-          <FreeTokensGraphic/>
-
-          {/* Perks */}
-          <div style={{ width:"100%", marginTop:16, display:"flex", flexDirection:"column", gap:12 }}>
-            {perks.map(p => (
-              <div key={p.bold} style={{ display:"flex", alignItems:"center", gap:12 }}>
-                <span style={{ fontSize:18, flexShrink:0 }}>{p.icon}</span>
-                <span style={{ fontSize:14, color:"#ccc" }}>
-                  {p.text} <strong style={{ color:"#fff" }}>{p.bold}</strong>
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
+
+      {/* Right: model photo */}
+      <RightPanel/>
+    </div>
+  );
+}
+
+// ── Main export ───────────────────────────────────────────────────────────
+export default function FreeTokensModal({ onClose, defaultView = "register" }) {
+  const [view, setView] = useState(defaultView); // "register" | "login"
+
+  return (
+    <div
+      style={{
+        position: "fixed", inset: 0, zIndex: 99999,
+        background: "rgba(0,0,0,0.82)",
+        display: "flex", alignItems: "center", justifyContent: "center", padding: 16,
+      }}
+      onClick={onClose}
+    >
+      <LogoBar/>
+      {view === "login"
+        ? <LoginView  onSwitch={() => setView("register")} onClose={onClose}/>
+        : <RegisterView onSwitch={() => setView("login")}  onClose={onClose}/>
+      }
     </div>
   );
 }
