@@ -15,9 +15,10 @@ export default function RootLayoutClient({ children }) {
 
   const isFullscreen = FULLSCREEN_ROUTES.some(r => pathname?.startsWith(r));
 
-  // Pages where sidebar is inline (not overlay) on desktop
   const NO_SIDEBAR_ROUTES = ["/top-models", "/categories", "/about", "/shop", "/dashboard/vip", "/checkout"];
   const isNoSidebar = NO_SIDEBAR_ROUTES.some(r => pathname?.startsWith(r));
+
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const check = () => {
@@ -29,9 +30,14 @@ export default function RootLayoutClient({ children }) {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Close sidebar on route change
+  // On route change: open sidebar if homepage (desktop), close otherwise
   useEffect(() => {
-    setSidebarOpen(false);
+    const mobile = window.innerWidth < 768;
+    if (isHome && !mobile) {
+      setSidebarOpen(true);
+    } else {
+      setSidebarOpen(false);
+    }
   }, [pathname]);
 
   useEffect(() => {
@@ -48,10 +54,8 @@ export default function RootLayoutClient({ children }) {
 
   const toggle = () => setSidebarOpen(o => !o);
 
-  // ── Sidebar overlay — rendered on EVERY page ──
   const SidebarOverlay = () => (
     <>
-      {/* Dark backdrop */}
       {sidebarOpen && (
         <div
           onClick={toggle}
@@ -63,7 +67,6 @@ export default function RootLayoutClient({ children }) {
         />
       )}
 
-      {/* Sidebar drawer */}
       <div style={{
         position:   "fixed",
         top:        0,
@@ -78,7 +81,6 @@ export default function RootLayoutClient({ children }) {
         transform:  sidebarOpen ? "translateX(0)" : "translateX(-260px)",
         transition: "transform 0.25s ease, box-shadow 0.25s ease",
       }}>
-        {/* Close button inside sidebar */}
         <button
           onClick={toggle}
           style={{
@@ -115,7 +117,7 @@ export default function RootLayoutClient({ children }) {
     );
   }
 
-  // ── No-sidebar pages (shop, vip, checkout, etc.) ──
+  // ── No-sidebar pages ──
   if (isNoSidebar) {
     return (
       <div style={{ display:"flex", flexDirection:"column", height:"100vh", overflow:"hidden" }}>
@@ -128,7 +130,7 @@ export default function RootLayoutClient({ children }) {
     );
   }
 
-  // ── Normal pages — sidebar inline on desktop, overlay on mobile ──
+  // ── Normal pages ──
   return (
     <div style={{ display:"flex", flexDirection:"column", height:"100vh", overflow:"hidden" }}>
       <Topbar onMenuToggle={toggle} sidebarOpen={sidebarOpen} />
@@ -136,20 +138,19 @@ export default function RootLayoutClient({ children }) {
       <div style={{ display:"flex", flex:1, overflow:"hidden", minHeight:0 }}>
 
         {isMobile ? (
-          // Mobile: full overlay drawer
           <SidebarOverlay />
         ) : (
-          // Desktop: inline collapsible sidebar
+          // Desktop: inline sidebar, visible by default on homepage
           <div style={{
-            width:      sidebarOpen ? 220 : 0,
-            minWidth:   sidebarOpen ? 220 : 0,
-            flexShrink: 0,
-            overflowY:  "auto",
-            overflowX:  "hidden",
+            width:       sidebarOpen ? 220 : 0,
+            minWidth:    sidebarOpen ? 220 : 0,
+            flexShrink:  0,
+            overflowY:   "auto",
+            overflowX:   "hidden",
             borderRight: sidebarOpen ? "1px solid #e5e7eb" : "none",
-            background: "#fff",
-            height:     "100%",
-            transition: "width 0.25s ease, min-width 0.25s ease",
+            background:  "#fff",
+            height:      "100%",
+            transition:  "width 0.25s ease, min-width 0.25s ease",
           }}>
             <div style={{ width: 220, height: "100%" }}>
               <SidebarWrapper />
@@ -157,7 +158,6 @@ export default function RootLayoutClient({ children }) {
           </div>
         )}
 
-        {/* Page content */}
         <div style={{ flex:1, minWidth:0, overflowY:"auto", overflowX:"hidden", height:"100%" }}>
           {children}
         </div>

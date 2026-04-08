@@ -7,7 +7,7 @@ import ModelStorefront from "./ModelStorefront";
 const PRODUCTS = [
   { id: 1,  name: "Used Lingerie Set",   price: 3000, currency: "tk", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThraG_zasU3rWm-JApmnIzbmVCpDdGS26DXQ&s", description: "Premium used lingerie set" },
   { id: 2,  name: "Silk Bra & Panty",    price: 2500, currency: "tk", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1QlXINDQBalpeGAZ__xai51XjT7Z_SfxAuw&s", description: "Soft silk bra and panty set" },
-  { id: 3,  name: "Lace Bodysuit",       price: 4200, currency: "tk", image: "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcS7ikNgel-FjLnsENncOg6k4UhdpC9TOWJXkkF2h16HGhkLDBbUZs4pLo-0eBPtSRiecyWVHYxe96v1phjEXCBFaB2SM6L2jsa9KtfGNjpk7e7rQE_GbQHabr-BUqJ1pmSHYNZgwakQh9U&usqp=CAc", description: "Elegant lace bodysuit" },
+  { id: 3,  name: "Lace Bodysuit",       price: 4200, currency: "tk", image: "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcS7ikNgel-FjLnsENncOg6k4UhdpC9TOWJXkkF2h16HGhkLDBbUZs4pLo-0eBPtSRiecyWVHYxe96v1phjEXCBFaB2SM6L2jsa9KtfGNjpk7e7rQE_GbQHabr-BUqJ1pmSHZgwakQh9U&usqp=CAc", description: "Elegant lace bodysuit" },
   { id: 4,  name: "Thong Collection",    price: 1800, currency: "tk", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDhXnQ-6Xp63R4ry3-rA4B131N9fyymISxIw&s", description: "Sexy thong collection" },
   { id: 5,  name: "Fishnet Stockings",   price: 1200, currency: "tk", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7XjPh0g5ho3ijFHPrGFAUsWu5m0Cy2RJLAw&s", description: "Classic fishnet stockings" },
   { id: 6,  name: "Corset Set",          price: 5500, currency: "tk", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9Mj_fweJIzOzCQ8a50zMSe1dtokJOLCNPxg&s", description: "Vintage style corset set" },
@@ -46,7 +46,6 @@ const PRODUCTS = [
 export default function ShopPage() {
   const router = useRouter();
 
-  // Load cart from localStorage on first render
   const [cart, setCart] = useState(() => {
     try {
       const saved = localStorage.getItem("shop_cart");
@@ -59,7 +58,6 @@ export default function ShopPage() {
   const [view, setView] = useState("shop");
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  // Save cart to localStorage whenever it changes
   useEffect(() => {
     try {
       localStorage.setItem("shop_cart", JSON.stringify(cart));
@@ -82,46 +80,19 @@ export default function ShopPage() {
     setView("product");
   };
 
-  const handleAddToCartFromDetail = (product) => {
-    addToCart(product);
-  };
-
   const styles = {
     page: {
       minHeight: "100%",
-      background: "#0d0d0d",
-      color: "#fff",
-      fontFamily: "'Rajdhani', 'Trebuchet MS', sans-serif",
+      background: "#fff",
+      color: "#222",
+      fontFamily: "Inter, system-ui, sans-serif",
       padding: "32px 40px",
     },
     card: {
-      background: "#141414",
-      border: "1px solid #222",
+      background: "#fff",
+      border: "1px solid #e5e7eb",
       borderRadius: 10,
       overflow: "hidden",
-    },
-    btnCyan: {
-      background: "#00e5ff",
-      color: "#000",
-      border: "none",
-      borderRadius: 8,
-      padding: "12px 20px",
-      fontSize: 14,
-      fontWeight: 700,
-      cursor: "pointer",
-      width: "100%",
-      letterSpacing: 0.5,
-    },
-    btnOutline: {
-      background: "transparent",
-      color: "#00e5ff",
-      border: "1px solid #333",
-      borderRadius: 8,
-      padding: "12px 20px",
-      fontSize: 14,
-      fontWeight: 600,
-      cursor: "pointer",
-      width: "100%",
     },
   };
 
@@ -132,7 +103,7 @@ export default function ShopPage() {
         product={selectedProduct}
         onBack={() => setView("shop")}
         onViewCart={() => setView("cart")}
-        onAddToCart={handleAddToCartFromDetail}
+        onAddToCart={(p) => addToCart(p)}
         onViewStorefront={() => setView("storefront")}
         onSelectProduct={(item) => { setSelectedProduct(item); setView("product"); }}
       />
@@ -144,10 +115,7 @@ export default function ShopPage() {
     return (
       <ModelStorefront
         onBack={() => setView("shop")}
-        onBuy={(product) => {
-          addToCart(product);
-          setView("cart");
-        }}
+        onBuy={(product) => { addToCart(product); setView("cart"); }}
       />
     );
   }
@@ -157,11 +125,10 @@ export default function ShopPage() {
     return (
       <div style={{ ...styles.page }}>
 
-        {/* Back button */}
         <button
           onClick={() => setView("shop")}
           style={{
-            background: "none", border: "none", color: "#aaa",
+            background: "none", border: "none", color: "#888",
             fontSize: 13, cursor: "pointer", display: "flex",
             alignItems: "center", gap: 6, padding: 0,
             fontFamily: "inherit", marginBottom: 24,
@@ -173,10 +140,10 @@ export default function ShopPage() {
           Back to Shop
         </button>
 
-        <h2 style={{ fontSize: 20, fontWeight: 700, letterSpacing: 2, marginBottom: 20 }}>YOUR CART</h2>
+        <h2 style={{ fontSize: 20, fontWeight: 700, letterSpacing: 2, marginBottom: 20, color: "#222" }}>YOUR CART</h2>
 
         {cart.length === 0 ? (
-          <div style={{ color: "#555", fontSize: 14, textAlign: "center", padding: "60px 0" }}>
+          <div style={{ color: "#aaa", fontSize: 14, textAlign: "center", padding: "60px 0" }}>
             Your cart is empty.
           </div>
         ) : (
@@ -184,8 +151,8 @@ export default function ShopPage() {
             <div style={styles.card}>
               <div style={{
                 display: "grid", gridTemplateColumns: "2fr 1fr 1fr auto",
-                padding: "10px 14px", borderBottom: "1px solid #222",
-                fontSize: 12, color: "#666", fontWeight: 700, letterSpacing: 1,
+                padding: "10px 14px", borderBottom: "1px solid #e5e7eb",
+                fontSize: 12, color: "#999", fontWeight: 700, letterSpacing: 1,
               }}>
                 <span>Product</span><span>Price</span><span>Quantity</span><span></span>
               </div>
@@ -193,39 +160,39 @@ export default function ShopPage() {
                 <div key={item.id} style={{
                   display: "grid", gridTemplateColumns: "2fr 1fr 1fr auto",
                   padding: "14px", alignItems: "center", gap: 8,
-                  borderBottom: "1px solid #1e1e1e",
+                  borderBottom: "1px solid #f3f4f6",
                 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                    <div style={{ width: 48, height: 48, background: "#252525", borderRadius: 6, overflow: "hidden", flexShrink: 0 }}>
+                    <div style={{ width: 48, height: 48, background: "#f3f4f6", borderRadius: 6, overflow: "hidden", flexShrink: 0 }}>
                       <img src={item.image} alt={item.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                     </div>
                     <div>
-                      <div style={{ fontSize: 13, color: "#ddd", fontWeight: 600 }}>{item.name}</div>
+                      <div style={{ fontSize: 13, color: "#222", fontWeight: 600 }}>{item.name}</div>
                       {item.selectedSize && item.selectedSize !== "One Size" && (
-                        <div style={{ fontSize: 11, color: "#666" }}>Size: {item.selectedSize}</div>
+                        <div style={{ fontSize: 11, color: "#999" }}>Size: {item.selectedSize}</div>
                       )}
                     </div>
                   </div>
                   <span style={{ fontSize: 13, color: "#e53935", fontWeight: 700 }}>{item.price.toLocaleString()}{item.currency}</span>
-                  <div style={{ display: "flex", alignItems: "center", gap: 0, width: "fit-content" }}>
+                  <div style={{ display: "flex", alignItems: "center", width: "fit-content" }}>
                     <button
                       onClick={() => setCart(prev => prev.map(i => i.id === item.id ? { ...i, qty: Math.max(1, i.qty - 1) } : i))}
-                      style={{ width: 28, height: 28, background: "#1a1a1a", border: "1px solid #333", borderRadius: "4px 0 0 4px", color: "#fff", fontSize: 14, cursor: "pointer" }}
+                      style={{ width: 28, height: 28, background: "#f3f4f6", border: "1px solid #e5e7eb", borderRadius: "4px 0 0 4px", color: "#222", fontSize: 14, cursor: "pointer" }}
                     >−</button>
-                    <div style={{ width: 36, height: 28, background: "#141414", border: "1px solid #333", borderLeft: "none", borderRight: "none", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: "#fff", fontWeight: 700 }}>{item.qty}</div>
+                    <div style={{ width: 36, height: 28, background: "#fff", border: "1px solid #e5e7eb", borderLeft: "none", borderRight: "none", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: "#222", fontWeight: 700 }}>{item.qty}</div>
                     <button
                       onClick={() => setCart(prev => prev.map(i => i.id === item.id ? { ...i, qty: i.qty + 1 } : i))}
-                      style={{ width: 28, height: 28, background: "#1a1a1a", border: "1px solid #333", borderRadius: "0 4px 4px 0", color: "#fff", fontSize: 14, cursor: "pointer" }}
+                      style={{ width: 28, height: 28, background: "#f3f4f6", border: "1px solid #e5e7eb", borderRadius: "0 4px 4px 0", color: "#222", fontSize: 14, cursor: "pointer" }}
                     >+</button>
                   </div>
                   <button onClick={() => removeFromCart(item.id)} style={{
-                    background: "transparent", color: "#ff4444", border: "1px solid #ff4444",
+                    background: "transparent", color: "#e53935", border: "1px solid #e53935",
                     borderRadius: 6, padding: "4px 10px", fontSize: 12, cursor: "pointer", fontFamily: "inherit",
                   }}>Remove</button>
                 </div>
               ))}
               <div style={{ padding: "16px 14px", maxWidth: 320 }}>
-                <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 10, color: "#fff" }}>Cart Summary</div>
+                <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 10, color: "#222" }}>Cart Summary</div>
                 {[
                   ["Subtotal:", `${subtotal.toLocaleString()}tk`],
                   ["Shipping:", "Free"],
@@ -233,7 +200,8 @@ export default function ShopPage() {
                 ].map(([label, val]) => (
                   <div key={label} style={{
                     display: "flex", justifyContent: "space-between",
-                    fontSize: 13, color: label === "Total:" ? "#fff" : "#aaa",
+                    fontSize: 13,
+                    color: label === "Total:" ? "#222" : "#888",
                     fontWeight: label === "Total:" ? 700 : 400, marginBottom: 6,
                   }}>
                     <span>{label}</span>
@@ -245,11 +213,11 @@ export default function ShopPage() {
 
             <div style={{ display: "flex", gap: 12, marginTop: 20 }}>
               <button
-                style={{ background: "#e53935", color: "#fff", border: "none", borderRadius: 8, padding: "13px 28px", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "inherit", letterSpacing: 0.5 }}
+                style={{ background: "#e53935", color: "#fff", border: "none", borderRadius: 8, padding: "13px 28px", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "inherit" }}
                 onClick={() => router.push("/checkout")}
               >Checkout</button>
               <button
-                style={{ background: "transparent", color: "#aaa", border: "1px solid #333", borderRadius: 8, padding: "13px 28px", fontSize: 14, fontWeight: 600, cursor: "pointer", fontFamily: "inherit" }}
+                style={{ background: "transparent", color: "#666", border: "1px solid #e5e7eb", borderRadius: 8, padding: "13px 28px", fontSize: 14, fontWeight: 600, cursor: "pointer", fontFamily: "inherit" }}
                 onClick={() => setView("shop")}
               >Continue Shopping</button>
             </div>
@@ -261,7 +229,7 @@ export default function ShopPage() {
 
   // ── MAIN SHOP VIEW ──
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%", background: "#0d0d0d", fontFamily: "'Rajdhani', 'Trebuchet MS', sans-serif" }}>
+    <div style={{ display: "flex", flexDirection: "column", height: "100%", background: "#f7f7f9", fontFamily: "Inter, system-ui, sans-serif" }}>
 
       <style>{`
         .shop-grid {
@@ -279,8 +247,8 @@ export default function ShopPage() {
         .shop-scroll { padding: 20px 40px 40px; }
         @media (max-width: 600px) { .shop-scroll { padding: 12px 16px 32px; } }
 
-        .product-card { transition: border-color 0.2s, transform 0.15s; }
-        .product-card:hover { border-color: #333 !important; transform: translateY(-2px); }
+        .product-card { transition: border-color 0.2s, transform 0.15s; background: #fff; }
+        .product-card:hover { border-color: #d1d5db !important; transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
         .product-card:hover img { transform: scale(1.05) !important; }
 
         .store-link { opacity: 0; transition: opacity 0.2s; }
@@ -289,10 +257,10 @@ export default function ShopPage() {
         .buy-btn:hover { background: #c62828 !important; }
       `}</style>
 
-      {/* Fixed shop header */}
-      <div className="shop-header" style={{ flexShrink: 0, borderBottom: "1px solid #1a1a1a" }}>
-        <h1 style={{ fontSize: 22, fontWeight: 700, letterSpacing: 3, marginBottom: 4, color: "#fff" }}>SHOP</h1>
-        <p style={{ color: "#666", fontSize: 13, margin: 0 }}>Exclusive items from your favorite models</p>
+      {/* Shop header */}
+      <div className="shop-header" style={{ flexShrink: 0, background: "#fff", borderBottom: "1px solid #e5e7eb" }}>
+        <h1 style={{ fontSize: 22, fontWeight: 700, letterSpacing: 1, marginBottom: 4, color: "#222" }}>SHOP</h1>
+        <p style={{ color: "#888", fontSize: 13, margin: 0 }}>Exclusive items from your favorite models</p>
       </div>
 
       {/* Scrollable grid */}
@@ -302,19 +270,19 @@ export default function ShopPage() {
             <div
               key={product.id}
               className="product-card"
-              style={{ ...styles.card, padding: 0, cursor: "pointer", overflow: "hidden" }}
+              style={{ ...styles.card, padding: 0, cursor: "pointer" }}
               onClick={() => handleProductClick(product)}
             >
               {/* Product image */}
               <div style={{
-                width: "100%", aspectRatio: "1", background: "#1a1a1a",
+                width: "100%", aspectRatio: "1", background: "#f3f4f6",
                 overflow: "hidden", position: "relative",
               }}>
                 <img
                   src={product.image}
                   alt={product.name}
                   style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.3s" }}
-                  onError={(e) => { e.target.parentElement.style.background = "#252525"; }}
+                  onError={(e) => { e.target.parentElement.style.background = "#f3f4f6"; }}
                 />
               </div>
 
@@ -334,16 +302,16 @@ export default function ShopPage() {
                     fontSize: 9, fontWeight: 700, color: "#fff", flexShrink: 0,
                   }}>A</div>
                   <span style={{
-                    fontSize: 10, color: "#aaa",
+                    fontSize: 10, color: "#999",
                     textDecoration: "underline", whiteSpace: "nowrap",
                     overflow: "hidden", textOverflow: "ellipsis",
                   }}>Alexa_Villia's Store</span>
                 </div>
 
-                <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 3, color: "#fff", lineHeight: 1.3 }}>
+                <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 3, color: "#222", lineHeight: 1.3 }}>
                   {product.name}
                 </div>
-                <div style={{ color: "#555", fontSize: 11, marginBottom: 6, lineHeight: 1.3 }}>
+                <div style={{ color: "#888", fontSize: 11, marginBottom: 6, lineHeight: 1.3 }}>
                   {product.description}
                 </div>
                 <div style={{ color: "#e53935", fontSize: 14, fontWeight: 700, marginBottom: 10 }}>
@@ -355,7 +323,7 @@ export default function ShopPage() {
                     width: "100%", padding: "9px", fontSize: 12,
                     background: "#e53935", color: "#fff", border: "none",
                     borderRadius: 6, fontWeight: 700, cursor: "pointer",
-                    fontFamily: "inherit", letterSpacing: 0.5,
+                    fontFamily: "inherit",
                   }}
                   onClick={(e) => {
                     e.stopPropagation();

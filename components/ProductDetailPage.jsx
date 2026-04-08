@@ -120,8 +120,8 @@ export default function ProductDetailPage({
   return (
     <div style={{
       minHeight: "100%",
-      background: "#0d0d0d",
-      color: "#fff",
+      background: "#ffffff",
+      color: "#1a1a1a",
       fontFamily: "'Rajdhani', 'Trebuchet MS', sans-serif",
     }}>
 
@@ -130,7 +130,7 @@ export default function ProductDetailPage({
         <button
           onClick={onBack}
           style={{
-            background: "none", border: "none", color: "#aaa",
+            background: "none", border: "none", color: "#666",
             fontSize: 13, cursor: "pointer", display: "flex",
             alignItems: "center", gap: 6, padding: 0, fontFamily: "inherit",
           }}
@@ -149,9 +149,9 @@ export default function ProductDetailPage({
       >
         {/* Image */}
         <div style={{
-          aspectRatio: "1", background: "#1a1a1a",
+          aspectRatio: "1", background: "#f5f5f5",
           borderRadius: 10, overflow: "hidden", maxHeight: 340,
-          cursor: "zoom-in",
+          cursor: "zoom-in", border: "1px solid #e8e8e8",
         }}>
           <img
             src={product.image}
@@ -165,7 +165,7 @@ export default function ProductDetailPage({
         {/* Info */}
         <div style={{ padding: "0 0 0 20px", display: "flex", flexDirection: "column", gap: 14 }}>
           <div>
-            <h1 style={{ fontSize: 20, fontWeight: 700, margin: "0 0 4px", color: "#fff", lineHeight: 1.3 }}>
+            <h1 style={{ fontSize: 20, fontWeight: 700, margin: "0 0 4px", color: "#1a1a1a", lineHeight: 1.3 }}>
               {product.name}
             </h1>
             <div style={{ fontSize: 16, color: "#e53935", fontWeight: 700 }}>
@@ -177,7 +177,7 @@ export default function ProductDetailPage({
           <button
             onClick={onViewStorefront}
             style={{
-              background: "none", border: "none", color: "#888",
+              background: "none", border: "none", color: "#555",
               fontSize: 12, cursor: "pointer", textAlign: "left",
               padding: 0, fontFamily: "inherit", display: "flex",
               alignItems: "center", gap: 6,
@@ -194,7 +194,7 @@ export default function ProductDetailPage({
 
           {/* Size selector */}
           <div>
-            <label style={{ fontSize: 12, color: "#aaa", display: "block", marginBottom: 8, letterSpacing: 0.5 }}>
+            <label style={{ fontSize: 12, color: "#666", display: "block", marginBottom: 8, letterSpacing: 0.5 }}>
               Size
             </label>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -204,10 +204,10 @@ export default function ProductDetailPage({
                   onClick={() => setSelectedSize(s)}
                   style={{
                     padding: "6px 14px",
-                    border: `1px solid ${selectedSize === s ? "#e53935" : "#333"}`,
+                    border: `1px solid ${selectedSize === s ? "#e53935" : "#d0d0d0"}`,
                     borderRadius: 6,
-                    background: selectedSize === s ? "rgba(229,57,53,0.12)" : "#1a1a1a",
-                    color: selectedSize === s ? "#e53935" : "#aaa",
+                    background: selectedSize === s ? "rgba(229,57,53,0.08)" : "#fff",
+                    color: selectedSize === s ? "#e53935" : "#555",
                     fontSize: 12, fontWeight: 600, cursor: "pointer",
                     fontFamily: "inherit", transition: "all 0.15s",
                   }}
@@ -220,31 +220,31 @@ export default function ProductDetailPage({
 
           {/* Qty */}
           <div>
-            <label style={{ fontSize: 12, color: "#aaa", display: "block", marginBottom: 8, letterSpacing: 0.5 }}>
+            <label style={{ fontSize: 12, color: "#666", display: "block", marginBottom: 8, letterSpacing: 0.5 }}>
               Qty
             </label>
             <div style={{ display: "flex", alignItems: "center", width: "fit-content" }}>
               <button
                 onClick={() => setQty(q => Math.max(1, q - 1))}
                 style={{
-                  width: 32, height: 32, background: "#1a1a1a",
-                  border: "1px solid #333", borderRadius: "6px 0 0 6px",
-                  color: "#fff", fontSize: 16, cursor: "pointer",
+                  width: 32, height: 32, background: "#f5f5f5",
+                  border: "1px solid #d0d0d0", borderRadius: "6px 0 0 6px",
+                  color: "#333", fontSize: 16, cursor: "pointer",
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}
               >−</button>
               <div style={{
-                width: 40, height: 32, background: "#141414",
-                border: "1px solid #333", borderLeft: "none", borderRight: "none",
+                width: 40, height: 32, background: "#fff",
+                border: "1px solid #d0d0d0", borderLeft: "none", borderRight: "none",
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: 13, fontWeight: 700, color: "#fff",
+                fontSize: 13, fontWeight: 700, color: "#1a1a1a",
               }}>{qty}</div>
               <button
                 onClick={() => setQty(q => q + 1)}
                 style={{
-                  width: 32, height: 32, background: "#1a1a1a",
-                  border: "1px solid #333", borderRadius: "0 6px 6px 0",
-                  color: "#fff", fontSize: 16, cursor: "pointer",
+                  width: 32, height: 32, background: "#f5f5f5",
+                  border: "1px solid #d0d0d0", borderRadius: "0 6px 6px 0",
+                  color: "#333", fontSize: 16, cursor: "pointer",
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}
               >+</button>
@@ -302,8 +302,8 @@ export default function ProductDetailPage({
             { label: "Shipping Information", text: "Only ships to the UK using the shipping information provided" },
           ].map(({ label, text }) => (
             <div key={label} style={{ marginBottom: 20 }}>
-              <div style={{ fontSize: 15, fontWeight: 700, color: "#fff", marginBottom: 4 }}>{label}</div>
-              <div style={{ fontSize: 13, color: "#aaa", lineHeight: 1.6 }}>{text}</div>
+              <div style={{ fontSize: 15, fontWeight: 700, color: "#1a1a1a", marginBottom: 4 }}>{label}</div>
+              <div style={{ fontSize: 13, color: "#666", lineHeight: 1.6 }}>{text}</div>
             </div>
           ))}
         </div>
@@ -313,7 +313,7 @@ export default function ProductDetailPage({
       <div style={{ padding: "24px 20px 40px" }}>
         <h2 style={{
           fontSize: 13, fontWeight: 700, letterSpacing: 3,
-          color: "#fff", marginBottom: 16, textTransform: "uppercase",
+          color: "#1a1a1a", marginBottom: 16, textTransform: "uppercase",
         }}>
           Related Items
         </h2>
@@ -323,14 +323,20 @@ export default function ProductDetailPage({
               key={item.id}
               onClick={() => onSelectProduct && onSelectProduct(item)}
               style={{
-                background: "#141414", border: "1px solid #1e1e1e",
+                background: "#fff", border: "1px solid #e8e8e8",
                 borderRadius: 8, overflow: "hidden", cursor: "pointer",
-                transition: "border-color 0.2s",
+                transition: "border-color 0.2s, box-shadow 0.2s",
               }}
-              onMouseEnter={e => e.currentTarget.style.borderColor = "#333"}
-              onMouseLeave={e => e.currentTarget.style.borderColor = "#1e1e1e"}
+              onMouseEnter={e => {
+                e.currentTarget.style.borderColor = "#ccc";
+                e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.08)";
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.borderColor = "#e8e8e8";
+                e.currentTarget.style.boxShadow = "none";
+              }}
             >
-              <div style={{ aspectRatio: "1", background: "#1a1a1a", overflow: "hidden" }}>
+              <div style={{ aspectRatio: "1", background: "#f5f5f5", overflow: "hidden" }}>
                 <img
                   src={item.image}
                   alt={item.name}
@@ -340,7 +346,7 @@ export default function ProductDetailPage({
                 />
               </div>
               <div style={{ padding: "8px 8px 4px" }}>
-                <div style={{ fontSize: 11, color: "#ddd", fontWeight: 600, marginBottom: 2, lineHeight: 1.3 }}>{item.name}</div>
+                <div style={{ fontSize: 11, color: "#1a1a1a", fontWeight: 600, marginBottom: 2, lineHeight: 1.3 }}>{item.name}</div>
                 <div style={{ fontSize: 11, color: "#e53935", fontWeight: 700 }}>
                   {item.price.toLocaleString()}{item.currency}
                 </div>

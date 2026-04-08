@@ -163,7 +163,7 @@ function RankBadge({ rank }) {
     </div>
   );
   return (
-    <div style={{ background:"#2a2a2a", padding:"5px 10px", fontSize:11, fontWeight:600, color:"#ccc", display:"flex", alignItems:"center", gap:4, borderRadius:"4px 4px 0 0" }}>
+    <div style={{ background:"#f3f4f6", padding:"5px 10px", fontSize:11, fontWeight:600, color:"#555", display:"flex", alignItems:"center", gap:4, borderRadius:"4px 4px 0 0" }}>
       {ordinal(rank)} Place - {getPoints(rank).toLocaleString()}
     </div>
   );
@@ -171,7 +171,7 @@ function RankBadge({ rank }) {
 
 function ModelCard({ model, onClick }) {
   return (
-    <div onClick={() => onClick(model.username)} style={{ cursor:"pointer", borderRadius:4, overflow:"hidden", background:"#111" }}>
+    <div onClick={() => onClick(model.username)} style={{ cursor:"pointer", borderRadius:4, overflow:"hidden", background:"#f3f4f6", border:"1px solid #e5e7eb" }}>
       <RankBadge rank={model.rank} />
       <div style={{ position:"relative", aspectRatio:"3/4", overflow:"hidden" }}>
         <img src={model.photo} alt={model.username} loading="lazy"
@@ -196,9 +196,9 @@ function ModelCard({ model, onClick }) {
 
 function SkeletonCard() {
   return (
-    <div style={{ borderRadius:4, overflow:"hidden", background:"#111" }}>
-      <div style={{ background:"#2a2a2a", padding:"5px 10px", height:28 }} />
-      <div style={{ aspectRatio:"3/4", background:"linear-gradient(90deg,#1a1a1a 25%,#222 50%,#1a1a1a 75%)", backgroundSize:"200% 100%", animation:"shimmer 1.2s infinite" }} />
+    <div style={{ borderRadius:4, overflow:"hidden", background:"#f3f4f6", border:"1px solid #e5e7eb" }}>
+      <div style={{ background:"#e5e7eb", padding:"5px 10px", height:28 }} />
+      <div style={{ aspectRatio:"3/4", background:"linear-gradient(90deg,#e5e7eb 25%,#f3f4f6 50%,#e5e7eb 75%)", backgroundSize:"200% 100%", animation:"shimmer 1.2s infinite" }} />
     </div>
   );
 }
@@ -227,10 +227,10 @@ function HofRankBadge({ rank, points }) {
     </div>
   );
   return (
-    <div style={{ background:"#1e1e1e", padding:"5px 10px", fontSize:11, fontWeight:500, color:"#aaa", display:"flex", alignItems:"center", justifyContent:"space-between", borderBottom:"1px solid #2a2a2a" }}>
+    <div style={{ background:"#f3f4f6", padding:"5px 10px", fontSize:11, fontWeight:500, color:"#555", display:"flex", alignItems:"center", justifyContent:"space-between", borderBottom:"1px solid #e5e7eb" }}>
       <span>{label}</span>
       <span style={{ display:"flex", alignItems:"center", gap:4 }}>
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="#aaa"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="#999"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
         {pts}
       </span>
     </div>
@@ -246,7 +246,7 @@ function HofModelCard({ model, onClick }) {
       onClick={() => onClick(model.username)}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      style={{ cursor:"pointer", borderRadius:4, overflow:"hidden", background:"#111", border:"1px solid #222", transition:"transform 0.18s ease, box-shadow 0.18s ease", transform: hovered ? "translateY(-3px)" : "translateY(0)", boxShadow: hovered ? "0 8px 24px rgba(0,0,0,0.6)" : "none" }}
+      style={{ cursor:"pointer", borderRadius:4, overflow:"hidden", background:"#fff", border:"1px solid #e5e7eb", transition:"transform 0.18s ease, box-shadow 0.18s ease", transform: hovered ? "translateY(-3px)" : "translateY(0)", boxShadow: hovered ? "0 8px 24px rgba(0,0,0,0.12)" : "none" }}
     >
       <HofRankBadge rank={model.rank} points={model.points} />
       <div style={{ position:"relative", aspectRatio:"3/4", overflow:"hidden" }}>
@@ -275,9 +275,9 @@ function HofModelCard({ model, onClick }) {
 
 function HofSkeletonCard() {
   return (
-    <div style={{ borderRadius:4, overflow:"hidden", background:"#111", border:"1px solid #1e1e1e" }}>
-      <div style={{ background:"#1e1e1e", height:29 }} />
-      <div style={{ aspectRatio:"3/4", background:"linear-gradient(90deg,#1a1a1a 25%,#252525 50%,#1a1a1a 75%)", backgroundSize:"200% 100%", animation:"shimmer 1.2s infinite" }} />
+    <div style={{ borderRadius:4, overflow:"hidden", background:"#fff", border:"1px solid #e5e7eb" }}>
+      <div style={{ background:"#f3f4f6", height:29 }} />
+      <div style={{ aspectRatio:"3/4", background:"linear-gradient(90deg,#e5e7eb 25%,#f3f4f6 50%,#e5e7eb 75%)", backgroundSize:"200% 100%", animation:"shimmer 1.2s infinite" }} />
     </div>
   );
 }
@@ -319,27 +319,27 @@ function HallOfFame({ isMobile, router }) {
   const visible = allModels.slice(0, visibleCount);
 
   return (
-    <div style={{ background:"#0d0d0d", minHeight:"60vh" }}>
-      <div style={{ background:"linear-gradient(135deg,#2d0a0a 0%,#4a1010 40%,#2d0a0a 100%)", padding: isMobile ? "28px 16px 20px" : "36px 28px 24px", position:"relative", overflow:"hidden", borderBottom:"1px solid #3a1010" }}>
+    <div style={{ background:"#f7f7f9", minHeight:"60vh" }}>
+      <div style={{ background:"linear-gradient(135deg,#fff0f0 0%,#ffe4e4 40%,#fff0f0 100%)", padding: isMobile ? "28px 16px 20px" : "36px 28px 24px", position:"relative", overflow:"hidden", borderBottom:"1px solid #f0d0d0" }}>
         <div style={{ position:"absolute", right: isMobile ? -20 : 40, top:"50%", transform:"translateY(-50%)", fontSize: isMobile ? 100 : 200, opacity:0.08, pointerEvents:"none", userSelect:"none", lineHeight:1 }}>🏆</div>
         <div style={{ display:"flex", alignItems:"center", gap:14, marginBottom:8 }}>
           <span style={{ fontSize: isMobile ? 24 : 32 }}>🏆</span>
-          <h1 style={{ fontSize: isMobile ? 22 : 32, fontWeight:800, margin:0, letterSpacing:"-0.02em", color:"#fff" }}>Hall of Fame</h1>
+          <h1 style={{ fontSize: isMobile ? 22 : 32, fontWeight:800, margin:0, letterSpacing:"-0.02em", color:"#222" }}>Hall of Fame</h1>
         </div>
-        <p style={{ fontSize: isMobile ? 12 : 14, color:"#c88", margin:0 }}>Discover the best-performing models over the years.</p>
-        <div style={{ height:1, background:"linear-gradient(90deg,#5a2020,transparent)", margin:"20px 0 16px" }} />
+        <p style={{ fontSize: isMobile ? 12 : 14, color:"#888", margin:0 }}>Discover the best-performing models over the years.</p>
+        <div style={{ height:1, background:"linear-gradient(90deg,#f0c0c0,transparent)", margin:"20px 0 16px" }} />
         <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:10 }}>
           <div style={{ display:"flex", alignItems:"center", overflowX:"auto", scrollbarWidth:"none", flexWrap: isMobile ? "wrap" : "nowrap", gap:2 }}>
             {HOF_YEARS.map(year => {
               const isActive = activeYear === year;
               const isCurrent = year === "Current year";
               return (
-                <button key={year} onClick={() => setActiveYear(year)} style={{ background: isActive ? (isCurrent ? "#c8960c" : "#333") : "none", border:"none", borderRadius: isActive ? 20 : 0, color: isActive ? (isCurrent ? "#1a0a00" : "#fff") : (isCurrent ? "#c8a020" : "#888"), fontSize: isMobile ? 12 : 13, fontWeight: isActive ? 700 : 500, padding:"5px 14px", cursor:"pointer", whiteSpace:"nowrap", fontFamily:"inherit", transition:"all 0.15s" }}>{year}</button>
+                <button key={year} onClick={() => setActiveYear(year)} style={{ background: isActive ? (isCurrent ? "#c8960c" : "#e5e7eb") : "none", border:"none", borderRadius: isActive ? 20 : 0, color: isActive ? (isCurrent ? "#fff" : "#222") : (isCurrent ? "#c8a020" : "#888"), fontSize: isMobile ? 12 : 13, fontWeight: isActive ? 700 : 500, padding:"5px 14px", cursor:"pointer", whiteSpace:"nowrap", fontFamily:"inherit", transition:"all 0.15s" }}>{year}</button>
               );
             })}
           </div>
           <div style={{ position:"relative" }}>
-            <select value={activeCategory} onChange={e => setActiveCategory(e.target.value)} style={{ background:"#1e1e1e", border:"1px solid #3a2020", color:"#fff", padding:"7px 32px 7px 12px", borderRadius:6, fontSize:13, fontFamily:"inherit", cursor:"pointer", appearance:"none", outline:"none" }}>
+            <select value={activeCategory} onChange={e => setActiveCategory(e.target.value)} style={{ background:"#fff", border:"1px solid #e5e7eb", color:"#222", padding:"7px 32px 7px 12px", borderRadius:6, fontSize:13, fontFamily:"inherit", cursor:"pointer", appearance:"none", outline:"none" }}>
               {CATEGORIES.map(cat => <option key={cat} value={cat}>{cat}</option>)}
             </select>
             <span style={{ position:"absolute", right:10, top:"50%", transform:"translateY(-50%)", pointerEvents:"none", color:"#888", fontSize:10 }}>▼</span>
@@ -355,10 +355,10 @@ function HallOfFame({ isMobile, router }) {
         </div>
         {visibleCount < HOF_TOTAL && <div ref={sentinelRef} style={{ height:1, marginTop:8 }} aria-hidden="true" />}
         {visibleCount >= HOF_TOTAL && (
-          <div style={{ textAlign:"center", marginTop:40, color:"#444", fontSize:13, display:"flex", alignItems:"center", justifyContent:"center", gap:8 }}>
-            <span style={{ display:"block", width:60, height:1, background:"#2a2a2a" }} />
+          <div style={{ textAlign:"center", marginTop:40, color:"#bbb", fontSize:13, display:"flex", alignItems:"center", justifyContent:"center", gap:8 }}>
+            <span style={{ display:"block", width:60, height:1, background:"#e5e7eb" }} />
             End of Hall of Fame - 100th place reached
-            <span style={{ display:"block", width:60, height:1, background:"#2a2a2a" }} />
+            <span style={{ display:"block", width:60, height:1, background:"#e5e7eb" }} />
           </div>
         )}
       </div>
@@ -425,36 +425,36 @@ function ContestRules({ isMobile }) {
     </svg>
   );
   return (
-    <div style={{ background:"#000", minHeight:"60vh", color:"#fff" }}>
-      <div style={{ background:"linear-gradient(180deg,#4a0e0e 0%,#2d0808 100%)", padding: isMobile ? "28px 20px" : "36px 80px", display:"flex", alignItems:"center", gap: isMobile ? 20 : 60, position:"relative", overflow:"hidden", minHeight: isMobile ? 120 : 140 }}>
+    <div style={{ background:"#fff", minHeight:"60vh", color:"#222" }}>
+      <div style={{ background:"linear-gradient(180deg,#fff0f0 0%,#ffe4e4 100%)", padding: isMobile ? "28px 20px" : "36px 80px", display:"flex", alignItems:"center", gap: isMobile ? 20 : 60, position:"relative", overflow:"hidden", minHeight: isMobile ? 120 : 140 }}>
         <div style={{ fontSize: isMobile ? 40 : 68, fontWeight:900, color:"#e07010", letterSpacing:"-1px", lineHeight:1, whiteSpace:"nowrap" }}>$ 76 000+</div>
         <div>
           <div style={{ fontSize: isMobile ? 18 : 26, fontWeight:700, color:"#e07010", lineHeight:1.2 }}>Given away monthly!</div>
-          <div style={{ fontSize: isMobile ? 14 : 18, color:"#fff", marginTop:4, fontWeight:400 }}>Any model can win.</div>
+          <div style={{ fontSize: isMobile ? 14 : 18, color:"#555", marginTop:4, fontWeight:400 }}>Any model can win.</div>
         </div>
       </div>
-      <div style={{ display:"flex", flexDirection: isMobile ? "column" : "row", background:"#000" }}>
+      <div style={{ display:"flex", flexDirection: isMobile ? "column" : "row", background:"#fff" }}>
         <div style={{ flex: isMobile ? "none" : "0 0 55%", padding: isMobile ? "32px 20px" : "48px 80px 60px 80px" }}>
           <div style={{ display:"flex", flexDirection:"column", gap:28 }}>
             {RULES.map((rule, i) => (
               <div key={i} style={{ display:"flex", gap:18, alignItems:"flex-start" }}>
-                <div style={{ width:32, height:32, borderRadius:"50%", background:"#222", display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, fontWeight:600, color:"#999", flexShrink:0, marginTop:1 }}>{i + 1}</div>
+                <div style={{ width:32, height:32, borderRadius:"50%", background:"#f3f4f6", border:"1px solid #e5e7eb", display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, fontWeight:600, color:"#555", flexShrink:0, marginTop:1 }}>{i + 1}</div>
                 <div style={{ paddingTop:4 }}>
-                  <p style={{ margin:0, fontSize:14, color:"#bbb", lineHeight:1.7 }}>{rule.text}</p>
+                  <p style={{ margin:0, fontSize:14, color:"#555", lineHeight:1.7 }}>{rule.text}</p>
                   {rule.highlight && <p style={{ margin:"6px 0 0", fontSize:14, color:"#e07010", lineHeight:1.6 }}>{rule.highlight}</p>}
                 </div>
               </div>
             ))}
           </div>
           <div style={{ marginTop:44 }}>
-            <button style={{ background:"#222", border:"none", color:"#bbb", padding:"12px 28px", borderRadius:20, fontSize:14, cursor:"pointer", fontFamily:"inherit", fontWeight:400 }}>Read full rules</button>
+            <button style={{ background:"#f3f4f6", border:"1px solid #e5e7eb", color:"#555", padding:"12px 28px", borderRadius:20, fontSize:14, cursor:"pointer", fontFamily:"inherit", fontWeight:400 }}>Read full rules</button>
           </div>
         </div>
         <div style={{ flex: isMobile ? "none" : "0 0 45%", padding: isMobile ? "0 20px 40px" : "48px 60px 60px 0" }}>
-          <p style={{ margin:"0 0 16px", fontSize:13, color:"#666", textAlign:"right" }}>Top performers each month get:</p>
-          <div style={{ display:"flex", borderBottom:"1px solid #222", marginBottom:0 }}>
+          <p style={{ margin:"0 0 16px", fontSize:13, color:"#888", textAlign:"right" }}>Top performers each month get:</p>
+          <div style={{ display:"flex", borderBottom:"1px solid #e5e7eb", marginBottom:0 }}>
             {CATEGORIES.map(cat => (
-              <button key={cat} onClick={() => setActiveCategory(cat)} style={{ background:"none", border:"none", cursor:"pointer", color: activeCategory === cat ? "#fff" : "#555", fontSize:14, fontWeight:400, padding:"8px 18px 10px", borderBottom: activeCategory === cat ? "2px solid #e53935" : "2px solid transparent", fontFamily:"inherit", marginBottom:-1 }}>{cat}</button>
+              <button key={cat} onClick={() => setActiveCategory(cat)} style={{ background:"none", border:"none", cursor:"pointer", color: activeCategory === cat ? "#222" : "#888", fontSize:14, fontWeight:400, padding:"8px 18px 10px", borderBottom: activeCategory === cat ? "2px solid #e53935" : "2px solid transparent", fontFamily:"inherit", marginBottom:-1 }}>{cat}</button>
             ))}
           </div>
           <div>
@@ -462,12 +462,12 @@ function ContestRules({ isMobile }) {
               const isTop3 = row.gold || row.silver || row.bronze;
               const iconClr = row.gold ? "#d4a017" : row.silver ? "#b0b0b0" : "#b87333";
               return (
-                <div key={i} style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"14px 4px", borderBottom:"1px solid #1a1a1a", borderLeft: isTop3 ? "3px solid #c85010" : "3px solid transparent", paddingLeft: isTop3 ? 12 : 4, background: isTop3 ? "rgba(200,80,16,0.06)" : "transparent" }}>
+                <div key={i} style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"14px 4px", borderBottom:"1px solid #f3f4f6", borderLeft: isTop3 ? "3px solid #e53935" : "3px solid transparent", paddingLeft: isTop3 ? 12 : 4, background: isTop3 ? "#fff5f5" : "transparent" }}>
                   <div style={{ display:"flex", alignItems:"center" }}>
                     {isTop3 && <CrownIcon color={iconClr} />}
-                    <span style={{ fontSize:14, color: isTop3 ? "#ddd" : "#666", fontWeight:400 }}>{row.range}</span>
+                    <span style={{ fontSize:14, color: isTop3 ? "#222" : "#888", fontWeight:400 }}>{row.range}</span>
                   </div>
-                  <span style={{ fontSize:14, color: isTop3 ? "#ddd" : "#666", fontWeight:400 }}>{row.amount}</span>
+                  <span style={{ fontSize:14, color: isTop3 ? "#222" : "#888", fontWeight:400 }}>{row.amount}</span>
                 </div>
               );
             })}
@@ -500,10 +500,10 @@ const PLACE_HEADER_BG = [
   "linear-gradient(90deg,#c8960c,#e0b030)",
   "#4a5a6a",
   "linear-gradient(90deg,#c85c30,#e07040)",
-  "#2e2e2e",
-  "#2e2e2e",
+  "#e5e7eb",
+  "#e5e7eb",
 ];
-const PLACE_HEADER_FG = ["#1a0a00","#fff","#fff","#bbb","#bbb"];
+const PLACE_HEADER_FG = ["#1a0a00","#fff","#fff","#555","#555"];
 
 function slotPoints(day, place) {
   const boost  = [2000,1800,1600,1500,1400];
@@ -588,33 +588,34 @@ function Last24hWinners({ isMobile, router }) {
   let lastRenderedDay = null;
 
   return (
-    <div style={{ background:"#0d0d0d", minHeight:"60vh", color:"#fff" }}>
+    <div style={{ background:"#f7f7f9", minHeight:"60vh", color:"#222" }}>
       <div style={{
-        background:"linear-gradient(135deg,#2d0816 0%,#4a0f22 60%,#2d0816 100%)",
+        background:"linear-gradient(135deg,#fff0f5 0%,#ffe4ee 60%,#fff0f5 100%)",
         padding: isMobile ? "28px 20px 0" : "44px 40px 0",
         position:"relative", overflow:"hidden",
+        borderBottom:"1px solid #f0d0dc",
       }}>
         <div style={{
           position:"absolute", right: isMobile ? -10 : 0, top:0, bottom:0,
           display:"flex", alignItems:"center", gap: isMobile ? 4 : 16,
-          opacity:0.12, pointerEvents:"none", userSelect:"none",
+          opacity:0.08, pointerEvents:"none", userSelect:"none",
           paddingRight: isMobile ? 0 : 32,
         }}>
           {["♀","⚤","⚧"].map((s, i) => (
-            <span key={i} style={{ fontSize: isMobile ? 72 : 150, color:"#fff", lineHeight:1, opacity: [0.7, 1, 0.85][i] }}>{s}</span>
+            <span key={i} style={{ fontSize: isMobile ? 72 : 150, color:"#e53935", lineHeight:1, opacity: [0.7, 1, 0.85][i] }}>{s}</span>
           ))}
         </div>
-        <h1 style={{ fontSize: isMobile ? 18 : 24, fontWeight:700, margin:"0 0 10px", position:"relative", letterSpacing:"-0.01em" }}>
+        <h1 style={{ fontSize: isMobile ? 18 : 24, fontWeight:700, margin:"0 0 10px", position:"relative", letterSpacing:"-0.01em", color:"#222" }}>
           Last 24h Winners: {activeCategory}
         </h1>
-        <p style={{ fontSize: isMobile ? 12 : 13, color:"#c99", margin:"0 0 30px", lineHeight:1.7, maxWidth:520, position:"relative" }}>
+        <p style={{ fontSize: isMobile ? 12 : 13, color:"#888", margin:"0 0 30px", lineHeight:1.7, maxWidth:520, position:"relative" }}>
           Every 3 hours, we give away StripPoints to the top 5,000 performers in each category. Along with StripPoints, the top 5 winners also receive cash prizes. Ranking is based on token earnings and the number of unique paying users.
         </p>
         <div style={{ display:"flex", gap:0, position:"relative" }}>
           {L24_CATEGORIES.map(cat => (
             <button key={cat} onClick={() => setActiveCategory(cat)} style={{
               background:"none", border:"none", cursor:"pointer",
-              color: activeCategory === cat ? "#fff" : "#888",
+              color: activeCategory === cat ? "#222" : "#888",
               fontSize: isMobile ? 13 : 14, fontWeight: activeCategory === cat ? 700 : 400,
               padding: isMobile ? "10px 16px 12px" : "12px 24px 14px",
               borderBottom: activeCategory === cat ? "2px solid #e53935" : "2px solid transparent",
@@ -623,7 +624,7 @@ function Last24hWinners({ isMobile, router }) {
           ))}
         </div>
       </div>
-      <div style={{ display:"flex", flexDirection:"column", padding: isMobile ? "12px 8px 40px" : "16px 16px 40px", background:"#181818", gap:0 }}>
+      <div style={{ display:"flex", flexDirection:"column", padding: isMobile ? "12px 8px 40px" : "16px 16px 40px", background:"#f7f7f9", gap:0 }}>
         {slots.map((slot, si) => {
           const showDayHeader = slot.day !== lastRenderedDay;
           if (showDayHeader) lastRenderedDay = slot.day;
@@ -631,8 +632,8 @@ function Last24hWinners({ isMobile, router }) {
             <div key={si} style={{ marginBottom:12 }}>
               {showDayHeader && (
                 <div style={{ display:"grid", gridTemplateColumns: gridCols, gap:4, marginBottom:4 }}>
-                  <div style={{ background:"#2a2a2a", borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", padding:"10px 8px" }}>
-                    <span style={{ fontSize:13, fontWeight:600, color:"#ccc" }}>{slot.day}</span>
+                  <div style={{ background:"#e5e7eb", borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", padding:"10px 8px" }}>
+                    <span style={{ fontSize:13, fontWeight:600, color:"#555" }}>{slot.day}</span>
                   </div>
                   {Array.from({ length: cols }, (_, place) => (
                     <div key={place} style={{ background: PLACE_HEADER_BG[place], borderRadius:4, display:"flex", alignItems:"center", padding: isMobile ? "7px 6px" : "9px 10px", gap:5 }}>
@@ -651,23 +652,23 @@ function Last24hWinners({ isMobile, router }) {
                 </div>
               )}
               <div style={{ display:"grid", gridTemplateColumns: gridCols, gap:4 }}>
-                <div style={{ background: slot.boost ? "#7a1515" : "#1e1e1e", borderRadius:4, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"14px 8px", height: cardHeight, gap:8 }}>
-                  <span style={{ fontSize: isMobile ? 15 : 20, fontWeight:800, color:"#fff", textAlign:"center", lineHeight:1.1 }}>{slot.time}</span>
+                <div style={{ background: slot.boost ? "#ffe4e4" : "#f3f4f6", borderRadius:4, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"14px 8px", height: cardHeight, gap:8, border: slot.boost ? "1px solid #fca5a5" : "1px solid #e5e7eb" }}>
+                  <span style={{ fontSize: isMobile ? 15 : 20, fontWeight:800, color:"#222", textAlign:"center", lineHeight:1.1 }}>{slot.time}</span>
                   {slot.boost && (
                     <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:4 }}>
-                      <div style={{ width:24, height:1, background:"rgba(255,255,255,0.2)" }} />
+                      <div style={{ width:24, height:1, background:"rgba(0,0,0,0.1)" }} />
                       <div style={{ display:"flex", alignItems:"center", gap:4 }}>
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="rgba(255,255,255,0.75)"><path d="M12 2C9 5 7 9 7 13H5l-2 3h4v4h6v-4h4l-2-3h-2c0-4-2-8-5-11z"/></svg>
-                        <span style={{ fontSize:8, fontWeight:700, color:"rgba(255,255,255,0.65)", letterSpacing:"0.07em", whiteSpace:"nowrap" }}>2X BOOST</span>
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="#e53935"><path d="M12 2C9 5 7 9 7 13H5l-2 3h4v4h6v-4h4l-2-3h-2c0-4-2-8-5-11z"/></svg>
+                        <span style={{ fontSize:8, fontWeight:700, color:"#e53935", letterSpacing:"0.07em", whiteSpace:"nowrap" }}>2X BOOST</span>
                       </div>
                     </div>
                   )}
                 </div>
                 {Array.from({ length: cols }, (_, place) => {
                   const model = slot.models[place];
-                  if (!model) return <div key={place} style={{ background:"#111", borderRadius:4, height: cardHeight }} />;
+                  if (!model) return <div key={place} style={{ background:"#f3f4f6", borderRadius:4, height: cardHeight }} />;
                   return (
-                    <div key={place} onClick={() => router.push("/watch/" + model.username)} style={{ position:"relative", overflow:"hidden", cursor:"pointer", background:"#111", height: cardHeight, borderRadius:4 }}>
+                    <div key={place} onClick={() => router.push("/watch/" + model.username)} style={{ position:"relative", overflow:"hidden", cursor:"pointer", background:"#f3f4f6", height: cardHeight, borderRadius:4 }}>
                       <img src={model.photo} alt={model.username} loading="lazy" style={{ width:"100%", height:"100%", objectFit:"cover", display:"block", position:"absolute", inset:0 }} />
                       <div style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 55%)", pointerEvents:"none" }} />
                       <div style={{ position:"absolute", top:5, left:5, display:"flex", gap:3, alignItems:"center" }}>
@@ -739,9 +740,9 @@ function lmwGetPoints(rank) {
 function LmwRankBadge({ rank, points }) {
   const bg =
     rank === 1 ? "linear-gradient(90deg,#c8960c,#e0b030)" :
-    rank === 2 ? "#3a4a5a" :
-    rank === 3 ? "linear-gradient(90deg,#c85c30,#e07040)" : "#2a2a2a";
-  const fg = rank === 1 ? "#1a0a00" : rank === 3 ? "#fff" : rank <= 6 ? "#fff" : "#bbb";
+    rank === 2 ? "#8a9ba8" :
+    rank === 3 ? "linear-gradient(90deg,#c85c30,#e07040)" : "#f3f4f6";
+  const fg = rank === 1 ? "#1a0a00" : rank === 3 ? "#fff" : rank <= 6 ? "#fff" : "#555";
   return (
     <div style={{ background: bg, padding:"7px 10px", fontSize:12, fontWeight:700, color:fg, display:"flex", alignItems:"center", gap:5, borderRadius:"4px 4px 0 0" }}>
       <span>{ordinal(rank)} Place</span>
@@ -761,7 +762,7 @@ function LmwModelCard({ model, onClick }) {
   const [hovered, setHovered] = useState(false);
   return (
     <div onClick={() => onClick(model.username)} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
-      style={{ cursor:"pointer", borderRadius:4, overflow:"hidden", background:"#111", transition:"transform 0.15s ease", transform: hovered ? "translateY(-2px)" : "none" }}>
+      style={{ cursor:"pointer", borderRadius:4, overflow:"hidden", background:"#fff", border:"1px solid #e5e7eb", transition:"transform 0.15s ease", transform: hovered ? "translateY(-2px)" : "none" }}>
       <LmwRankBadge rank={model.rank} points={model.points} />
       <div style={{ position:"relative", aspectRatio:"3/4", overflow:"hidden" }}>
         <img src={model.photo} alt={model.username} loading="lazy"
@@ -791,9 +792,9 @@ function LmwModelCard({ model, onClick }) {
 
 function LmwSkeletonCard() {
   return (
-    <div style={{ borderRadius:4, overflow:"hidden", background:"#111" }}>
-      <div style={{ background:"#2a2a2a", padding:"7px 10px", height:30 }} />
-      <div style={{ aspectRatio:"3/4", background:"linear-gradient(90deg,#1a1a1a 25%,#222 50%,#1a1a1a 75%)", backgroundSize:"200% 100%", animation:"shimmer 1.2s infinite" }} />
+    <div style={{ borderRadius:4, overflow:"hidden", background:"#fff", border:"1px solid #e5e7eb" }}>
+      <div style={{ background:"#f3f4f6", padding:"7px 10px", height:30 }} />
+      <div style={{ aspectRatio:"3/4", background:"linear-gradient(90deg,#e5e7eb 25%,#f3f4f6 50%,#e5e7eb 75%)", backgroundSize:"200% 100%", animation:"shimmer 1.2s infinite" }} />
     </div>
   );
 }
@@ -857,31 +858,31 @@ function LastMonthWinners({ isMobile, router }) {
   const regionEmoji = (r) => LMW_REGION_EMOJI[r] || "🌍";
 
   return (
-    <div style={{ background:"#0d0d0d", minHeight:"100vh", color:"#fff" }}>
-      <div style={{ position:"relative", overflow:"hidden", background:"linear-gradient(135deg,#1a0a00 0%,#2d1500 50%,#1a0a00 100%)", padding: isMobile ? "24px 16px 16px" : "32px 24px 20px", minHeight: isMobile ? 100 : 130 }}>
+    <div style={{ background:"#f7f7f9", minHeight:"100vh", color:"#222" }}>
+      <div style={{ position:"relative", overflow:"hidden", background:"linear-gradient(135deg,#fff8f0 0%,#fff0e0 50%,#fff8f0 100%)", padding: isMobile ? "24px 16px 16px" : "32px 24px 20px", minHeight: isMobile ? 100 : 130, borderBottom:"1px solid #f0e0d0" }}>
         <div style={{ position:"absolute", right: isMobile ? -20 : 40, top:0, bottom:0, width: isMobile ? 180 : 320, opacity:0.15, display:"flex", alignItems:"center", justifyContent:"center", fontSize: isMobile ? 120 : 220, pointerEvents:"none", userSelect:"none" }}>
           {regionEmoji(activeRegion)}
         </div>
-        <h1 style={{ fontSize: isMobile ? 18 : 24, fontWeight:700, margin:"0 0 6px", position:"relative" }}>
+        <h1 style={{ fontSize: isMobile ? 18 : 24, fontWeight:700, margin:"0 0 6px", position:"relative", color:"#222" }}>
           Top {activeCategory} of the Last Month in {activeRegion}
         </h1>
-        <p style={{ fontSize: isMobile ? 11 : 13, color:"#aaa", margin:0, position:"relative" }}>
+        <p style={{ fontSize: isMobile ? 11 : 13, color:"#888", margin:0, position:"relative" }}>
           Ranked by total StripPoints earned. Top spots are awarded regionally to highlight the hottest talent.
         </p>
         <div style={{ display:"flex", gap:0, marginTop:16, position:"relative" }}>
           {CATEGORIES.map(cat => (
-            <button key={cat} onClick={() => setActiveCategory(cat)} style={{ background:"none", border:"none", cursor:"pointer", color: activeCategory === cat ? "#fff" : "#888", fontSize:14, fontWeight: activeCategory === cat ? 700 : 400, padding:"4px 0", marginRight:20, borderBottom: activeCategory === cat ? "2px solid #e53935" : "2px solid transparent", fontFamily:"inherit" }}>{cat}</button>
+            <button key={cat} onClick={() => setActiveCategory(cat)} style={{ background:"none", border:"none", cursor:"pointer", color: activeCategory === cat ? "#222" : "#888", fontSize:14, fontWeight: activeCategory === cat ? 700 : 400, padding:"4px 0", marginRight:20, borderBottom: activeCategory === cat ? "2px solid #e53935" : "2px solid transparent", fontFamily:"inherit" }}>{cat}</button>
           ))}
         </div>
       </div>
-      <div style={{ display:"flex", gap:8, padding:"12px 16px", overflowX:"auto", scrollbarWidth:"none", background:"#111", borderBottom:"1px solid #222" }}>
+      <div style={{ display:"flex", gap:8, padding:"12px 16px", overflowX:"auto", scrollbarWidth:"none", background:"#fff", borderBottom:"1px solid #e5e7eb" }}>
         {REGIONS.map(region => (
-          <button key={region} onClick={() => setActiveRegion(region)} style={{ background: activeRegion === region ? "#333" : "#1e1e1e", border: activeRegion === region ? "1px solid #555" : "1px solid #333", color: activeRegion === region ? "#fff" : "#aaa", fontSize:12, fontWeight: activeRegion === region ? 600 : 400, padding:"7px 14px", borderRadius:6, cursor:"pointer", whiteSpace:"nowrap", fontFamily:"inherit", display:"flex", alignItems:"center", gap:6 }}>
+          <button key={region} onClick={() => setActiveRegion(region)} style={{ background: activeRegion === region ? "#f3f4f6" : "#fff", border: activeRegion === region ? "1px solid #d1d5db" : "1px solid #e5e7eb", color: activeRegion === region ? "#222" : "#888", fontSize:12, fontWeight: activeRegion === region ? 600 : 400, padding:"7px 14px", borderRadius:6, cursor:"pointer", whiteSpace:"nowrap", fontFamily:"inherit", display:"flex", alignItems:"center", gap:6 }}>
             {regionEmoji(region)} {region}
           </button>
         ))}
       </div>
-      <div style={{ padding: isMobile ? "12px 8px 40px" : "16px 16px 40px", background:"#0d0d0d" }}>
+      <div style={{ padding: isMobile ? "12px 8px 40px" : "16px 16px 40px", background:"#f7f7f9" }}>
         <div style={{ display:"grid", gridTemplateColumns:`repeat(${cols}, 1fr)`, gap: isMobile ? 6 : 8 }}>
           {visible.map(model => (
             <LmwModelCard key={activeRegion + "-" + activeCategory + "-" + model.rank} model={model} onClick={name => router.push("/watch/" + name)} />
@@ -890,10 +891,10 @@ function LastMonthWinners({ isMobile, router }) {
         </div>
         {visibleCount < LMW_TOTAL && <div ref={sentinelRef} style={{ height:1, marginTop:8 }} aria-hidden="true" />}
         {visibleCount >= LMW_TOTAL && (
-          <div style={{ textAlign:"center", marginTop:32, color:"#444", fontSize:13, display:"flex", alignItems:"center", justifyContent:"center", gap:8 }}>
-            <span style={{ display:"block", width:60, height:1, background:"#2a2a2a" }} />
+          <div style={{ textAlign:"center", marginTop:32, color:"#bbb", fontSize:13, display:"flex", alignItems:"center", justifyContent:"center", gap:8 }}>
+            <span style={{ display:"block", width:60, height:1, background:"#e5e7eb" }} />
             You have reached the end of the leaderboard (900th place)
-            <span style={{ display:"block", width:60, height:1, background:"#2a2a2a" }} />
+            <span style={{ display:"block", width:60, height:1, background:"#e5e7eb" }} />
           </div>
         )}
       </div>
@@ -904,19 +905,19 @@ function LastMonthWinners({ isMobile, router }) {
 function Footer() {
   return (
     <>
-      <footer style={{ background:"#1a1a1a", borderTop:"1px solid #2a2a2a", padding:"40px 40px 24px", color:"#fff" }}>
+      <footer style={{ background:"#fff", borderTop:"1px solid #e5e7eb", padding:"40px 40px 24px", color:"#222" }}>
         <div style={{ display:"flex", gap:40, flexWrap:"wrap" }}>
           <div style={{ flex:"0 0 260px", minWidth:220 }}>
             <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:16 }}>
               <div style={{ width:28, height:28, background:"#e53935", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center" }}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
               </div>
-              <span style={{ fontWeight:700, fontSize:16 }}><span style={{ color:"#fff" }}>STRIP</span><span style={{ color:"#aaa", fontWeight:400 }}>CHATBATE</span></span>
+              <span style={{ fontWeight:700, fontSize:16 }}><span style={{ color:"#222" }}>STRIP</span><span style={{ color:"#888", fontWeight:400 }}>CHATBATE</span></span>
             </div>
-            <p style={{ fontSize:11, color:"#666", lineHeight:1.7, margin:"0 0 12px" }}>
+            <p style={{ fontSize:11, color:"#888", lineHeight:1.7, margin:"0 0 12px" }}>
               Stripchatbate is the world's premier 18+ LIVE adult entertainment destination for real connection and adult play.
             </p>
-            <p style={{ fontSize:11, color:"#555", lineHeight:1.6, margin:"0 0 24px" }}>
+            <p style={{ fontSize:11, color:"#aaa", lineHeight:1.6, margin:"0 0 24px" }}>
               All models appearing on this site have contractually confirmed to us that they are 18 years of age or older.
             </p>
           </div>
@@ -928,11 +929,11 @@ function Footer() {
               { title:"Help & Support", links:["Support & FAQ","Billing Support","DMCA Protection"] },
             ].map(col => (
               <div key={col.title} style={{ minWidth:120, marginBottom:24 }}>
-                <h4 style={{ fontSize:11, fontWeight:700, color:"#fff", margin:"0 0 16px", letterSpacing:"0.08em", textTransform:"uppercase" }}>{col.title}</h4>
+                <h4 style={{ fontSize:11, fontWeight:700, color:"#222", margin:"0 0 16px", letterSpacing:"0.08em", textTransform:"uppercase" }}>{col.title}</h4>
                 {col.links.map(l => (
                   <div key={l} style={{ marginBottom:12 }}>
                     <a href="#" style={{ fontSize:13, color:"#888", textDecoration:"none" }}
-                      onMouseEnter={e => e.currentTarget.style.color="#fff"}
+                      onMouseEnter={e => e.currentTarget.style.color="#222"}
                       onMouseLeave={e => e.currentTarget.style.color="#888"}
                     >{l}</a>
                   </div>
@@ -941,15 +942,15 @@ function Footer() {
             ))}
           </div>
         </div>
-        <div style={{ borderTop:"1px solid #2a2a2a", marginTop:32, paddingTop:20, display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:12 }}>
+        <div style={{ borderTop:"1px solid #e5e7eb", marginTop:32, paddingTop:20, display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:12 }}>
           <div style={{ display:"flex", alignItems:"center", gap:20 }}>
             {["RTA","SafeLabeling.org","ASACP"].map(l => (
-              <span key={l} style={{ fontSize:10, color:"#444", fontWeight:700, letterSpacing:"0.05em" }}>{l}</span>
+              <span key={l} style={{ fontSize:10, color:"#aaa", fontWeight:700, letterSpacing:"0.05em" }}>{l}</span>
             ))}
           </div>
-          <span style={{ fontSize:11, color:"#444" }}>18 U.S.C. 2257 Record-Keeping Requirements Compliance Statement</span>
-          <div style={{ width:32, height:32, borderRadius:"50%", border:"1px solid #444", display:"flex", alignItems:"center", justifyContent:"center" }}>
-            <span style={{ fontSize:11, color:"#555", fontWeight:700 }}>18+</span>
+          <span style={{ fontSize:11, color:"#aaa" }}>18 U.S.C. 2257 Record-Keeping Requirements Compliance Statement</span>
+          <div style={{ width:32, height:32, borderRadius:"50%", border:"1px solid #e5e7eb", display:"flex", alignItems:"center", justifyContent:"center" }}>
+            <span style={{ fontSize:11, color:"#888", fontWeight:700 }}>18+</span>
           </div>
         </div>
       </footer>
@@ -961,7 +962,6 @@ function Footer() {
   );
 }
 
-// ── Flag Image helper ─────────────────────────────────────────────────────────
 function FlagImg({ code, size = 20 }) {
   if (!code || code === "africa") {
     return <span style={{ fontSize: size - 4, lineHeight: 1, flexShrink: 0 }}>🌍</span>;
@@ -978,7 +978,6 @@ function FlagImg({ code, size = 20 }) {
   );
 }
 
-// ── Main Page ─────────────────────────────────────────────────────────────────
 export default function TopModelsPage() {
   const router = useRouter();
   const [activeTab,      setActiveTab]      = useState("Current Month Top");
@@ -1037,39 +1036,38 @@ export default function TopModelsPage() {
 
   const CONTINENT_SVG = {
     "Africa": (
-      <svg viewBox="0 0 200 220" style={{ width:"100%", height:"100%", opacity:0.18 }} fill="#c47a00">
+      <svg viewBox="0 0 200 220" style={{ width:"100%", height:"100%", opacity:0.12 }} fill="#e53935">
         <path d="M80,10 C60,12 45,20 40,35 C35,50 38,60 30,75 C22,90 15,95 18,115 C21,135 35,145 40,165 C45,185 55,205 70,215 C85,225 100,215 112,200 C124,185 128,165 140,150 C152,135 165,130 168,115 C171,100 160,88 158,72 C156,56 162,42 155,30 C148,18 130,12 115,10 C100,8 90,8 80,10Z"/>
       </svg>
     ),
     "North America": (
-      <svg viewBox="0 0 200 200" style={{ width:"100%", height:"100%", opacity:0.18 }} fill="#c47a00">
+      <svg viewBox="0 0 200 200" style={{ width:"100%", height:"100%", opacity:0.12 }} fill="#e53935">
         <path d="M30,20 C20,30 15,50 20,70 C25,90 40,95 45,115 C50,135 40,155 55,170 C70,185 90,180 105,165 C120,150 125,130 140,120 C155,110 170,115 175,100 C180,85 165,70 155,55 C145,40 145,20 130,12 C115,4 95,8 80,15 C65,22 50,18 40,20 C38,20 32,19 30,20Z"/>
       </svg>
     ),
     "South America": (
-      <svg viewBox="0 0 160 220" style={{ width:"100%", height:"100%", opacity:0.18 }} fill="#c47a00">
+      <svg viewBox="0 0 160 220" style={{ width:"100%", height:"100%", opacity:0.12 }} fill="#e53935">
         <path d="M55,10 C40,15 30,30 28,50 C26,70 35,80 38,100 C41,120 30,135 35,155 C40,175 60,195 80,205 C100,215 118,200 125,180 C132,160 122,140 125,120 C128,100 142,88 138,68 C134,48 118,30 100,18 C82,6 68,6 55,10Z"/>
       </svg>
     ),
     "Europe": (
-      <svg viewBox="0 0 180 160" style={{ width:"100%", height:"100%", opacity:0.18 }} fill="#c47a00">
+      <svg viewBox="0 0 180 160" style={{ width:"100%", height:"100%", opacity:0.12 }} fill="#e53935">
         <path d="M40,20 C28,28 22,42 25,58 C28,74 42,78 48,92 C54,106 48,122 60,132 C72,142 90,138 105,128 C120,118 126,102 140,94 C154,86 168,88 172,74 C176,60 164,46 152,36 C140,26 124,22 108,18 C92,14 76,16 62,20 C56,22 46,18 40,20Z"/>
       </svg>
     ),
     "Asia & Pacific": (
-      <svg viewBox="0 0 240 180" style={{ width:"100%", height:"100%", opacity:0.18 }} fill="#c47a00">
+      <svg viewBox="0 0 240 180" style={{ width:"100%", height:"100%", opacity:0.12 }} fill="#e53935">
         <path d="M20,40 C10,55 12,75 25,88 C38,101 58,98 72,110 C86,122 88,142 105,150 C122,158 140,148 155,135 C170,122 172,102 185,90 C198,78 215,75 218,60 C221,45 208,32 194,24 C180,16 162,18 147,25 C132,32 120,42 104,44 C88,46 72,38 58,32 C44,26 30,28 20,40Z"/>
       </svg>
     ),
   };
 
-  // ── Categories Modal ──────────────────────────────────────────────────────
   const CategoriesModal = () => {
     const SectionLabel = ({ children }) => (
       <div style={{
-        fontSize:10, fontWeight:700, color:"#aaa",
+        fontSize:10, fontWeight:700, color:"#888",
         letterSpacing:"0.1em", textTransform:"uppercase",
-        background:"#2a2b32", padding:"5px 8px",
+        background:"#f3f4f6", padding:"5px 8px",
         borderRadius:3, marginBottom:10,
       }}>{children}</div>
     );
@@ -1079,8 +1077,8 @@ export default function TopModelsPage() {
         onMouseEnter={e => e.currentTarget.style.opacity="0.7"}
         onMouseLeave={e => e.currentTarget.style.opacity="1"}>
         {icon && <span style={{ fontSize:12, flexShrink:0, display:"flex", alignItems:"center" }}>{icon}</span>}
-        <span style={{ fontSize:13, color:"#d8d8d8", fontWeight:400 }}>{label}</span>
-        {count !== undefined && <span style={{ fontSize:12, color:"#666", marginLeft:1 }}>{count}</span>}
+        <span style={{ fontSize:13, color:"#374151", fontWeight:400 }}>{label}</span>
+        {count !== undefined && <span style={{ fontSize:12, color:"#9ca3af", marginLeft:1 }}>{count}</span>}
       </div>
     );
 
@@ -1089,38 +1087,36 @@ export default function TopModelsPage() {
         onMouseEnter={e => e.currentTarget.style.opacity="0.7"}
         onMouseLeave={e => e.currentTarget.style.opacity="1"}>
         <FlagImg code={code} size={20} />
-        <span style={{ fontSize:13, color:"#d8d8d8", fontWeight:400 }}>{label}</span>
-        {count !== undefined && <span style={{ fontSize:12, color:"#666", marginLeft:1 }}>{count}</span>}
+        <span style={{ fontSize:13, color:"#374151", fontWeight:400 }}>{label}</span>
+        {count !== undefined && <span style={{ fontSize:12, color:"#9ca3af", marginLeft:1 }}>{count}</span>}
       </div>
     );
 
-    const IconHeart    = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>;
-    const IconThumb    = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>;
-    const IconClock    = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>;
-    const IconGallery  = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>;
-    const IconLock     = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>;
-    const IconMobile   = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>;
+    const IconHeart    = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>;
+    const IconThumb    = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>;
+    const IconClock    = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>;
+    const IconGallery  = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>;
+    const IconLock     = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>;
+    const IconMobile   = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>;
     const IconZap      = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#f0b429" strokeWidth="2"><polygon points="13,2 3,14 12,14 11,22 21,10 12,10 13,2"/></svg>;
     const IconVR       = () => <span style={{ background:"#1565C0", color:"#fff", fontSize:8, fontWeight:800, padding:"1px 4px", borderRadius:2 }}>VR</span>;
-    const IconBDSM     = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>;
-    const IconTicket   = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2z"/><line x1="12" y1="7" x2="12" y2="17"/></svg>;
+    const IconBDSM     = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>;
+    const IconTicket   = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2z"/><line x1="12" y1="7" x2="12" y2="17"/></svg>;
     const IconToy      = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#e040fb" strokeWidth="2"><circle cx="12" cy="12" r="3"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>;
     const IconFoot     = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#e040fb" strokeWidth="2"><path d="M8.56 2.9A7 7 0 0 1 19 9v1l1.93 3.86A2 2 0 0 1 19.14 16H5a2 2 0 0 1-1.8-2.9L5 9V7a7 7 0 0 1 3.56-6.1z"/></svg>;
-    const IconGlobe    = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>;
-    const IconHeel     = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2"><path d="M2 20h4l10-10-4-4L2 16v4z"/><path d="M18 2l4 4-2 2-4-4 2-2z"/></svg>;
-    const IconEye      = () => <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>;
-    const IconGrid     = () => <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>;
+    const IconGlobe    = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>;
+    const IconHeel     = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2"><path d="M2 20h4l10-10-4-4L2 16v4z"/><path d="M18 2l4 4-2 2-4-4 2-2z"/></svg>;
+    const IconEye      = () => <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>;
+    const IconGrid     = () => <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>;
     const IconController = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#e040fb" strokeWidth="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4"/><circle cx="16" cy="11" r="1"/><circle cx="19" cy="13" r="1"/></svg>;
-    const IconRecordable = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3" fill="#888"/></svg>;
+    const IconRecordable = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3" fill="#9ca3af"/></svg>;
 
     return (
       <>
-      {/* Full-screen dim backdrop — click outside to close */}
       <div
-        style={{ position:"fixed", inset:0, zIndex:1200, background:"rgba(0,0,0,0.65)" }}
+        style={{ position:"fixed", inset:0, zIndex:1200, background:"rgba(0,0,0,0.4)" }}
         onClick={() => setShowCategories(false)}
       />
-      {/* Panel — left-anchored, starts below main topbar (52px) */}
       <div
         onClick={e => e.stopPropagation()}
         style={{
@@ -1130,21 +1126,22 @@ export default function TopModelsPage() {
           bottom: 0,
           width: isMobile ? "100vw" : "min(1300px, 82vw)",
           zIndex: 1201,
-          background:"#212329",
-          color:"#d0d0d0",
+          background:"#fff",
+          color:"#374151",
           overflowY:"auto",
           fontFamily:"system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif",
           fontSize:13,
           scrollbarWidth:"thin",
-          scrollbarColor:"#333 transparent",
+          scrollbarColor:"#e5e7eb transparent",
+          borderRight:"1px solid #e5e7eb",
+          boxShadow:"4px 0 24px rgba(0,0,0,0.08)",
         }}
       >
         <div style={{ padding: isMobile ? "20px 16px" : "28px 32px", position:"relative" }}>
-          <button onClick={() => setShowCategories(false)} style={{ position:"absolute", top:16, right:20, background:"none", border:"none", color:"#666", fontSize:20, cursor:"pointer", lineHeight:1, zIndex:10 }}>✕</button>
+          <button onClick={() => setShowCategories(false)} style={{ position:"absolute", top:16, right:20, background:"none", border:"none", color:"#9ca3af", fontSize:20, cursor:"pointer", lineHeight:1, zIndex:10 }}>✕</button>
 
-          {/* ── CATEGORIES ── */}
           <div style={{ marginBottom:32 }}>
-            <h2 style={{ display:"flex", alignItems:"center", gap:10, fontSize:22, fontWeight:700, color:"#fff", margin:"0 0 16px" }}>
+            <h2 style={{ display:"flex", alignItems:"center", gap:10, fontSize:22, fontWeight:700, color:"#222", margin:"0 0 16px" }}>
               <IconGrid /> Categories
             </h2>
             <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(5,1fr)", gap:"0 24px" }}>
@@ -1197,11 +1194,10 @@ export default function TopModelsPage() {
             </div>
           </div>
 
-          <div style={{ height:1, background:"#2a2a2a", margin:"0 0 28px" }} />
+          <div style={{ height:1, background:"#f3f4f6", margin:"0 0 28px" }} />
 
-          {/* ── APPEARANCE ── */}
           <div style={{ marginBottom:32 }}>
-            <h2 style={{ display:"flex", alignItems:"center", gap:10, fontSize:22, fontWeight:700, color:"#fff", margin:"0 0 16px" }}>
+            <h2 style={{ display:"flex", alignItems:"center", gap:10, fontSize:22, fontWeight:700, color:"#222", margin:"0 0 16px" }}>
               <IconEye /> Appearance
             </h2>
             <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(5,1fr)", gap:"0 24px" }}>
@@ -1255,11 +1251,10 @@ export default function TopModelsPage() {
             </div>
           </div>
 
-          <div style={{ height:1, background:"#2a2a2a", margin:"0 0 28px" }} />
+          <div style={{ height:1, background:"#f3f4f6", margin:"0 0 28px" }} />
 
-          {/* ── ACTIVITIES ON REQUEST ── */}
           <div style={{ marginBottom:32 }}>
-            <h2 style={{ display:"flex", alignItems:"center", gap:10, fontSize:22, fontWeight:700, color:"#fff", margin:"0 0 16px" }}>
+            <h2 style={{ display:"flex", alignItems:"center", gap:10, fontSize:22, fontWeight:700, color:"#222", margin:"0 0 16px" }}>
               <IconTicket /> Activities on Request
             </h2>
             <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(5,1fr)", gap:"0 24px" }}>
@@ -1354,11 +1349,10 @@ export default function TopModelsPage() {
             </div>
           </div>
 
-          <div style={{ height:1, background:"#2a2a2a", margin:"0 0 28px" }} />
+          <div style={{ height:1, background:"#f3f4f6", margin:"0 0 28px" }} />
 
-          {/* ── SPECIFICS ── */}
           <div style={{ marginBottom:32 }}>
-            <h2 style={{ display:"flex", alignItems:"center", gap:10, fontSize:22, fontWeight:700, color:"#fff", margin:"0 0 16px" }}>
+            <h2 style={{ display:"flex", alignItems:"center", gap:10, fontSize:22, fontWeight:700, color:"#222", margin:"0 0 16px" }}>
               <IconGrid /> Specifics
             </h2>
             <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(5,1fr)", gap:"0 24px" }}>
@@ -1414,15 +1408,13 @@ export default function TopModelsPage() {
             </div>
           </div>
 
-          <div style={{ height:1, background:"#2a2a2a", margin:"0 0 28px" }} />
+          <div style={{ height:1, background:"#f3f4f6", margin:"0 0 28px" }} />
 
-          {/* ── COUNTRIES & LANGUAGES ── */}
           <div style={{ marginBottom:32 }}>
-            <h2 style={{ display:"flex", alignItems:"center", gap:10, fontSize:22, fontWeight:700, color:"#fff", margin:"0 0 16px" }}>
+            <h2 style={{ display:"flex", alignItems:"center", gap:10, fontSize:22, fontWeight:700, color:"#222", margin:"0 0 16px" }}>
               <IconGlobe /> Countries &amp; Languages
             </h2>
             <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(5,1fr)", gap:"0 24px" }}>
-              {/* Col 1: North + South America */}
               <div>
                 <SectionLabel>North America</SectionLabel>
                 <FlagItem code="us" label="American"   count={145} />
@@ -1439,7 +1431,6 @@ export default function TopModelsPage() {
                 <FlagItem code="uy" label="Uruguayan"   count={1}    />
                 <FlagItem code="ve" label="Venezuelan"  count={140}  />
               </div>
-              {/* Col 2: Europe part 1 */}
               <div>
                 <SectionLabel>Europe</SectionLabel>
                 <FlagItem code="at" label="Austrian"   count={1}   />
@@ -1454,7 +1445,6 @@ export default function TopModelsPage() {
                 <FlagItem code="ie" label="Irish"      count={1}   />
                 <FlagItem code="it" label="Italian"    count={9}   />
               </div>
-              {/* Col 3: Europe part 2 */}
               <div>
                 <SectionLabel>&nbsp;</SectionLabel>
                 <FlagItem code="lv" label="Latvian"    count={1}   />
@@ -1468,7 +1458,6 @@ export default function TopModelsPage() {
                 <FlagItem code="gb" label="UK Models"  count={15}  />
                 <FlagItem code="ua" label="Ukrainian"  count={77}  />
               </div>
-              {/* Col 4: Asia + Africa */}
               <div>
                 <SectionLabel>Asia &amp; Pacific</SectionLabel>
                 <FlagItem code="au" label="Australian" count={7}   />
@@ -1495,7 +1484,6 @@ export default function TopModelsPage() {
                 <FlagItem code="ae" label="Arab"    count={60} />
                 <FlagItem code="tr" label="Turkish" count={4}  />
               </div>
-              {/* Col 5: Languages */}
               <div>
                 <SectionLabel>Languages</SectionLabel>
                 <FlagItem code="br" label="Portuguese Speaking" count={50}   />
@@ -1505,11 +1493,10 @@ export default function TopModelsPage() {
             </div>
           </div>
 
-          <div style={{ height:1, background:"#2a2a2a", margin:"0 0 28px" }} />
+          <div style={{ height:1, background:"#f3f4f6", margin:"0 0 28px" }} />
 
-          {/* ── FETISHES & KINKS ── */}
           <div style={{ marginBottom:16 }}>
-            <h2 style={{ display:"flex", alignItems:"center", gap:10, fontSize:22, fontWeight:700, color:"#fff", margin:"0 0 16px" }}>
+            <h2 style={{ display:"flex", alignItems:"center", gap:10, fontSize:22, fontWeight:700, color:"#222", margin:"0 0 16px" }}>
               <IconHeel /> Fetishes &amp; Kinks
             </h2>
             <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(3,1fr)", gap:"0 24px" }}>
@@ -1544,20 +1531,20 @@ export default function TopModelsPage() {
   };
 
   return (
-    <div style={{ background:"#0d0d0d", minHeight:"100vh", color:"#fff", paddingBottom:60 }}>
+    <div style={{ background:"#f7f7f9", minHeight:"100vh", color:"#222", paddingBottom:60 }}>
       <style>{`@keyframes shimmer { 0% { background-position:200% 0; } 100% { background-position:-200% 0; } }`}</style>
 
       {showCategories && <CategoriesModal />}
 
       {/* Sticky tab nav */}
-      <div style={{ background:"#1a1a1a", borderBottom:"1px solid #333", position:"sticky", top:0, zIndex:100 }}>
+      <div style={{ background:"#fff", borderBottom:"1px solid #e5e7eb", position:"sticky", top:0, zIndex:100, boxShadow:"0 1px 4px rgba(0,0,0,0.06)" }}>
         <div style={{ display:"flex", alignItems:"center", overflowX:"auto", scrollbarWidth:"none", padding:"0 16px" }}>
           {TABS.map(tab => (
-            <button key={tab} onClick={() => setActiveTab(tab)} style={{ background:"none", border:"none", cursor:"pointer", color: activeTab === tab ? "#fff" : "#888", fontSize:13, fontWeight: activeTab === tab ? 700 : 400, padding:"12px 16px", whiteSpace:"nowrap", borderBottom: activeTab === tab ? "2px solid #e53935" : "2px solid transparent", fontFamily:"inherit" }}>{tab}</button>
+            <button key={tab} onClick={() => setActiveTab(tab)} style={{ background:"none", border:"none", cursor:"pointer", color: activeTab === tab ? "#222" : "#888", fontSize:13, fontWeight: activeTab === tab ? 700 : 400, padding:"12px 16px", whiteSpace:"nowrap", borderBottom: activeTab === tab ? "2px solid #e53935" : "2px solid transparent", fontFamily:"inherit" }}>{tab}</button>
           ))}
           <button
             onClick={() => setShowCategories(true)}
-            style={{ marginLeft:"auto", display:"flex", alignItems:"center", gap:6, padding:"0 8px 0 16px", color:"#ccc", fontSize:12, cursor:"pointer", whiteSpace:"nowrap", background:"none", border:"none", fontFamily:"inherit", height:"100%", minHeight:44 }}
+            style={{ marginLeft:"auto", display:"flex", alignItems:"center", gap:6, padding:"0 8px 0 16px", color:"#555", fontSize:12, cursor:"pointer", whiteSpace:"nowrap", background:"none", border:"none", fontFamily:"inherit", height:"100%", minHeight:44 }}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
             Categories
@@ -1572,26 +1559,28 @@ export default function TopModelsPage() {
 
       {activeTab !== "Hall of Fame" && activeTab !== "Contest Rules" && activeTab !== "Last 24h Winners" && activeTab !== "Last Month Winners" && (
         <>
-          <div style={{ position:"relative", overflow:"hidden", background:"linear-gradient(100deg, #0a0700 0%, #1a0f00 30%, #2d1a00 55%, #c47a00 100%)", padding: isMobile ? "24px 16px 0" : "32px 28px 0", minHeight: isMobile ? 110 : 145 }}>
+          {/* Hero header */}
+          <div style={{ position:"relative", overflow:"hidden", background:"linear-gradient(100deg, #fff5f5 0%, #fff0f0 30%, #ffe4e4 55%, #ffd0d0 100%)", padding: isMobile ? "24px 16px 0" : "32px 28px 0", minHeight: isMobile ? 110 : 145, borderBottom:"1px solid #f0d0d0" }}>
             <div style={{ position:"absolute", right:0, top:0, bottom:0, width: isMobile ? 160 : 340, display:"flex", alignItems:"center", justifyContent:"center", pointerEvents:"none", userSelect:"none" }}>
               {CONTINENT_SVG[activeRegion] || CONTINENT_SVG["Africa"]}
             </div>
-            <h1 style={{ fontSize: isMobile ? 16 : 20, fontWeight:700, margin:"0 0 5px", position:"relative", color:"#fff" }}>
+            <h1 style={{ fontSize: isMobile ? 16 : 20, fontWeight:700, margin:"0 0 5px", position:"relative", color:"#222" }}>
               Top {activeCategory} of the Month in {activeRegion}
             </h1>
-            <p style={{ fontSize: isMobile ? 11 : 13, color:"#aaa", margin:"0 0 18px", position:"relative" }}>
+            <p style={{ fontSize: isMobile ? 11 : 13, color:"#888", margin:"0 0 18px", position:"relative" }}>
               Ranked by total StripPoints earned. Top spots are awarded regionally to highlight the hottest talent.
             </p>
-            <div style={{ display:"flex", gap:0, position:"relative", borderTop:"1px solid rgba(255,255,255,0.06)" }}>
+            <div style={{ display:"flex", gap:0, position:"relative", borderTop:"1px solid rgba(0,0,0,0.06)" }}>
               {CATEGORIES.map(cat => (
-                <button key={cat} onClick={() => setActiveCategory(cat)} style={{ background:"none", border:"none", cursor:"pointer", color: activeCategory === cat ? "#fff" : "#888", fontSize:14, fontWeight: activeCategory === cat ? 700 : 400, padding:"10px 20px 12px", borderBottom: activeCategory === cat ? "2px solid #e53935" : "2px solid transparent", fontFamily:"inherit", marginBottom:-1 }}>{cat}</button>
+                <button key={cat} onClick={() => setActiveCategory(cat)} style={{ background:"none", border:"none", cursor:"pointer", color: activeCategory === cat ? "#222" : "#888", fontSize:14, fontWeight: activeCategory === cat ? 700 : 400, padding:"10px 20px 12px", borderBottom: activeCategory === cat ? "2px solid #e53935" : "2px solid transparent", fontFamily:"inherit", marginBottom:-1 }}>{cat}</button>
               ))}
             </div>
           </div>
 
-          <div style={{ display:"flex", gap:8, padding:"12px 16px", overflowX:"auto", scrollbarWidth:"none", background:"#111", borderBottom:"1px solid #1e1e1e" }}>
+          {/* Region filter */}
+          <div style={{ display:"flex", gap:8, padding:"12px 16px", overflowX:"auto", scrollbarWidth:"none", background:"#fff", borderBottom:"1px solid #e5e7eb" }}>
             {REGIONS.map(region => (
-              <button key={region} onClick={() => setActiveRegion(region)} style={{ background: activeRegion === region ? "#2a2a2a" : "#181818", border: "1px solid " + (activeRegion === region ? "#444" : "#2a2a2a"), color: activeRegion === region ? "#fff" : "#aaa", fontSize:12, fontWeight: activeRegion === region ? 600 : 400, padding:"7px 14px", borderRadius:6, cursor:"pointer", whiteSpace:"nowrap", fontFamily:"inherit", display:"flex", alignItems:"center", gap:8 }}>
+              <button key={region} onClick={() => setActiveRegion(region)} style={{ background: activeRegion === region ? "#f3f4f6" : "#fff", border: "1px solid " + (activeRegion === region ? "#d1d5db" : "#e5e7eb"), color: activeRegion === region ? "#222" : "#888", fontSize:12, fontWeight: activeRegion === region ? 600 : 400, padding:"7px 14px", borderRadius:6, cursor:"pointer", whiteSpace:"nowrap", fontFamily:"inherit", display:"flex", alignItems:"center", gap:8 }}>
                 <span style={{ fontSize:16, lineHeight:1 }}>
                   {region === "Africa" ? "🌍" : region === "North America" || region === "South America" ? "🌎" : region === "Asia & Pacific" ? "🌏" : "🌍"}
                 </span>
@@ -1600,7 +1589,8 @@ export default function TopModelsPage() {
             ))}
           </div>
 
-          <div style={{ padding: isMobile ? "12px 8px 40px" : "16px 16px 40px", background:"#0d0d0d" }}>
+          {/* Model grid */}
+          <div style={{ padding: isMobile ? "12px 8px 40px" : "16px 16px 40px", background:"#f7f7f9" }}>
             <div style={{ display:"grid", gridTemplateColumns:"repeat(" + cols + ", 1fr)", gap: isMobile ? 6 : 8 }}>
               {visible.map(model => (
                 <ModelCard key={activeRegion + "-" + model.rank} model={model} onClick={name => router.push("/watch/" + name)} />
@@ -1608,7 +1598,7 @@ export default function TopModelsPage() {
               {isLoading && Array.from({ length: cols }).map((_, i) => <SkeletonCard key={"sk-" + i} />)}
             </div>
             {visibleCount < TOTAL && <div ref={sentinelRef} style={{ height:1, marginTop:8 }} aria-hidden="true" />}
-            {visibleCount >= TOTAL && <div style={{ textAlign:"center", marginTop:32, color:"#444", fontSize:13 }}>You have reached the end of the leaderboard (1,000th place)</div>}
+            {visibleCount >= TOTAL && <div style={{ textAlign:"center", marginTop:32, color:"#bbb", fontSize:13 }}>You have reached the end of the leaderboard (1,000th place)</div>}
           </div>
           <Footer />
         </>

@@ -10,14 +10,13 @@ export default function LayoutShell({ children, sidebar }) {
   const isHome = pathname === "/";
 
   const [liveCount, setLiveCount] = useState(11284);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const check = () => {
       const mobile = window.innerWidth <= 768;
       setIsMobile(mobile);
-      // Auto-open sidebar only on homepage (desktop), closed everywhere else
       if (!mobile) {
         setSidebarOpen(isHome && !isTopModels);
       } else {
@@ -49,7 +48,7 @@ export default function LayoutShell({ children, sidebar }) {
         flexDirection: "column",
         height: "100vh",
         overflow: "hidden",
-        background: "#111",
+        background: "#fff",
         fontFamily: "Inter, system-ui, sans-serif",
       }}>
 
@@ -76,14 +75,14 @@ export default function LayoutShell({ children, sidebar }) {
               flexShrink: 0,
               overflowY: "auto",
               overflowX: "hidden",
-              borderRight: "1px solid #2a2a2a",
+              borderRight: "1px solid #e5e7eb",
               height: "100%",
-              background: "#1a1a1a",
+              background: "#fff",
               position: isMobile ? "absolute" : "relative",
               top: 0, left: 0, bottom: 0,
               zIndex: isMobile ? 200 : "auto",
               scrollbarWidth: "thin",
-              scrollbarColor: "#333 transparent",
+              scrollbarColor: "#e5e7eb transparent",
             }}>
               {sidebar}
             </div>
@@ -95,7 +94,7 @@ export default function LayoutShell({ children, sidebar }) {
             overflowY: "auto",
             overflowX: "hidden",
             height: "100%",
-            background: "#111",
+            background: "#f7f7f9",
           }}>
             {children}
           </div>
