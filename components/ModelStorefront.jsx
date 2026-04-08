@@ -45,17 +45,18 @@ function ProductCard({ product, onBuy }) {
   return (
     <div
       style={{
-        background: "#141414",
-        border: `1px solid ${hov ? "#333" : "#1e1e1e"}`,
+        background: "#ffffff",
+        border: `1px solid ${hov ? "#ccc" : "#e8e8e8"}`,
         borderRadius: 8, overflow: "hidden",
-        transition: "border-color 0.2s, transform 0.15s",
+        transition: "border-color 0.2s, transform 0.15s, box-shadow 0.2s",
         transform: hov ? "translateY(-2px)" : "none",
+        boxShadow: hov ? "0 4px 12px rgba(0,0,0,0.08)" : "none",
         cursor: "pointer",
       }}
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
     >
-      <div style={{ aspectRatio: "1", background: "#1a1a1a", overflow: "hidden" }}>
+      <div style={{ aspectRatio: "1", background: "#f5f5f5", overflow: "hidden" }}>
         <img
           src={product.image}
           alt={product.name}
@@ -63,9 +64,9 @@ function ProductCard({ product, onBuy }) {
         />
       </div>
       <div style={{ padding: "8px 8px 4px" }}>
-        <div style={{ fontSize: 10, color: "#ddd", fontWeight: 600, marginBottom: 2, lineHeight: 1.3 }}>{product.name}</div>
+        <div style={{ fontSize: 10, color: "#1a1a1a", fontWeight: 600, marginBottom: 2, lineHeight: 1.3 }}>{product.name}</div>
         <div style={{ fontSize: 10, color: "#e53935", fontWeight: 700, marginBottom: 5 }}>
-          🪙 {product.price.toLocaleString()}{product.currency}
+          {product.price.toLocaleString()}{product.currency}
         </div>
       </div>
       <div style={{ padding: "0 8px 8px" }}>
@@ -87,10 +88,7 @@ function ProductCard({ product, onBuy }) {
   );
 }
 
-// ── This component works both from ShopPage (onBack navigates back)
-//    and from WatchPage (onBack switches tab back to Profile)
 export default function ModelStorefront({ username, color, onBack, onBuy }) {
-  // Derive avatar initial and display name from username prop
   const displayName = username || "Alexa_Villia";
   const initial     = displayName?.[0]?.toUpperCase() || "A";
   const avatarColor = color || "linear-gradient(135deg,#e53935,#8e24aa)";
@@ -98,7 +96,7 @@ export default function ModelStorefront({ username, color, onBack, onBuy }) {
   return (
     <div style={{
       display: "flex", flexDirection: "column", height: "100%",
-      background: "#0d0d0d", color: "#fff",
+      background: "#f5f5f5", color: "#1a1a1a",
       fontFamily: "'Rajdhani','Trebuchet MS',sans-serif",
     }}>
 
@@ -115,34 +113,29 @@ export default function ModelStorefront({ username, color, onBack, onBuy }) {
         @media (max-width: 600px) { .store-content { padding: 12px 14px 40px; } }
       `}</style>
 
-      {/* ── STORE HEADER BANNER ── */}
-      <div style={{ flexShrink: 0, background: "#0d0d0d", borderBottom: "1px solid #1a1a1a", position: "relative" }}>
-
-        {/* Blurred cover image */}
+      {/* STORE HEADER BANNER */}
+      <div style={{ flexShrink: 0, background: "#ffffff", borderBottom: "1px solid #e8e8e8", position: "relative" }}>
         <div style={{ height: 110, overflow: "hidden", position: "relative" }}>
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThraG_zasU3rWm-JApmnIzbmVCpDdGS26DXQ&s"
             alt="cover"
-            style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.3, filter: "blur(4px)" }}
+            style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.2, filter: "blur(4px)" }}
           />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 20%, #0d0d0d 100%)" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 20%, #ffffff 100%)" }} />
         </div>
 
-        {/* Header content overlay */}
         <div style={{
           position: "absolute", top: 0, left: 0, right: 0, bottom: 0,
           display: "flex", alignItems: "center", padding: "0 20px",
           justifyContent: "space-between",
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-
-            {/* Back button — only shown when onBack is provided */}
             {onBack && (
               <button
                 onClick={onBack}
                 style={{
-                  background: "rgba(0,0,0,0.5)", border: "1px solid #333",
-                  borderRadius: 8, color: "#aaa", fontSize: 11,
+                  background: "rgba(255,255,255,0.9)", border: "1px solid #d0d0d0",
+                  borderRadius: 8, color: "#555", fontSize: 11,
                   cursor: "pointer", display: "flex", alignItems: "center",
                   gap: 4, padding: "5px 10px", fontFamily: "inherit", flexShrink: 0,
                 }}
@@ -154,7 +147,6 @@ export default function ModelStorefront({ username, color, onBack, onBuy }) {
               </button>
             )}
 
-            {/* Avatar */}
             <div style={{
               width: 56, height: 56, borderRadius: "50%",
               border: "3px solid #e53935", overflow: "hidden",
@@ -165,37 +157,31 @@ export default function ModelStorefront({ username, color, onBack, onBuy }) {
               {initial}
             </div>
 
-            {/* Name + online status */}
             <div>
-              <div style={{ fontSize: 18, fontWeight: 700, color: "#fff", lineHeight: 1.2 }}>
+              <div style={{ fontSize: 18, fontWeight: 700, color: "#1a1a1a", lineHeight: 1.2 }}>
                 {displayName}
               </div>
-              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.55)", display: "flex", alignItems: "center", gap: 5, marginTop: 3 }}>
+              <div style={{ fontSize: 11, color: "#888", display: "flex", alignItems: "center", gap: 5, marginTop: 3 }}>
                 <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#4caf50", display: "inline-block" }} />
                 Online Now
               </div>
             </div>
           </div>
 
-          {/* Stats */}
           <div style={{ display: "flex", gap: 20 }}>
             {[["128", "Items"], ["4.9★", "Rating"], ["2.3k", "Sales"]].map(([val, label]) => (
               <div key={label} style={{ textAlign: "center" }}>
-                <div style={{ fontSize: 15, fontWeight: 700, color: "#fff" }}>{val}</div>
-                <div style={{ fontSize: 10, color: "#aaa", marginTop: 2 }}>{label}</div>
+                <div style={{ fontSize: 15, fontWeight: 700, color: "#1a1a1a" }}>{val}</div>
+                <div style={{ fontSize: 10, color: "#888", marginTop: 2 }}>{label}</div>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* ── SCROLLABLE PRODUCT GRID ── */}
+      {/* SCROLLABLE PRODUCT GRID */}
       <div className="store-content" style={{ flex: 1, overflowY: "auto" }}>
-
-        <h2 style={{
-          fontSize: 11, fontWeight: 700, letterSpacing: 3,
-          color: "#555", marginBottom: 12, textTransform: "uppercase",
-        }}>
+        <h2 style={{ fontSize: 11, fontWeight: 700, letterSpacing: 3, color: "#999", marginBottom: 12, textTransform: "uppercase" }}>
           All Items
         </h2>
         <div className="store-grid" style={{ marginBottom: 32 }}>
@@ -204,10 +190,7 @@ export default function ModelStorefront({ username, color, onBack, onBuy }) {
           ))}
         </div>
 
-        <h2 style={{
-          fontSize: 11, fontWeight: 700, letterSpacing: 3,
-          color: "#555", marginBottom: 12, textTransform: "uppercase",
-        }}>
+        <h2 style={{ fontSize: 11, fontWeight: 700, letterSpacing: 3, color: "#999", marginBottom: 12, textTransform: "uppercase" }}>
           Top Selling Items
         </h2>
         <div className="store-grid">
