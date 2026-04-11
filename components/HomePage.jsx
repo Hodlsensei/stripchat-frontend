@@ -6,19 +6,14 @@ import { useCategory } from "./CategoryContext";
 // ── Photo pools ────────────────────────────────────────────────────────────
 const PHOTO_POOLS = {
   african: [
-    "https://thumb-cdn77.xvideos-cdn.com/7cf709be-1545-4f75-b7b2-91a2bf3c5eff/0/xv_9_p.jpg",
-    "https://thumb-cdn77.xvideos-cdn.com/bcc3ad5f-e56d-4031-89dd-9e57b0fb8a66/0/xv_18_p.jpg",
-    "https://thumb-cdn77.xvideos-cdn.com/109c8f67-92b4-4462-a1ff-557a9c24fec9/0/xv_8_p.jpg",
-    "https://thumb-cdn77.xvideos-cdn.com/1270c747-9119-4cec-a851-5939b0fffb38/0/xv_30_p.jpg",
-    "https://thumb-cdn77.xvideos-cdn.com/31873630-628a-4817-990f-68f2b7f9c2a9/0/xv_27_p.jpg",
-    "https://thumb-cdn77.xnxx-cdn.com/ae3716e7-d734-4131-86aa-23c4a7e239db/0/xn_24_t.jpg",
-    "https://ic-nss.flixcdn.com/a/Yzg5MmRiZmM3Y2Q5MzgzODhjNWE3ZDYzMjk5ZTAwOWM/webp%2Cs%28w%3A704%2Ch%3A440%29/xc/nw/nwpmaQ/frame/original/18.jpg",
-    "https://ic-vt-nss.xhcdn.com/a/MjZiODkxNmQ2NzJkMWJhajhiZmYxNmE0YTBjNzI0NGQ/s(w:2560,h:1440),webp/024/801/642/v2/2560x1440.245.webp",
-    "https://www.tongabonga.com/media/thumbs_200/1/320/20060.jpg",
-    "https://thumb-cdn77.xvideos-cdn.com/1e1fdc91-f540-4f72-acd2-58ce81d27730/0/xv_4_t.jpg",
-    "https://ic-vt-nss.xhcdn.com/a/YTdiZmYwMDk0NTM4Y2IwMTk0NjY3ZTBkY2IzZDJiYmI/s(w:2560,h:1440),webp/024/319/667/v2/2560x1440.218.webp",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQl3kh_xcjfbqmRbuqy4fdyzWGL2VYjOg4zYQ&s",
-    "https://cdn1.44sex.com/upload/photos/2025/04/INCREDIBLE%20SEX%20South%20African%20Porn%20Star%20German%20Machine%20Drilled%20Pussy%20Melani%20xgmtl%20%5B44sex.com%5D.jpg",
+    "https://cdni.pornpics.com/460/7/106/78051532/78051532_184_aa54.jpg",
+    "https://video.damplips.com/pics/wp-content/uploads/2023/08/busty-hot-blonde.jpg",
+    "https://video.damplips.com/pics/wp-content/uploads/2018/09/naked-pornstars-brazzers-orgy.jpg",
+    "https://nudeyoga.net/contents/videos_screenshots/1000/1965/330x248/1.jpg",
+    "https://erowall.com/wallpapers/original/10747.jpg",
+    "https://adultsiteranking.com/fhg/galleries/1918/16.jpg",
+    "https://static-ca-cdn.eporner.com/gallery/VV/7L/hQP9PUb7LVV/27211498-alexis-monroe-porn-star-blonde-naked-nude-boo.jpg",
+    "https://fi1-ph.ypncdn.com/videos/202212/20/421730251/original/(m=eGM68f)(mh=WE-lfUOZ5LJOaRwR)14.jpg",
   ],
   top: [
     "https://cdni.pornpics.com/460/7/63/91904270/91904270_064_e2e2.jpg",
@@ -123,7 +118,7 @@ const PHOTO_POOLS = {
 // ── Sections config per gender tab ─────────────────────────────────────────
 const SECTIONS_BY_CATEGORY = {
   girls: [
-    { key: "african",  title: "African"                    },
+    { key: "african",  title: "UK"                         },
     { key: "top",      title: "Top Free Live Sex Cams"     },
     { key: "couples",  title: "Couples Live Sex Cams"      },
     { key: "mobile",   title: "Mobile Live Sex Cams"       },
@@ -135,14 +130,14 @@ const SECTIONS_BY_CATEGORY = {
     { key: "trending", title: "Trending Couples"           },
     { key: "mobile",   title: "Mobile Couples"             },
     { key: "vr",       title: "Couples VR Cams"            },
-    { key: "african",  title: "African Couples"            },
+    { key: "african",  title: "UK Couples"                 },
   ],
   guys: [
     { key: "top",      title: "Top Guys Live Now"          },
     { key: "trending", title: "Trending Guys"              },
     { key: "mobile",   title: "Mobile Guys"                },
     { key: "vr",       title: "Guys VR Cams"               },
-    { key: "african",  title: "African Guys"               },
+    { key: "african",  title: "UK Guys"                    },
   ],
   trans: [
     { key: "top",      title: "Top Trans Live Now"         },
@@ -193,34 +188,29 @@ function generateCard(tag, index) {
   };
 }
 
-const COLS    = 6;
 const GAP     = 8;
 const BATCH_H = 12;
 const BATCH_V = 24;
 
+// Card dimensions per section type
+const CARD_W_DEFAULT = 185;
+const CARD_H_DEFAULT = 140;
+const CARD_W_MOBILE  = 162;
+const CARD_H_MOBILE  = 266;
+
 // ── Horizontal scrolling section ───────────────────────────────────────────
 function HorizontalSection({ title, tag }) {
-  const containerRef = useRef(null);
-  const scrollRef    = useRef(null);
-  const sentinelRef  = useRef(null);
-  const loadingRef   = useRef(false);
-  const nextRef      = useRef(BATCH_H);
+  const scrollRef   = useRef(null);
+  const sentinelRef = useRef(null);
+  const loadingRef  = useRef(false);
+  const nextRef     = useRef(BATCH_H);
+
+  const isMobileSection = tag === "mobile";
+  const CARD_W = isMobileSection ? CARD_W_MOBILE : CARD_W_DEFAULT;
+  const CARD_H = isMobileSection ? CARD_H_MOBILE : CARD_H_DEFAULT;
 
   const [cards,   setCards]   = useState(() => Array.from({ length: BATCH_H * 2 }, (_, i) => generateCard(tag, i)));
   const [loading, setLoading] = useState(false);
-  const [cardW,   setCardW]   = useState(0);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-    const compute = () => {
-      const w = containerRef.current.offsetWidth;
-      setCardW(Math.floor((w - (COLS - 1) * GAP) / COLS));
-    };
-    compute();
-    const ro = new ResizeObserver(compute);
-    ro.observe(containerRef.current);
-    return () => ro.disconnect();
-  }, []);
 
   useEffect(() => {
     const container = scrollRef.current;
@@ -245,10 +235,10 @@ function HorizontalSection({ title, tag }) {
     );
     observer.observe(sentinel);
     return () => observer.disconnect();
-  }, [tag, cardW]);
+  }, [tag]);
 
   const scrollRight = () => {
-    scrollRef.current?.scrollBy({ left: (cardW + GAP) * COLS, behavior: "smooth" });
+    scrollRef.current?.scrollBy({ left: (CARD_W + GAP) * 6, behavior: "smooth" });
   };
 
   const colCount = Math.ceil(cards.length / 2);
@@ -267,8 +257,11 @@ function HorizontalSection({ title, tag }) {
         }}>See All</button>
       </div>
 
-      <div ref={containerRef} style={{ position: "relative", overflow: "hidden" }}>
-        <div ref={scrollRef} style={{ overflowX: "auto", overflowY: "hidden", scrollbarWidth: "none", msOverflowStyle: "none" }}>
+      <div style={{ position: "relative", overflow: "hidden" }}>
+        <div
+          ref={scrollRef}
+          style={{ overflowX: "auto", overflowY: "hidden", scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
           <style>{`
             .hscroll::-webkit-scrollbar { display: none; }
             @keyframes shimmer {
@@ -277,35 +270,36 @@ function HorizontalSection({ title, tag }) {
             }
           `}</style>
 
-          {cardW > 0 && (
-            <div
-              className="hscroll"
-              style={{
-                display: "grid",
-                gridTemplateRows: "repeat(2, auto)",
-                gridAutoFlow: "column",
-                gridAutoColumns: cardW,
-                gap: GAP,
-                width: colCount * cardW + (colCount - 1) * GAP,
-              }}
-            >
-              {cards.map(s => (
-                <div key={s.id} style={{ width: cardW }}>
-                  <StreamCard streamer={s} gridMode />
-                </div>
-              ))}
+          <div
+            className="hscroll"
+            style={{
+              display: "grid",
+              gridTemplateRows: "repeat(2, auto)",
+              gridAutoFlow: "column",
+              gridAutoColumns: CARD_W,
+              gap: GAP,
+              width: colCount * CARD_W + (colCount - 1) * GAP,
+            }}
+          >
+            {cards.map(s => (
+              <div key={s.id} style={{ width: CARD_W }}>
+                <StreamCard streamer={s} gridMode cardHeight={CARD_H} />
+              </div>
+            ))}
 
-              {loading && Array.from({ length: BATCH_H }).map((_, i) => (
-                <div key={`sk-${i}`} style={{
-                  width: cardW, aspectRatio: "3/2", borderRadius: 8,
-                  background: "linear-gradient(90deg,#f0f0f0 25%,#e8e8e8 50%,#f0f0f0 75%)",
-                  backgroundSize: "200% 100%", animation: "shimmer 1.2s infinite",
-                }}/>
-              ))}
+            {loading && Array.from({ length: BATCH_H }).map((_, i) => (
+              <div key={`sk-${i}`} style={{
+                width: CARD_W,
+                height: CARD_H,
+                borderRadius: 8,
+                background: "linear-gradient(90deg,#f0f0f0 25%,#e8e8e8 50%,#f0f0f0 75%)",
+                backgroundSize: "200% 100%",
+                animation: "shimmer 1.2s infinite",
+              }}/>
+            ))}
 
-              <div ref={sentinelRef} style={{ width: 1, height: "100%", gridRow: "1 / span 2" }} />
-            </div>
-          )}
+            <div ref={sentinelRef} style={{ width: 1, height: "100%", gridRow: "1 / span 2" }} />
+          </div>
         </div>
 
         <button
@@ -366,14 +360,16 @@ function FeaturedSection({ cols, title }) {
         <span style={{ fontSize: 16, fontWeight: 700, color: "#1a1a1a" }}>{title}</span>
       </div>
       <div style={{ display: "grid", gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: GAP }}>
-        {cards.map(s => <StreamCard key={s.id} streamer={s} gridMode />)}
+        {cards.map(s => (
+          <StreamCard key={s.id} streamer={s} gridMode cardHeight={CARD_H_DEFAULT} />
+        ))}
       </div>
       <div ref={sentinelRef} style={{ height: 1, marginTop: 8 }} aria-hidden="true" />
       {loading && (
         <div style={{ display: "grid", gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: GAP, marginTop: 8 }}>
           {Array.from({ length: BATCH_V }).map((_, i) => (
             <div key={`sk-${i}`} style={{
-              aspectRatio: "3/2", borderRadius: 8,
+              height: CARD_H_DEFAULT, borderRadius: 8,
               background: "linear-gradient(90deg,#f0f0f0 25%,#e8e8e8 50%,#f0f0f0 75%)",
               backgroundSize: "200% 100%", animation: "shimmer 1.2s infinite",
             }}/>
@@ -397,15 +393,12 @@ export default function HomePage() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  const cols = isMobile ? 2 : COLS;
-
-  // Pick sections for the active tab; fall back to girls
   const sections = SECTIONS_BY_CATEGORY[category] ?? SECTIONS_BY_CATEGORY.girls;
   const featuredTitle = FEATURED_TITLE[category] ?? FEATURED_TITLE.girls;
 
   return (
     <div style={{ background: "#fff", minHeight: "100%", color: "#1a1a1a", fontFamily: "Inter, system-ui, sans-serif" }}>
-      <main style={{ padding: isMobile ? "16px 8px 80px" : "16px 16px 80px" }}>
+      <main style={{ padding: isMobile ? "16px 8px 80px" : "24px 32px 80px" }}>
 
         {/* Promo banner */}
         {showPromo && (
@@ -446,13 +439,13 @@ export default function HomePage() {
           </div>
         )}
 
-        {/* Horizontal sections — re-renders when category changes */}
+        {/* Horizontal sections */}
         {sections.map(sec => (
           <HorizontalSection key={`${category}-${sec.key}-${sec.title}`} title={sec.title} tag={sec.key} />
         ))}
 
-        {/* Vertical infinite featured grid */}
-        <FeaturedSection key={category} cols={isMobile ? 2 : 4} title={featuredTitle} />
+        {/* Vertical infinite featured grid — 6 columns desktop, 2 mobile */}
+        <FeaturedSection key={category} cols={isMobile ? 2 : 6} title={featuredTitle} />
 
       </main>
 

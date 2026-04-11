@@ -31,24 +31,24 @@ const PHOTOS = [
 ];
 
 const AFRICAN_PHOTOS = [
-    "https://thumb-cdn77.xvideos-cdn.com/7cf709be-1545-4f75-b7b2-91a2bf3c5eff/0/xv_9_p.jpg",
-    "https://thumb-cdn77.xvideos-cdn.com/bcc3ad5f-e56d-4031-89dd-9e57b0fb8a66/0/xv_18_p.jpg",
-    "https://thumb-cdn77.xvideos-cdn.com/109c8f67-92b4-4462-a1ff-557a9c24fec9/0/xv_8_p.jpg",
-    "https://thumb-cdn77.xvideos-cdn.com/1270c747-9119-4cec-a851-5939b0fffb38/0/xv_30_p.jpg",
-    "https://thumb-cdn77.xvideos-cdn.com/31873630-628a-4817-990f-68f2b7f9c2a9/0/xv_27_p.jpg",
-    "https://thumb-cdn77.xnxx-cdn.com/ae3716e7-d734-4131-86aa-23c4a7e239db/0/xn_24_t.jpg",
-    "https://ic-nss.flixcdn.com/a/Yzg5MmRiZmM3Y2Q5MzgzODhjNWE3ZDYzMjk5ZTAwOWM/webp%2Cs%28w%3A704%2Ch%3A440%29/xc/nw/nwpmaQ/frame/original/18.jpg",
-    "https://ic-vt-nss.xhcdn.com/a/MjZiODkxNmQ2NzJkMWJhajhiZmYxNmE0YTBjNzI0NGQ/s(w:2560,h:1440),webp/024/801/642/v2/2560x1440.245.webp",
-    "https://www.tongabonga.com/media/thumbs_200/1/320/20060.jpg",
-    "https://thumb-cdn77.xvideos-cdn.com/1e1fdc91-f540-4f72-acd2-58ce81d27730/0/xv_4_t.jpg",
-    "https://ic-vt-nss.xhcdn.com/a/YTdiZmYwMDk0NTM4Y2IwMTk0NjY3ZTBkY2IzZDJiYmI/s(w:2560,h:1440),webp/024/319/667/v2/2560x1440.218.webp",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQl3kh_xcjfbqmRbuqy4fdyzWGL2VYjOg4zYQ&s",
-    "https://cdn1.44sex.com/upload/photos/2025/04/INCREDIBLE%20SEX%20South%20African%20Porn%20Star%20German%20Machine%20Drilled%20Pussy%20Melani%20xgmtl%20%5B44sex.com%5D.jpg",
+  "https://thumb-cdn77.xvideos-cdn.com/7cf709be-1545-4f75-b7b2-91a2bf3c5eff/0/xv_9_p.jpg",
+  "https://thumb-cdn77.xvideos-cdn.com/bcc3ad5f-e56d-4031-89dd-9e57b0fb8a66/0/xv_18_p.jpg",
+  "https://thumb-cdn77.xvideos-cdn.com/109c8f67-92b4-4462-a1ff-557a9c24fec9/0/xv_8_p.jpg",
+  "https://thumb-cdn77.xvideos-cdn.com/1270c747-9119-4cec-a851-5939b0fffb38/0/xv_30_p.jpg",
+  "https://thumb-cdn77.xvideos-cdn.com/31873630-628a-4817-990f-68f2b7f9c2a9/0/xv_27_p.jpg",
+  "https://thumb-cdn77.xnxx-cdn.com/ae3716e7-d734-4131-86aa-23c4a7e239db/0/xn_24_t.jpg",
+  "https://ic-nss.flixcdn.com/a/Yzg5MmRiZmM3Y2Q5MzgzODhjNWE3ZDYzMjk5ZTAwOWM/webp%2Cs%28w%3A704%2Ch%3A440%29/xc/nw/nwpmaQ/frame/original/18.jpg",
+  "https://ic-vt-nss.xhcdn.com/a/MjZiODkxNmQ2NzJkMWJhajhiZmYxNmE0YTBjNzI0NGQ/s(w:2560,h:1440),webp/024/801/642/v2/2560x1440.245.webp",
+  "https://www.tongabonga.com/media/thumbs_200/1/320/20060.jpg",
+  "https://thumb-cdn77.xvideos-cdn.com/1e1fdc91-f540-4f72-acd2-58ce81d27730/0/xv_4_t.jpg",
+  "https://ic-vt-nss.xhcdn.com/a/YTdiZmYwMDk0NTM4Y2IwMTk0NjY3ZTBkY2IzZDJiYmI/s(w:2560,h:1440),webp/024/319/667/v2/2560x1440.218.webp",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQl3kh_xcjfbqmRbuqy4fdyzWGL2VYjOg4zYQ&s",
+  "https://cdn1.44sex.com/upload/photos/2025/04/INCREDIBLE%20SEX%20South%20African%20Porn%20Star%20German%20Machine%20Drilled%20Pussy%20Melani%20xgmtl%20%5B44sex.com%5D.jpg",
 ];
 
 const FLAGS = ["🇿🇦","🇺🇸","🇧🇷","🇨🇴","🇷🇺","🇺🇦","🇯🇵","🇫🇷","🇩🇪","🇬🇧","🇲🇽","🇳🇬","🇹🇭","🇷🇴","🇵🇱"];
 
-// SVG Icons as components
+// SVG Icons
 function MobileIcon() {
   return (
     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -66,20 +66,22 @@ function PlaneIcon() {
   );
 }
 
-export default function StreamCard({ streamer, index = 0, gridMode = false }) {
+// cardHeight prop: overrides aspect ratio with a fixed pixel height.
+// Used by HomePage to enforce 185×140px (desktop) or 162×266px (mobile sections).
+export default function StreamCard({ streamer, index = 0, gridMode = false, cardHeight }) {
   const router = useRouter();
   const [viewers, setViewers] = useState(streamer?.viewers || Math.floor(Math.random() * 30000) + 500);
 
   const isAfrican = !!streamer?.photo && streamer.photo.includes("african");
   const photoPool = isAfrican ? AFRICAN_PHOTOS : PHOTOS;
-  const photo  = streamer?.photo || photoPool[index % photoPool.length];
-  const flag   = streamer?.region || FLAGS[index % FLAGS.length];
-  const name   = streamer?.username || `Model_${index + 1}`;
-  const isNew  = streamer?.isNew || false;
-  const isVR   = streamer?.vr || false;
-  const isMob  = streamer?.mobile || Math.random() < 0.35;   // ~35% show mobile icon
-  const isHD   = streamer?.hd !== undefined ? streamer.hd : Math.random() > 0.4;
-  const hasPrivate = streamer?.hasPrivate !== undefined ? streamer.hasPrivate : Math.random() < 0.5; // ~50% show plane icon
+  const photo      = streamer?.photo || photoPool[index % photoPool.length];
+  const flag       = streamer?.region || FLAGS[index % FLAGS.length];
+  const name       = streamer?.username || `Model_${index + 1}`;
+  const isNew      = streamer?.isNew || false;
+  const isVR       = streamer?.vr || false;
+  const isMob      = streamer?.mobile || Math.random() < 0.35;
+  const isHD       = streamer?.hd !== undefined ? streamer.hd : Math.random() > 0.4;
+  const hasPrivate = streamer?.hasPrivate !== undefined ? streamer.hasPrivate : Math.random() < 0.5;
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -88,7 +90,10 @@ export default function StreamCard({ streamer, index = 0, gridMode = false }) {
     return () => clearInterval(id);
   }, [index]);
 
-  const fmtViewers = (n) => n >= 1000 ? `${(n / 1000).toFixed(1)}k` : String(n);
+  // Image container sizing: fixed height when cardHeight is supplied, else 3:2 aspect ratio
+  const imageContainerStyle = cardHeight
+    ? { width: "100%", height: cardHeight, overflow: "hidden", position: "relative", background: "#1a1a1a" }
+    : { width: "100%", aspectRatio: "3/2", overflow: "hidden", position: "relative", background: "#1a1a1a" };
 
   return (
     <div
@@ -104,7 +109,7 @@ export default function StreamCard({ streamer, index = 0, gridMode = false }) {
         animation: `fadeUp .3s ${index * 0.03}s both`,
       }}
     >
-      <div style={{ width: "100%", aspectRatio: "3/2", overflow: "hidden", position: "relative", background: "#1a1a1a" }}>
+      <div style={imageContainerStyle}>
         <img
           src={photo}
           alt={name}
@@ -122,12 +127,11 @@ export default function StreamCard({ streamer, index = 0, gridMode = false }) {
           pointerEvents: "none",
         }} />
 
-        {/* ── TOP LEFT: mobile + plane icons ── */}
+        {/* TOP LEFT: mobile + plane + HD/VR icons */}
         <div style={{ position: "absolute", top: 5, left: 5, display: "flex", gap: 3, alignItems: "center" }}>
           {isMob && (
             <span style={{
-              background: "rgba(0,0,0,0.6)",
-              borderRadius: 4,
+              background: "rgba(0,0,0,0.6)", borderRadius: 4,
               width: 18, height: 18,
               display: "flex", alignItems: "center", justifyContent: "center",
             }}>
@@ -136,8 +140,7 @@ export default function StreamCard({ streamer, index = 0, gridMode = false }) {
           )}
           {hasPrivate && (
             <span style={{
-              background: "rgba(0,0,0,0.6)",
-              borderRadius: 4,
+              background: "rgba(0,0,0,0.6)", borderRadius: 4,
               width: 18, height: 18,
               display: "flex", alignItems: "center", justifyContent: "center",
             }}>
@@ -163,22 +166,20 @@ export default function StreamCard({ streamer, index = 0, gridMode = false }) {
           )}
         </div>
 
-        {/* ── TOP RIGHT: NEW badge ── */}
+        {/* TOP RIGHT: NEW badge */}
         {isNew && (
           <div style={{
             position: "absolute", top: 5, right: 5,
             background: "#f0a500", color: "#000",
             fontSize: 8, fontWeight: 800,
             padding: "2px 6px", borderRadius: 3,
-            letterSpacing: ".05em",
-            lineHeight: 1.4,
+            letterSpacing: ".05em", lineHeight: 1.4,
           }}>
             NEW
           </div>
         )}
 
-      
-
+        {/* BOTTOM: name + flag */}
         <div style={{
           position: "absolute", bottom: 5, left: 6, right: 22,
           fontSize: 10, fontWeight: 600, color: "#fff",
