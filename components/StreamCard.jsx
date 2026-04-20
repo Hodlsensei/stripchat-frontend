@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
+const FONT = "'Inter', Helvetica, Roboto, sans-serif";
+
 const PHOTOS = [
   "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=267&fit=crop",
   "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&h=267&fit=crop",
@@ -18,16 +20,6 @@ const PHOTOS = [
   "https://images.unsplash.com/photo-1504593811423-6dd665756598?w=400&h=267&fit=crop",
   "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=400&h=267&fit=crop",
   "https://images.unsplash.com/photo-1541823709867-1b206113eafd?w=400&h=267&fit=crop",
-  "https://images.unsplash.com/photo-1521119989659-a83eee488004?w=400&h=267&fit=crop",
-  "https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?w=400&h=267&fit=crop",
-  "https://images.unsplash.com/photo-1528892952291-009c663ce843?w=400&h=267&fit=crop",
-  "https://images.unsplash.com/photo-1513956589380-bad6acb9b9d4?w=400&h=267&fit=crop",
-  "https://images.unsplash.com/photo-1511895426328-dc8714191011?w=400&h=267&fit=crop",
-  "https://images.unsplash.com/photo-1490150028299-bf57d78394e0?w=400&h=267&fit=crop",
-  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=267&fit=crop",
-  "https://images.unsplash.com/photo-1474176857210-7287d38d27c6?w=400&h=267&fit=crop",
-  "https://images.unsplash.com/photo-1475823678248-624fc6f85785?w=400&h=267&fit=crop",
-  "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=267&fit=crop",
 ];
 
 const AFRICAN_PHOTOS = [
@@ -38,20 +30,15 @@ const AFRICAN_PHOTOS = [
   "https://thumb-cdn77.xvideos-cdn.com/31873630-628a-4817-990f-68f2b7f9c2a9/0/xv_27_p.jpg",
   "https://thumb-cdn77.xnxx-cdn.com/ae3716e7-d734-4131-86aa-23c4a7e239db/0/xn_24_t.jpg",
   "https://ic-nss.flixcdn.com/a/Yzg5MmRiZmM3Y2Q5MzgzODhjNWE3ZDYzMjk5ZTAwOWM/webp%2Cs%28w%3A704%2Ch%3A440%29/xc/nw/nwpmaQ/frame/original/18.jpg",
-  "https://ic-vt-nss.xhcdn.com/a/MjZiODkxNmQ2NzJkMWJhajhiZmYxNmE0YTBjNzI0NGQ/s(w:2560,h:1440),webp/024/801/642/v2/2560x1440.245.webp",
   "https://www.tongabonga.com/media/thumbs_200/1/320/20060.jpg",
   "https://thumb-cdn77.xvideos-cdn.com/1e1fdc91-f540-4f72-acd2-58ce81d27730/0/xv_4_t.jpg",
-  "https://ic-vt-nss.xhcdn.com/a/YTdiZmYwMDk0NTM4Y2IwMTk0NjY3ZTBkY2IzZDJiYmI/s(w:2560,h:1440),webp/024/319/667/v2/2560x1440.218.webp",
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQl3kh_xcjfbqmRbuqy4fdyzWGL2VYjOg4zYQ&s",
-  "https://cdn1.44sex.com/upload/photos/2025/04/INCREDIBLE%20SEX%20South%20African%20Porn%20Star%20German%20Machine%20Drilled%20Pussy%20Melani%20xgmtl%20%5B44sex.com%5D.jpg",
 ];
 
 const FLAGS = ["🇿🇦","🇺🇸","🇧🇷","🇨🇴","🇷🇺","🇺🇦","🇯🇵","🇫🇷","🇩🇪","🇬🇧","🇲🇽","🇳🇬","🇹🇭","🇷🇴","🇵🇱"];
 
-// SVG Icons
 function MobileIcon() {
   return (
-    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width={10} height={10} viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
       <line x1="12" y1="18" x2="12.01" y2="18"/>
     </svg>
@@ -60,16 +47,14 @@ function MobileIcon() {
 
 function PlaneIcon() {
   return (
-    <svg width="10" height="10" viewBox="0 0 24 24" fill="rgba(255,255,255,0.85)" strokeWidth="0">
+    <svg width={10} height={10} viewBox="0 0 24 24" fill="rgba(255,255,255,0.85)" strokeWidth="0">
       <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
     </svg>
   );
 }
 
-// cardHeight prop: overrides aspect ratio with a fixed pixel height.
-// Used by HomePage to enforce 185×140px (desktop) or 162×266px (mobile sections).
 export default function StreamCard({ streamer, index = 0, gridMode = false, cardHeight }) {
-  const router = useRouter();
+  const router  = useRouter();
   const [viewers, setViewers] = useState(streamer?.viewers || Math.floor(Math.random() * 30000) + 500);
 
   const isAfrican = !!streamer?.photo && streamer.photo.includes("african");
@@ -77,10 +62,10 @@ export default function StreamCard({ streamer, index = 0, gridMode = false, card
   const photo      = streamer?.photo || photoPool[index % photoPool.length];
   const flag       = streamer?.region || FLAGS[index % FLAGS.length];
   const name       = streamer?.username || `Model_${index + 1}`;
-  const isNew      = streamer?.isNew || false;
-  const isVR       = streamer?.vr || false;
+  const isNew      = streamer?.isNew  || false;
+  const isVR       = streamer?.vr     || false;
   const isMob      = streamer?.mobile || Math.random() < 0.35;
-  const isHD       = streamer?.hd !== undefined ? streamer.hd : Math.random() > 0.4;
+  const isHD       = streamer?.hd     !== undefined ? streamer.hd : Math.random() > 0.4;
   const hasPrivate = streamer?.hasPrivate !== undefined ? streamer.hasPrivate : Math.random() < 0.5;
 
   useEffect(() => {
@@ -90,7 +75,6 @@ export default function StreamCard({ streamer, index = 0, gridMode = false, card
     return () => clearInterval(id);
   }, [index]);
 
-  // Image container sizing: fixed height when cardHeight is supplied, else 3:2 aspect ratio
   const imageContainerStyle = cardHeight
     ? { width: "100%", height: cardHeight, overflow: "hidden", position: "relative", background: "#1a1a1a" }
     : { width: "100%", aspectRatio: "3/2", overflow: "hidden", position: "relative", background: "#1a1a1a" };
@@ -101,68 +85,59 @@ export default function StreamCard({ streamer, index = 0, gridMode = false, card
       style={{
         width: gridMode ? "100%" : 160,
         flexShrink: gridMode ? undefined : 0,
-        borderRadius: 6,
+        /* Reference site: very slight radius (~4px), not heavily rounded */
+        borderRadius: 4,
         overflow: "hidden",
         position: "relative",
         cursor: "pointer",
-        background: "#1a1a1a",
-        animation: `fadeUp .3s ${index * 0.03}s both`,
+        background: "#111",
+        animation: `fadeUp .28s ${index * 0.025}s both`,
+        transition: "transform .18s ease, box-shadow .18s ease",
+      }}
+      onMouseEnter={e => {
+        e.currentTarget.style.transform = "translateY(-2px)";
+        e.currentTarget.style.boxShadow = "0 6px 20px rgba(0,0,0,0.35)";
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.transform = "none";
+        e.currentTarget.style.boxShadow = "none";
       }}
     >
       <div style={imageContainerStyle}>
-        <img
-          src={photo}
-          alt={name}
-          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-          onError={e => {
-            e.currentTarget.style.display = "none";
-            e.currentTarget.parentElement.style.background = "#1a1a1a";
-          }}
-        />
+        <img src={photo} alt={name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          onError={e => { e.currentTarget.style.display = "none"; }} />
 
         {/* Gradient overlay */}
         <div style={{
           position: "absolute", inset: 0,
-          background: "linear-gradient(to top,rgba(0,0,0,0.88) 0%,rgba(0,0,0,0.1) 50%,transparent 100%)",
+          background: "linear-gradient(to top,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.08) 45%,transparent 100%)",
           pointerEvents: "none",
         }} />
 
-        {/* TOP LEFT: mobile + plane + HD/VR icons */}
+        {/* TOP LEFT: mobile + plane + HD/VR badges */}
         <div style={{ position: "absolute", top: 5, left: 5, display: "flex", gap: 3, alignItems: "center" }}>
           {isMob && (
-            <span style={{
-              background: "rgba(0,0,0,0.6)", borderRadius: 4,
-              width: 18, height: 18,
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}>
+            <span style={{ background: "rgba(0,0,0,0.55)", borderRadius: 3, width: 18, height: 18,
+              display: "flex", alignItems: "center", justifyContent: "center" }}>
               <MobileIcon />
             </span>
           )}
           {hasPrivate && (
-            <span style={{
-              background: "rgba(0,0,0,0.6)", borderRadius: 4,
-              width: 18, height: 18,
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}>
+            <span style={{ background: "rgba(0,0,0,0.55)", borderRadius: 3, width: 18, height: 18,
+              display: "flex", alignItems: "center", justifyContent: "center" }}>
               <PlaneIcon />
             </span>
           )}
           {isHD && !isVR && (
             <span style={{
-              background: "rgba(0,0,0,0.6)",
-              color: "rgba(255,255,255,0.9)",
-              fontSize: 8, fontWeight: 700,
-              padding: "2px 4px", borderRadius: 3,
-              border: "1px solid rgba(255,255,255,0.25)",
-              lineHeight: 1.2,
+              background: "rgba(0,0,0,0.55)", color: "rgba(255,255,255,0.9)",
+              fontSize: 8, fontWeight: 700, padding: "2px 4px", borderRadius: 3,
+              border: "1px solid rgba(255,255,255,0.2)", lineHeight: 1.2, fontFamily: FONT,
             }}>HD</span>
           )}
           {isVR && (
-            <span style={{
-              background: "#1565c0", color: "#fff",
-              fontSize: 8, fontWeight: 700,
-              padding: "2px 5px", borderRadius: 3,
-            }}>VR</span>
+            <span style={{ background: "#1565c0", color: "#fff", fontSize: 8, fontWeight: 700,
+              padding: "2px 5px", borderRadius: 3, fontFamily: FONT }}>VR</span>
           )}
         </div>
 
@@ -171,25 +146,36 @@ export default function StreamCard({ streamer, index = 0, gridMode = false, card
           <div style={{
             position: "absolute", top: 5, right: 5,
             background: "#f0a500", color: "#000",
-            fontSize: 8, fontWeight: 800,
-            padding: "2px 6px", borderRadius: 3,
-            letterSpacing: ".05em", lineHeight: 1.4,
-          }}>
-            NEW
-          </div>
+            fontSize: 8, fontWeight: 800, padding: "2px 6px", borderRadius: 3,
+            letterSpacing: ".05em", lineHeight: 1.4, fontFamily: FONT,
+          }}>NEW</div>
         )}
 
-        {/* BOTTOM: name + flag */}
+        {/*
+          COUNTRY FLAG — moved HIGHER in the cell (above the username line).
+          Reference site: flag sits roughly 22-24px from the bottom,
+          clearly separated from the name text.
+        */}
+        <div style={{
+          position: "absolute",
+          bottom: 22,   /* higher than before — sits above the name line */
+          right: 5,
+          fontSize: 13,
+          lineHeight: 1,
+          filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.7))",
+        }}>
+          {flag}
+        </div>
+
+        {/* BOTTOM: username */}
         <div style={{
           position: "absolute", bottom: 5, left: 6, right: 22,
-          fontSize: 10, fontWeight: 600, color: "#fff",
+          fontSize: 11, fontWeight: 600, color: "#fff", fontFamily: FONT,
           whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
           textShadow: "0 1px 4px rgba(0,0,0,0.9)",
         }}>
           {name}
         </div>
-
-        <div style={{ position: "absolute", bottom: 5, right: 5, fontSize: 11 }}>{flag}</div>
       </div>
     </div>
   );

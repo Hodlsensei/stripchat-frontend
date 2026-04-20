@@ -1,16 +1,16 @@
 "use client";
 import { useState } from "react";
 import Sidebar from "./Sidebar";
-import FreeTokensModal from "./FreeTokensModal";
+import AuthModal from "./AuthModal";
 
-export default function SidebarWrapper() {
-  const [showFreeTokens, setShowFreeTokens] = useState(false);
+export default function SidebarWrapper({ collapsed = false }) {
+  const [showAuth, setShowAuth] = useState(false);
 
   return (
     <>
-      <Sidebar onOpenAuth={() => setShowFreeTokens(true)} />
-      {showFreeTokens && (
-        <FreeTokensModal onClose={() => setShowFreeTokens(false)} />
+      <Sidebar collapsed={collapsed} onOpenAuth={() => setShowAuth(true)} />
+      {showAuth && (
+        <AuthModal defaultTab="register" onClose={() => setShowAuth(false)} />
       )}
     </>
   );
