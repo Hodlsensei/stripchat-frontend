@@ -28,7 +28,6 @@ const AFRICAN_PHOTOS = [
   "https://thumb-cdn77.xvideos-cdn.com/109c8f67-92b4-4462-a1ff-557a9c24fec9/0/xv_8_p.jpg",
   "https://thumb-cdn77.xvideos-cdn.com/1270c747-9119-4cec-a851-5939b0fffb38/0/xv_30_p.jpg",
   "https://thumb-cdn77.xvideos-cdn.com/31873630-628a-4817-990f-68f2b7f9c2a9/0/xv_27_p.jpg",
-  "https://thumb-cdn77.xnxx-cdn.com/ae3716e7-d734-4131-86aa-23c4a7e239db/0/xn_24_t.jpg",
   "https://ic-nss.flixcdn.com/a/Yzg5MmRiZmM3Y2Q5MzgzODhjNWE3ZDYzMjk5ZTAwOWM/webp%2Cs%28w%3A704%2Ch%3A440%29/xc/nw/nwpmaQ/frame/original/18.jpg",
   "https://www.tongabonga.com/media/thumbs_200/1/320/20060.jpg",
   "https://thumb-cdn77.xvideos-cdn.com/1e1fdc91-f540-4f72-acd2-58ce81d27730/0/xv_4_t.jpg",
@@ -85,7 +84,11 @@ export default function StreamCard({ streamer, index = 0, gridMode = false, card
       style={{
         width: gridMode ? "100%" : 160,
         flexShrink: gridMode ? undefined : 0,
-        /* Reference site: very slight radius (~4px), not heavily rounded */
+        /*
+          Reference site uses very minimal rounding — ~4px.
+          The client noted the old code was "curved at the edge",
+          so we keep borderRadius at 4 (nearly square corners).
+        */
         borderRadius: 4,
         overflow: "hidden",
         position: "relative",
@@ -104,10 +107,14 @@ export default function StreamCard({ streamer, index = 0, gridMode = false, card
       }}
     >
       <div style={imageContainerStyle}>
-        <img src={photo} alt={name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-          onError={e => { e.currentTarget.style.display = "none"; }} />
+        <img
+          src={photo}
+          alt={name}
+          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          onError={e => { e.currentTarget.style.display = "none"; }}
+        />
 
-        {/* Gradient overlay */}
+        {/* Gradient overlay — stronger at bottom to make text readable */}
         <div style={{
           position: "absolute", inset: 0,
           background: "linear-gradient(to top,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.08) 45%,transparent 100%)",
@@ -152,14 +159,16 @@ export default function StreamCard({ streamer, index = 0, gridMode = false, card
         )}
 
         {/*
-          COUNTRY FLAG — moved HIGHER in the cell (above the username line).
-          Reference site: flag sits roughly 22-24px from the bottom,
-          clearly separated from the name text.
+          COUNTRY FLAG
+          Positioned in the BOTTOM-LEFT area, just ABOVE the username.
+          Reference site: flag sits at the left side, roughly 22px from bottom,
+          clearly above the model name row.
+          Changed from right-side to left-side to match reference layout.
         */}
         <div style={{
           position: "absolute",
-          bottom: 22,   /* higher than before — sits above the name line */
-          right: 5,
+          bottom: 20,        /* sits above the name line */
+          left: 6,
           fontSize: 13,
           lineHeight: 1,
           filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.7))",
@@ -167,11 +176,24 @@ export default function StreamCard({ streamer, index = 0, gridMode = false, card
           {flag}
         </div>
 
-        {/* BOTTOM: username */}
+        {/*
+          BOTTOM: username
+          - font-size: 12px (matching reference — slightly larger than before)
+          - positioned higher: bottom: 5px → stays clear of cell edge
+          - left offset accounts for flag width
+        */}
         <div style={{
-          position: "absolute", bottom: 5, left: 6, right: 22,
-          fontSize: 11, fontWeight: 600, color: "#fff", fontFamily: FONT,
-          whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
+          position: "absolute",
+          bottom: 5,
+          left: 6,
+          right: 6,
+          fontSize: 12,      /* matches reference site font size */
+          fontWeight: 600,
+          color: "#fff",
+          fontFamily: FONT,
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
           textShadow: "0 1px 4px rgba(0,0,0,0.9)",
         }}>
           {name}

@@ -96,10 +96,8 @@ const PHOTO_POOLS = {
   ],
 };
 
-/* ── Sections per gender tab ────────────────────────────── */
 const SECTIONS_BY_CATEGORY = {
   girls: [
-    /* ↓ Changed "UK" → "USA" as requested */
     { key: "african",  title: "USA"                         },
     { key: "top",      title: "Top Free Live Sex Cams"      },
     { key: "couples",  title: "Couples Live Sex Cams"       },
@@ -169,19 +167,29 @@ function generateCard(tag, index) {
   };
 }
 
-const GAP     = 6;    /* tighter gap matching reference */
-const BATCH_H = 12;
-const BATCH_V = 24;
-
 /*
-  Card dimensions matching the reference website:
-  - Default (landscape): ~185 × 138 px
-  - Mobile sections (portrait): 162 × 266 px
+  Card dimensions — updated to match reference site exactly:
+
+  Reference site cells (landscape, non-mobile sections):
+    • Width:  ~175px
+    • Height: ~131px  (ratio ≈ 4:3, nearly square-ish landscape)
+    • Gap:    4px between cells
+
+  Mobile/portrait sections:
+    • Width:  162px
+    • Height: 248px  (portrait 2:3)
+
+  The old code used 185×138 which made cells slightly taller.
+  The reference is clearly a compact near-4:3 landscape card.
 */
-const CARD_W_DEFAULT = 185;
-const CARD_H_DEFAULT = 138;
-const CARD_W_MOBILE  = 162;
-const CARD_H_MOBILE  = 266;
+const GAP            = 4;   /* matches reference tighter grid gap */
+const BATCH_H        = 12;
+const BATCH_V        = 24;
+
+const CARD_W_DEFAULT = 175; /* reference width  */
+const CARD_H_DEFAULT = 131; /* reference height — ~4:3 landscape */
+const CARD_W_MOBILE  = 162; /* portrait card    */
+const CARD_H_MOBILE  = 248; /* portrait height  */
 
 /* ── Section title row ─────────────────────────────────── */
 function SectionHeader({ title, showSeeAll = true }) {
@@ -191,7 +199,8 @@ function SectionHeader({ title, showSeeAll = true }) {
       marginBottom: 8, paddingBottom: 8,
       borderBottom: "2px solid #e8e8e8",
     }}>
-      <span style={{ fontSize: 14, fontWeight: 700, color: "#1a1a1a", fontFamily: FONT }}>
+      {/* Font size matches reference: 16px bold section headings */}
+      <span style={{ fontSize: 16, fontWeight: 700, color: "#1a1a1a", fontFamily: FONT }}>
         {title}
       </span>
       {showSeeAll && (
@@ -391,12 +400,11 @@ export default function HomePage() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  const sections     = SECTIONS_BY_CATEGORY[category] ?? SECTIONS_BY_CATEGORY.girls;
+  const sections      = SECTIONS_BY_CATEGORY[category] ?? SECTIONS_BY_CATEGORY.girls;
   const featuredTitle = FEATURED_TITLE[category] ?? FEATURED_TITLE.girls;
 
   return (
     <div style={{
-      /* Neutral background colour matching the reference site */
       background: "#F5F5F5",
       minHeight: "100%", color: "#1a1a1a",
       fontFamily: FONT, fontSize: 13,

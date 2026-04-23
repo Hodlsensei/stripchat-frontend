@@ -4,18 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import AllCategoriesModal from "./AllCategoriesModal";
 
-/* ─── Design tokens ──────────────────────────────────────────
-   Font: Inter → Helvetica → Roboto fallback, 12–14px body
-   Section spacing: ~60px total gap between last item of one
-   section and first item of the next, broken down as:
-     • row bottom padding       :  4px  (part of each row's 8px padding)
-     • margin-top of divider    : 20px
-     • divider line             :  1px
-     • margin-bottom of divider : 18px
-     • section-label top pad    : 12px
-     • section-label bottom pad :  5px
-   Total                        : 60px  ✓
- ──────────────────────────────────────────────────────────── */
 const FONT   = "'Inter', Helvetica, Roboto, sans-serif";
 const BG     = "#EEEEF0";
 const HOVER  = "#E3E4E6";
@@ -24,7 +12,6 @@ const ACTIVE_CLR = "#e5192b";
 const MUTED  = "#999";
 const TEXT   = "#374151";
 
-/* ─── Icon helpers ───────────────────────────────────────── */
 const Ico = ({ d, size = 17 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
     stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
@@ -59,7 +46,6 @@ const NAV_ICONS = {
   ),
 };
 
-/* ─── Static data ────────────────────────────────────────── */
 const NAV = [
   { label: "Home",              href: "/",              icon: "home"      },
   { label: "Gallery",           href: "/gallery",       icon: "gallery"   },
@@ -130,36 +116,65 @@ const POPULAR = [
   { label: "Shaven",          count: 3348 },
   { label: "Deepthroat",      count: 3745, hot: true },
   { label: "Office",          count: 1038 },
-  { label: "Foot Fetish",     count: 4281, hot: true }, // ← last item
+  { label: "Foot Fetish",     count: 4281, hot: true },
 ];
 const FOOTER_LINKS = [
-  "About Us", "Blog", "Support & FAQ", "Billing Support",
-  "Become a Model", "Affiliates",
-  "Report Content", "Media Inquiries",
-  "Privacy Policy", "Cookie Policy",
-  "Terms of Use", "All Models", "Sitemap",
-  "18 U.S.C. 2257 Record-Keeping Statement",
-];
-const LANGUAGES = [
-  "English","Spanish","Portuguese","French","German","Italian",
-  "Russian","Ukrainian","Polish","Czech","Romanian","Hungarian",
-  "Turkish","Dutch","Swedish","Norwegian","Danish","Finnish",
-  "Greek","Bulgarian","Croatian","Serbian","Thai","Japanese",
-  "Korean","Chinese (Simplified)","Chinese (Traditional)",
-  "Arabic","Hindi","Indonesian","Vietnamese","Malay",
+  { label: "About Us",                                 href: "/about" },
+  { label: "Blog",                                     href: "#"      },
+  { label: "Support & FAQ",                            href: "#"      },
+  { label: "Billing Support",                          href: "#"      },
+  { label: "Become a Model",                           href: "#"      },
+  { label: "Affiliates",                               href: "#"      },
+  { label: "Report Content",                           href: "#"      },
+  { label: "Media Inquiries",                          href: "#"      },
+  { label: "Privacy Policy",                           href: "#"      },
+  { label: "Cookie Policy",                            href: "#"      },
+  { label: "Terms of Use",                             href: "#"      },
+  { label: "All Models",                               href: "#"      },
+  { label: "Sitemap",                                  href: "#"      },
+  { label: "18 U.S.C. 2257 Record-Keeping Statement", href: "#"      },
 ];
 
-/* ─── Divider
-   margin-top: 20px + 1px line + margin-bottom: 18px = 39px
-   Combined with row padding (bottom 4px) + SecLabel top (12px)
-   + SecLabel bottom (5px) → total ≈ 60px between sections      */
+const LANGUAGES = [
+  "English",
+  "Deutsch",
+  "Français",
+  "Español",
+  "Italiano",
+  "Nederlands",
+  "Português (EU)",
+  "Português (BR)",
+  "Ελληνικά",
+  "Українська",
+  "Polski",
+  "Русский",
+  "Română",
+  "Magyar",
+  "Čeština",
+  "Hrvatski",
+  "Slovenčina",
+  "Norsk",
+  "Svenska",
+  "Dansk",
+  "Suomi",
+  "日本語",
+  "한국어",
+  "中文",
+  "繁體中文",
+  "ภาษาไทย",
+  "বাংলা",
+  "Bahasa Indonèsia",
+  "Bahasa Melayu",
+  "Tiếng Việt",
+  "العربية",
+  "Türkçe",
+];
+
+/* ─── Divider */
 const Divider = () => (
   <div style={{ height: 1, background: "#D1D3D4", margin: "20px 0 18px" }} />
 );
 
-/* ─── Section label
-   padding: 12px top, 5px bottom, 16px left
-   font: 11px, uppercase, letter-spacing 0.1em, color #999       */
 function SecLabel({ text }) {
   return (
     <div style={{
@@ -174,7 +189,6 @@ function SecLabel({ text }) {
   );
 }
 
-/* ─── Special icon (flag / VR / bolt / toy / mobile) ──────── */
 function SpecialIcon({ flagCode, vr, type }) {
   if (flagCode) return (
     <img src={`https://flagcdn.com/w20/${flagCode}.png`}
@@ -204,10 +218,6 @@ function SpecialIcon({ flagCode, vr, type }) {
   return null;
 }
 
-/* ─── Row components ─────────────────────────────────────── */
-/* Plain row: label + optional hot badge + count
-   font-size: 13px (within the 12–14px spec)
-   padding: 7px 16px (tight, consistent)                        */
 function PlainRow({ label, count, hot, href = "#" }) {
   const [hov, setHov] = useState(false);
   return (
@@ -232,7 +242,6 @@ function PlainRow({ label, count, hot, href = "#" }) {
   );
 }
 
-/* Icon row: icon + label + count */
 function IconRow({ label, count, flagCode, vr, icon, hot, href = "#" }) {
   const [hov, setHov] = useState(false);
   return (
@@ -260,7 +269,6 @@ function IconRow({ label, count, flagCode, vr, icon, hot, href = "#" }) {
   );
 }
 
-/* ─── Nav item ───────────────────────────────────────────── */
 function NavItem({ item, active, collapsed }) {
   const [hov, setHov] = useState(false);
   const isVip = item.icon === "vip";
@@ -281,7 +289,6 @@ function NavItem({ item, active, collapsed }) {
       transform: (!active && hov && !collapsed) ? "translateX(3px)" : "none",
     }}
     onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}>
-      {/* Pulsing active indicator bar */}
       {active && !collapsed && (
         <span style={{
           position: "absolute", left: 0, top: "10%", bottom: "10%",
@@ -313,11 +320,10 @@ function NavItem({ item, active, collapsed }) {
   );
 }
 
-/* ─── Footer link (12px) ─────────────────────────────────── */
-function FooterLink({ label }) {
+function FooterLink({ label, href = "#" }) {
   const [hov, setHov] = useState(false);
   return (
-    <Link href="#" style={{
+    <Link href={href} style={{
       display: "block", padding: "4px 16px",
       fontSize: 12, fontFamily: FONT,
       color: hov ? TEXT : "#6b7280",
@@ -329,7 +335,6 @@ function FooterLink({ label }) {
   );
 }
 
-/* ─── Tokens banner ──────────────────────────────────────── */
 function TokensBanner({ collapsed, onClick }) {
   const [hov, setHov] = useState(false);
   if (collapsed) return null;
@@ -369,7 +374,6 @@ function TokensBanner({ collapsed, onClick }) {
   );
 }
 
-/* ─── ALL CATEGORIES button ──────────────────────────────── */
 function AllCatsBtn({ collapsed, onClick }) {
   const [hov, setHov] = useState(false);
   return (
@@ -377,7 +381,7 @@ function AllCatsBtn({ collapsed, onClick }) {
       display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
       width: "100%", padding: collapsed ? "9px 0" : "8px 14px",
       border: `1.5px solid ${hov ? ACTIVE_CLR : "#C4C6C8"}`,
-      borderRadius: 6,
+      borderRadius: 20,
       background: hov ? ACTIVE_BG : "#F0F1F2",
       color: hov ? ACTIVE_CLR : TEXT,
       fontSize: 11, fontWeight: 700, fontFamily: FONT,
@@ -397,11 +401,11 @@ function AllCatsBtn({ collapsed, onClick }) {
   );
 }
 
-/* ─── Language dropdown ──────────────────────────────────── */
+/* ─── Language Selector ──────────────────────────────────── */
 function LanguageSelector({ collapsed }) {
-  const [open, setOpen]     = useState(false);
-  const [lang, setLang]     = useState("English");
-  const wrapRef             = useRef(null);
+  const [open, setOpen]   = useState(false);
+  const [lang, setLang]   = useState("English");
+  const wrapRef           = useRef(null);
 
   useEffect(() => {
     if (!open) return;
@@ -418,6 +422,7 @@ function LanguageSelector({ collapsed }) {
 
   return (
     <div ref={wrapRef} style={{ position: "relative", padding: "4px 12px 14px" }}>
+      {/* Trigger button */}
       <button onClick={() => setOpen(o => !o)} style={{
         display: "flex", alignItems: "center", gap: 8, width: "100%",
         padding: "8px 10px",
@@ -435,28 +440,55 @@ function LanguageSelector({ collapsed }) {
         </svg>
       </button>
 
+      {/* Dropdown — opens downward, white bg, checkmark for selected */}
       {open && (
         <div style={{
-          position: "absolute", bottom: "calc(100% - 4px)", left: 12, right: 12,
-          background: "#fff", borderRadius: 8, zIndex: 200,
-          boxShadow: "0 -6px 24px rgba(0,0,0,0.13)",
+          position: "absolute",
+          top: "calc(100% - 4px)",
+          left: 12, right: 12,
+          background: "#ffffff",
+          borderRadius: 8,
+          zIndex: 200,
+          boxShadow: "0 6px 24px rgba(0,0,0,0.13)",
           border: "1px solid #e5e7eb",
-          maxHeight: 240, overflowY: "auto",
+          maxHeight: 260,
+          overflowY: "auto",
+          scrollbarWidth: "thin",
+          scrollbarColor: "#bbb transparent",
         }}>
           {LANGUAGES.map(l => {
             const sel = l === lang;
             return (
-              <button key={l} onClick={() => { setLang(l); setOpen(false); }} style={{
-                display: "block", width: "100%", textAlign: "left",
-                padding: "7px 14px", border: "none", cursor: "pointer",
-                background: sel ? ACTIVE_BG : "transparent",
-                color: sel ? ACTIVE_CLR : TEXT,
-                fontWeight: sel ? 600 : 400, fontSize: 12, fontFamily: FONT,
-                transition: "background .1s",
-              }}
-              onMouseEnter={e => { if (!sel) e.currentTarget.style.background = "#f3f4f6"; }}
-              onMouseLeave={e => { if (!sel) e.currentTarget.style.background = "transparent"; }}>
-                {l}
+              <button
+                key={l}
+                onClick={() => { setLang(l); setOpen(false); }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  width: "100%",
+                  textAlign: "left",
+                  padding: "8px 14px",
+                  border: "none",
+                  cursor: "pointer",
+                  background: "transparent",
+                  color: sel ? ACTIVE_CLR : TEXT,
+                  fontWeight: sel ? 600 : 400,
+                  fontSize: 13,
+                  fontFamily: FONT,
+                  transition: "background .1s",
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = "#f3f4f6"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
+              >
+                <span>{l}</span>
+                {sel && (
+                  <svg width={14} height={14} viewBox="0 0 24 24" fill="none"
+                    stroke={ACTIVE_CLR} strokeWidth={2.5}
+                    strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                )}
               </button>
             );
           })}
@@ -466,7 +498,7 @@ function LanguageSelector({ collapsed }) {
   );
 }
 
-/* ─── Main Sidebar export ─────────────────────────────────── */
+/* ─── Main Sidebar ─────────────────────────────────────────── */
 export default function Sidebar({ onOpenAuth, collapsed = false }) {
   const pathname = usePathname();
   const [showCats, setShowCats] = useState(false);
@@ -482,12 +514,17 @@ export default function Sidebar({ onOpenAuth, collapsed = false }) {
 
   return (
     <>
-      {/* Keyframe for active bar pulse — injected once */}
       <style>{`
         @keyframes activePulse {
           0%,100% { opacity:1; transform:scaleY(1);   }
           50%      { opacity:.5; transform:scaleY(.8); }
         }
+        .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+        .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-scroll::-webkit-scrollbar-thumb { background: #bbb; border-radius: 4px; }
+        .lang-dropdown::-webkit-scrollbar { width: 4px; }
+        .lang-dropdown::-webkit-scrollbar-track { background: transparent; }
+        .lang-dropdown::-webkit-scrollbar-thumb { background: #bbb; border-radius: 4px; }
       `}</style>
 
       {showCats && <AllCategoriesModal onClose={closeCats}/>}
@@ -498,25 +535,21 @@ export default function Sidebar({ onOpenAuth, collapsed = false }) {
         display: "flex", flexDirection: "column",
         overflow: "hidden", fontFamily: FONT,
       }}>
-        {/* ── Scrollable body ─────────────────────────────── */}
-        <div style={{
-          flex: 1, overflowY: "auto", overflowX: "hidden",
-          padding: "8px 0 0",
-          scrollbarWidth: "thin", scrollbarColor: "#bbb transparent",
-        }}>
-
-          {/* Tokens banner */}
+        <div
+          className="sidebar-scroll"
+          style={{
+            flex: 1, overflowY: "auto", overflowX: "hidden",
+            padding: "8px 0 0",
+            scrollbarWidth: "thin", scrollbarColor: "#bbb transparent",
+          }}
+        >
           <TokensBanner collapsed={collapsed} onClick={onOpenAuth}/>
 
-          {/* ── NAV ───────────────────────────────────────── */}
           {NAV.map(item => (
             <NavItem key={item.href} item={item}
               active={pathname === item.href} collapsed={collapsed}/>
           ))}
 
-          {/* ── SPECIALS ──────────────────────────────────── */}
-          {/* Divider: 20px top + 1px + 18px bottom = 39px
-              + last nav row bottom (4px) + SecLabel (17px) = ~60px */}
           <Divider/>
           {!collapsed && <SecLabel text="Specials"/>}
           {SPECIALS.map(s =>
@@ -525,9 +558,11 @@ export default function Sidebar({ onOpenAuth, collapsed = false }) {
                 <div key={s.label} style={{ padding: "8px 0", textAlign: "center" }}>
                   {s.flagCode
                     ? <img src={`https://flagcdn.com/w20/${s.flagCode}.png`} width={20} height={14} alt={s.flagCode} style={{ borderRadius: 2, display: "inline-block" }}/>
-                    : s.vr ? <span style={{ fontSize:10,fontWeight:700,padding:"1px 3px",borderRadius:3,background:"#8b5cf6",color:"#fff" }}>VR</span>
-                    : s.icon==="bolt" ? <span style={{ color:"#f59e0b",fontSize:14 }}>⚡</span>
-                    : null}
+                    : s.vr
+                      ? <span style={{ fontSize:10,fontWeight:700,padding:"1px 3px",borderRadius:3,background:"#8b5cf6",color:"#fff" }}>VR</span>
+                      : s.icon==="bolt"
+                        ? <span style={{ color:"#f59e0b",fontSize:14 }}>⚡</span>
+                        : null}
                 </div>
               )
               : <IconRow key={s.label} label={s.label} count={s.count}
@@ -536,32 +571,32 @@ export default function Sidebar({ onOpenAuth, collapsed = false }) {
 
           {!collapsed && (
             <>
-              {/* ── AGE ─────────────────────────────────── */}
+              {/* AGE */}
               <Divider/>
               <SecLabel text="Age"/>
               {AGE.map(s => <PlainRow key={s.label} {...s}/>)}
 
-              {/* ── ETHNICITY ──────────────────────────── */}
+              {/* ETHNICITY */}
               <Divider/>
               <SecLabel text="Ethnicity"/>
               {ETHNICITY.map(s => <PlainRow key={s.label} {...s}/>)}
 
-              {/* ── BODY TYPE ──────────────────────────── */}
+              {/* BODY TYPE */}
               <Divider/>
               <SecLabel text="Body Type"/>
               {BODY_TYPE.map(s => <PlainRow key={s.label} {...s}/>)}
 
-              {/* ── HAIR ───────────────────────────────── */}
+              {/* HAIR */}
               <Divider/>
               <SecLabel text="Hair"/>
               {HAIR.map(s => <PlainRow key={s.label} {...s}/>)}
 
-              {/* ── PRIVATE SHOWS ──────────────────────── */}
+              {/* PRIVATE SHOWS */}
               <Divider/>
               <SecLabel text="Private Shows"/>
               {PRIVATE_SHOWS.map(s => <PlainRow key={s.label} {...s}/>)}
 
-              {/* ── POPULAR ────────────────────────────── */}
+              {/* POPULAR */}
               <Divider/>
               <SecLabel text="Popular"/>
               {POPULAR.map(s =>
@@ -570,36 +605,32 @@ export default function Sidebar({ onOpenAuth, collapsed = false }) {
                   : <PlainRow key={s.label} label={s.label} count={s.count} hot={s.hot}/>
               )}
 
-              {/*
-                ── ALL CATEGORIES (sticky) ────────────────
-                Placed directly after Foot Fetish (last Popular item).
-                `position: sticky; bottom: 0` means:
-                  • While scrolling through Popular → floats at the
-                    bottom of the sidebar viewport (appears "fixed").
-                  • Once Foot Fetish has scrolled past → unsticks and
-                    sits naturally below it in the document flow.
-                This matches the client spec exactly.
-              */}
+              {/* ALL CATEGORIES — sticky */}
               <div style={{
-                position: "sticky", bottom: 0, zIndex: 20,
+                position: "sticky",
+                bottom: 50,
+                zIndex: 20,
                 background: BG,
                 borderTop: "1px solid #D1D3D4",
-                padding: "8px 12px",
+                padding: "10px 12px",
+                boxShadow: '0 20px 0 20px ${BG}',
               }}>
                 <AllCatsBtn collapsed={false} onClick={openCats}/>
               </div>
 
-              {/* ── FOOTER LINKS (about us, become a model…) */}
-              <Divider/>
-              {FOOTER_LINKS.map(l => <FooterLink key={l} label={l}/>)}
+              {/* FOOTER LINKS */}
+              <div style={{ marginTop: 20 }}>
+                {FOOTER_LINKS.map(l => <FooterLink key={l.label} label={l.label} href={l.href}/>)}
+              </div>
 
-              {/* ── LANGUAGE SELECTOR ──────────────────── */}
+              {/* LANGUAGE SELECTOR — above footer links */}
               <Divider/>
+              <div style={{  paddingBottom: 140}}>
               <LanguageSelector collapsed={false}/>
+              </div>
             </>
           )}
 
-          {/* Collapsed: AllCats icon only */}
           {collapsed && (
             <div style={{ padding: "10px 6px" }}>
               <AllCatsBtn collapsed={true} onClick={openCats}/>
