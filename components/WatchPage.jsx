@@ -9,7 +9,7 @@ import PrivateShowModal from "./PrivateShowModal";
 import BuyTokensModal from "./BuyTokensModal";
 import { CartProvider } from "./CartContext";
 
-const FONT = "'DM Sans', 'Helvetica Neue', Helvetica, sans-serif";
+const FONT = "'Inter', 'Helvetica Neue', Roboto, sans-serif";
 const COLORS = ["#c0392b","#8e24aa","#1e88e5","#00acc1","#43a047","#fb8c00"];
 
 const RELATED = ["Molliexo","Lwhite1","Amy01112","Catababa67","Scarlett_girlnextdoor","misstroubleme","siennadiamond","MelisaSwan611","MONA_W","MissLolly92","Nimah_","Recura","michellycherryxx24","BonnyMolhada","SexyPetitex25","Freaky_CardiXX"];
@@ -28,46 +28,57 @@ const INTEREST_EMOJI = {
 
 const REVIEWS = [
   { stars:5, text:"sweet, hot, so much fun", date:"Jun 12, 2026", type:"Exclusive Private" },
-  { stars:5, text:"Absolutely incredible woman 😍!!!", date:"Jun 11, 2026", type:"Exclusive Private" },
+  { stars:5, text:"Absolutely incredible woman", date:"Jun 11, 2026", type:"Exclusive Private" },
   { stars:5, text:"Amazing private with this stunning, sexy lady...WOW.", date:"Jun 5, 2026", type:"Private" },
   { stars:5, text:"so sexy and beautiful I love role playing with you xx", date:"May 30, 2026", type:"Exclusive Private" },
   { stars:5, text:"superb", date:"May 27, 2026", type:"Exclusive Private" },
 ];
 
 const SCHEDULE = [
-  { day:"Monday", slots:["8:00 AM – 9:30 AM","3:00 PM – 5:30 PM"], today:false },
-  { day:"Tuesday", slots:["7:00 AM – 10:00 AM","6:45 PM – 8:30 PM"], today:true },
-  { day:"Wednesday", slots:["7:00 AM – 10:30 AM","4:00 PM – 6:00 PM"], today:false },
-  { day:"Thursday", slots:["7:00 AM – 10:00 AM"], today:false },
-  { day:"Friday", slots:["6:30 AM – 10:00 AM","1:30 PM – 4:00 PM"], today:false },
-  { day:"Saturday", slots:["6:30 AM – 9:00 AM","8:30 PM – 10:15 PM"], today:false },
-  { day:"Sunday", slots:["6:30 AM – 10:30 AM","3:00 PM – 6:00 PM","6:15 PM – 8:45 PM"], today:false },
+  { day:"Monday", slots:["8:30 AM – 12:00 AM"], today:false },
+  { day:"Tuesday", slots:["8:30 AM – 12:00 AM"], today:false },
+  { day:"Wednesday", slots:[], today:false },
+  { day:"Thursday", slots:["8:30 AM – 12:00 AM"], today:true },
+  { day:"Friday", slots:["8:30 AM – 12:00 AM"], today:false },
+  { day:"Saturday", slots:["8:30 AM – 12:00 AM"], today:false },
+  { day:"Sunday", slots:["8:30 AM – 12:00 AM"], today:false },
 ];
 
 const TIP_MENU = [
-  { label:"HI", tokens:1 },{ label:"Hi Beautiful 💋", tokens:3 },{ label:"Ask a personal Question ?", tokens:4 },
-  { label:"Hi SEXY 🤩", tokens:7 },{ label:"Blow A Kiss 😘", tokens:7 },{ label:"WOW 😛", tokens:8 },
-  { label:"YOURE HOT 👌🏻", tokens:8 },{ label:"Private Message 📩📩", tokens:10 },{ label:"Love Your OutFit 🤩", tokens:10 },
-  { label:"💝 Appreciation Tip", tokens:12 },{ label:"Make Me Smile 😃", tokens:15 },{ label:"Lets see you Twirl for me 😍", tokens:15 },
-  { label:"Slow Lip Tease UPCLOSE 💋", tokens:17 },{ label:"Don't Stop Monica 🥰🥰", tokens:20 },{ label:"Close Up Tongue Tease 😝", tokens:20 },
-  { label:"💝 Appreciation Tip", tokens:25 },{ label:"YOURE HORNY 🤩", tokens:20 },{ label:"Fap Tax", tokens:20 },
-  { label:"YOU MAKE ME HORNY", tokens:25 },{ label:"BIG Dick Tax 🍆", tokens:25 },{ label:"SMALL Dick Tax 🤣", tokens:25 },
-  { label:"Turn Around And TEASE 🥰", tokens:25 },{ label:"Spanking TEASE x 5", tokens:30 },{ label:"SlowBodyTease Reveal Something", tokens:50 },
-  { label:"Ass To Cam TEASE", tokens:50 },{ label:"Show Me Those Feet Monica 👀", tokens:50 },{ label:"SHOW Those Legs Monica 👀", tokens:50 },
-  { label:"Hands up Armpits up close 😛", tokens:55 },{ label:"Naughty Licking on Toy 😛", tokens:65 },{ label:"Quick Flash lingerie 👙", tokens:70 },
-  { label:"Full Body TEASE", tokens:99 },{ label:"Go out for Cappuccino ☕️", tokens:100 },{ label:"Slow Squeeze BREASTS UP Close", tokens:100 },
-  { label:"Dick Rating Out Loud 🍆", tokens:100 },{ label:"Oil TEASE Bottom", tokens:110 },{ label:"Remove Top Slooooowly 👙", tokens:120 },
-  { label:"JOI HandJob Worship 🍆", tokens:150 },{ label:"👙 SHOW OFF THOSE BIG BREASTS 👀", tokens:200 },{ label:"Apero Spritz For You 🥂", tokens:200 },
-  { label:"Heels on off guys", tokens:200 },{ label:"CONTROL You Lead ME", tokens:200 },{ label:"VIP Fantasy Moment 🥰", tokens:230 },
-  { label:"Outfit Change 👙", tokens:250 },{ label:"GO BUY THE LILLIES 💐", tokens:350 },{ label:"Full control lovense 5 mins ☺️", tokens:500 },
-  { label:"FULL Control 10 mins ☺️☺️☺️", tokens:999 },{ label:"Snapchat 🔥", tokens:888 },{ label:"Snapchat 10 mins video call", tokens:1000 },
-  { label:"🥂 Spoil Me 🥰", tokens:1000 },{ label:"TAKE A SPA DAY MONICA 🥰", tokens:2000 },
+  { label:"HI", tokens:1 },{ label:"Hi Beautiful", tokens:3 },{ label:"Ask a personal Question ?", tokens:4 },
+  { label:"Hi SEXY", tokens:7 },{ label:"Blow A Kiss", tokens:7 },{ label:"WOW", tokens:8 },
+  { label:"YOURE HOT", tokens:8 },{ label:"Private Message", tokens:10 },{ label:"Love Your OutFit", tokens:10 },
+  { label:"Appreciation Tip", tokens:12 },{ label:"Make Me Smile", tokens:15 },{ label:"Lets see you Twirl for me", tokens:15 },
+  { label:"Slow Lip Tease UPCLOSE", tokens:17 },{ label:"Don't Stop Monica", tokens:20 },{ label:"Close Up Tongue Tease", tokens:20 },
+  { label:"Appreciation Tip", tokens:25 },{ label:"YOURE HORNY", tokens:20 },{ label:"Fap Tax", tokens:20 },
+  { label:"YOU MAKE ME HORNY", tokens:25 },{ label:"BIG Dick Tax", tokens:25 },{ label:"SMALL Dick Tax", tokens:25 },
+  { label:"Turn Around And TEASE", tokens:25 },{ label:"Spanking TEASE x 5", tokens:30 },{ label:"SlowBodyTease Reveal Something", tokens:50 },
+  { label:"Ass To Cam TEASE", tokens:50 },{ label:"Show Me Those Feet Monica", tokens:50 },{ label:"SHOW Those Legs Monica", tokens:50 },
+  { label:"Hands up Armpits up close", tokens:55 },{ label:"Naughty Licking on Toy", tokens:65 },{ label:"Quick Flash lingerie", tokens:70 },
+  { label:"Full Body TEASE", tokens:99 },{ label:"Go out for Cappuccino", tokens:100 },{ label:"Slow Squeeze BREASTS UP Close", tokens:100 },
+  { label:"Dick Rating Out Loud", tokens:100 },{ label:"Oil TEASE Bottom", tokens:110 },{ label:"Remove Top Slooooowly", tokens:120 },
+  { label:"JOI HandJob Worship", tokens:150 },{ label:"SHOW OFF THOSE BIG BREASTS", tokens:200 },{ label:"Apero Spritz For You", tokens:200 },
+  { label:"Heels on off guys", tokens:200 },{ label:"CONTROL You Lead ME", tokens:200 },{ label:"VIP Fantasy Moment", tokens:230 },
+  { label:"Outfit Change", tokens:250 },{ label:"GO BUY THE LILLIES", tokens:350 },{ label:"Full control lovense 5 mins", tokens:500 },
+  { label:"FULL Control 10 mins", tokens:999 },{ label:"Snapchat", tokens:888 },{ label:"Snapchat 10 mins video call", tokens:1000 },
+  { label:"Spoil Me", tokens:1000 },{ label:"TAKE A SPA DAY MONICA", tokens:2000 },
 ];
 
 const KNIGHTS = [
-  { name:"SXSAARFEND", level:87, league:"royal" },{ name:"prankman1", level:39, league:"gold" },
-  { name:"bat21Lubricant", level:85, league:"royal" },{ name:"Stanley_the_m", level:85, league:"royal" },
-  { name:"hammers1266", level:62, league:"diamond" },{ name:"w1ldheart", level:83, league:"royal" },
+  { name:"SXSAARFEND", level:87, top:true },{ name:"prankman1", level:39 },
+  { name:"bat21Lubricant", level:85 },{ name:"Stanley_the_m", level:85 },
+  { name:"hammers1266", level:62 },{ name:"w1ldheart", level:83 },
+];
+
+const KING = { name:"Hejhejheja2", level:94, ultimate:true };
+
+const VIDEOS = [
+  { title:"Taking 12 inch dildo, dp, riding", duration:"14:21", likes:0, locked:true, price:250 },
+  { title:"Using 15 inch dildo squirting and tasting", duration:"08:40", likes:0, locked:true, price:175 },
+  { title:"Fingering pussy, butt plug and squirt", duration:"08:28", likes:0, locked:true, price:100 },
+  { title:"Bending over shaking asse", duration:"02:24", likes:1, locked:true, price:75 },
+  { title:"Big squirt and playing with toy", duration:"10:25", likes:4, locked:true, price:150 },
+  { title:"Using the beast dildo", duration:"02:46", likes:3, locked:true, price:100 },
 ];
 
 const ALBUMS = [
@@ -83,12 +94,12 @@ const ALBUMS = [
 ];
 
 const PANELS = [
-  { col:0, title:"My schedule\n7 am to 10 am\nI'm a morning gal\n4pm to 7pm\nAnd sometimes MORE", body:"Just saying!\nI looooooove Flowers 🌺 especially Lillie's", thumb:"linear-gradient(135deg,#6a7a4a,#3a4a2a)" },
+  { col:0, title:"My schedule\n7 am to 10 am\nI'm a morning gal\n4pm to 7pm\nAnd sometimes MORE", body:"Just saying!\nI looooooove Flowers especially Lillie's", thumb:"linear-gradient(135deg,#6a7a4a,#3a4a2a)" },
   { col:1, title:"Love summer Days Poolside", body:"One day I will take you to the lake or beach with me, Lush & Domi", thumb:"linear-gradient(135deg,#4a8aa5,#2a5570)" },
   { col:0, title:"Do You Like A Foot Show or Nylons too ?", thumb:"linear-gradient(135deg,#4a4a4a,#2a2a2a)" },
-  { col:1, title:"Things I love & like ❤️", body:"Things I like, Cappuccino, apéro Spritz, flowers!\nRunning, 3 times London marathon 1 x Robin Hood but now I love trail running.\nAnd of course I love to be here with you !" },
-  { col:0, title:"Always love a morning with you! But I try to find you later in the day too 😍😘" },
-  { col:1, title:"See you tomorrow gorgeous guys 😍", body:"Can't wait!", thumb:"linear-gradient(135deg,#5a4a5a,#332a33)" },
+  { col:1, title:"Things I love & like", body:"Things I like, Cappuccino, apero Spritz, flowers!\nRunning, 3 times London marathon 1 x Robin Hood but now I love trail running.\nAnd of course I love to be here with you !" },
+  { col:0, title:"Always love a morning with you! But I try to find you later in the day too" },
+  { col:1, title:"See you tomorrow gorgeous guys", body:"Can't wait!", thumb:"linear-gradient(135deg,#5a4a5a,#332a33)" },
 ];
 
 const BG = "#111111";
@@ -103,8 +114,6 @@ const GOLD = "#f5a623";
 const GREEN = "#4caf50";
 const PURPLE = "#8e24aa";
 
-const LEAGUE_COLORS = { royal:"#FCA311", diamond:"#8e24aa", gold:"#f5a623", silver:"#b0bec5" };
-
 function Stars({ n, size=13 }) {
   return (
     <span style={{ display:"flex", gap:1 }}>
@@ -117,27 +126,16 @@ function Stars({ n, size=13 }) {
   );
 }
 
-function HexBadge({ level, league, size=44 }) {
-  const color = LEAGUE_COLORS[league] || "#888";
-  return (
-    <div style={{ position:"relative", width:size, height:size }}>
-      <svg width={size} height={size} viewBox="0 0 100 100">
-        <path d="M43.7 2.9a12.7 12.7 0 0112.6 0l15.9 9.1 15.8 9a12.7 12.7 0 016.4 11.1L94.4 50l.04 18a12.7 12.7 0 01-6.4 11.1l-15.8 9-15.9 9.1a12.7 12.7 0 01-12.6 0l-15.9-9.1-15.8-9A12.7 12.7 0 015.6 68L5.6 50l-.04-18A12.7 12.7 0 0112 21l15.8-9 15.9-9.1z" fill={color} fillOpacity="0.9"/>
-        <text x="50" y="50" textAnchor="middle" dy="0.35em" fill="#fff" fontSize={level>9?"30":"36"} fontWeight="700" fontFamily="sans-serif">{level}</text>
-      </svg>
-    </div>
-  );
-}
-
 function DiamondIcon({ size=18 }) {
   return <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor"><path d="M12 23L0 11L4.5 2H19.5L24 11L12 23ZM20.3 10.4L17.6 5H6.4L3.7 10.4L12 18.8L20.3 10.4ZM12 14.5L7.3 9.8L8.2 8H10.9L12 9.9L13.1 8H15.8L16.7 9.8L12 14.5Z"/></svg>;
 }
 
-function LockedAlbumIcons({ size=15 }) {
+function TierIcons({ size=13 }) {
   return (
-    <div style={{ display:"flex", gap:2 }}>
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="#d63f9b"><path d="M12 23L0 11L4.5 2H19.5L24 11L12 23Z"/></svg>
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="#FCA311"><path d="M12 23L0 11L4.5 2H19.5L24 11L12 23Z"/></svg>
+    <div style={{ display:"flex", gap:4 }}>
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="#4a7fe0"><path d="M12 2L22 20H2z"/></svg>
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="#cc33ff"><path d="M12 2L22 12L12 22L2 12z"/></svg>
+      <svg width={size} height={size} viewBox="0 0 22 22" fill="#e0507a"><path d="M15.5 3a4.5 4.5 0 014.5 4.5C20 12 11 19 11 19S2 12 2 7.5A4.5 4.5 0 016.5 3c1.74 0 3.41.81 4.5 2.08A5.48 5.48 0 0115.5 3z"/></svg>
     </div>
   );
 }
@@ -187,6 +185,22 @@ function MegaphoneIcon({ size=13 }) {
   return <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 00-2.5-4.03v8.06A4.48 4.48 0 0016.5 12zM14 3.23v2.06a7 7 0 010 13.42v2.06a9 9 0 000-17.54z"/></svg>;
 }
 
+function CrownIcon({ size=14 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 16 12" fill={GOLD}>
+      <path d="M15.84 3.445a.275.275 0 00-.328.054l-3.45 3.545L8.249.136a.307.307 0 00-.108-.1.293.293 0 00-.39.1L3.94 7.044.49 3.5a.275.275 0 00-.332-.057.292.292 0 00-.126.13.31.31 0 00-.027.183l1.142 7.991c.01.072.045.136.097.183.053.047.12.072.189.071h13.137a.278.278 0 00.188-.071.302.302 0 00.098-.183l1.142-7.99a.31.31 0 00-.03-.182.292.292 0 00-.127-.129z"/>
+    </svg>
+  );
+}
+
+function ShieldIcon({ size=20 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={GOLD}>
+      <path d="M12 1L3 5v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V5l-9-4z"/>
+    </svg>
+  );
+}
+
 function PlayThumb({ thumb, duration }) {
   return (
     <div style={{ borderRadius:8, overflow:"hidden", position:"relative", aspectRatio:"16/9", background:thumb||"#222", marginBottom:8, cursor:"pointer" }}>
@@ -200,18 +214,26 @@ function PlayThumb({ thumb, duration }) {
   );
 }
 
+function LockedThumb({ price, duration, width, height }) {
+  return (
+    <div style={{ borderRadius:8, overflow:"hidden", position:"relative", width: width||"100%", height: height, aspectRatio: height?undefined:"16/9", background:"#1a1a1a", marginBottom:8, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", boxSizing:"border-box" }}>
+      <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:5 }}>
+        <TierIcons size={14}/>
+        <span style={{ color:"#fff", fontSize:12, fontWeight:700 }}>Join Fan Club</span>
+        <span style={{ color:SUBTLE, fontSize:10 }}>or</span>
+        <div style={{ display:"flex", alignItems:"center", gap:4 }}><span style={{ fontSize:11 }}>🪙</span><span style={{ color:GOLD, fontSize:12, fontWeight:800 }}>{price} tk</span></div>
+      </div>
+      {duration && <span style={{ position:"absolute", bottom:5, right:6, background:"rgba(0,0,0,0.75)", color:"#fff", fontSize:10, padding:"2px 5px", borderRadius:3 }}>{duration}</span>}
+    </div>
+  );
+}
+
 const NAVBAR_H = 48;
 
 function WatchPageInner({ username }) {
   const router = useRouter();
   const scrollRef = useRef(null);
 
-  // Deterministic seed from username so server-rendered HTML and the
-  // client's first render produce the SAME number — this is what was
-  // causing the hydration mismatch (Math.random() ran once on the server
-  // and again on the client with a different result). Random drift now
-  // only happens after mount, inside the setInterval effect below, which
-  // never runs during SSR so it can't desync.
   const initialViewers = useMemo(() => {
     if (!username) return 2000;
     let hash = 0;
@@ -243,6 +265,7 @@ function WatchPageInner({ username }) {
   const [epicGoal] = useState({ text:"Pay for my Car!", current:7, total:50000 });
   const [isLive] = useState(false);
   const [lastOnline] = useState("about 1 hour ago");
+  const [followerCount] = useState("79.3k");
 
   const color = COLORS[username?.charCodeAt(0) % COLORS.length] || RED;
   const goalPct = Math.min(100, Math.round((goalCurrent/goalAmount)*100));
@@ -274,7 +297,7 @@ function WatchPageInner({ username }) {
   return (
     <div style={{ height:"100%", background:BG, display:"flex", flexDirection:"column", overflow:"hidden", fontFamily:FONT, color:TEXT }}>
 
-      {/* TOP NAV — always visible */}
+      {/* TOP NAV */}
       <div style={{ height:NAVBAR_H, background:"#0d0d0d", borderBottom:`1px solid ${BORDER}`, display:"flex", alignItems:"center", padding:"0 12px", gap:8, flexShrink:0, position:"relative", zIndex:100 }}>
         <button onClick={()=>router.back()} style={{ background:"none", border:"none", color:MUTED, cursor:"pointer", fontSize:22, padding:"0 6px", lineHeight:1 }}>‹</button>
         <div style={{ display:"flex", alignItems:"center", gap:6, flexShrink:0, cursor:"pointer" }}>
@@ -317,18 +340,15 @@ function WatchPageInner({ username }) {
       {/* SCROLL AREA */}
       <div ref={scrollRef} style={{ flex:1, overflowY:"auto", overflowX:"hidden", scrollbarWidth:"thin", scrollbarColor:"#333 transparent" }}>
 
-        {/* ══ SHOP TAB — full page, no stream above it ══ */}
         {isShop && <ShopPage modelId={username} />}
 
-        {/* ══ STREAM + EVERYTHING ELSE — hidden when Shop is active ══ */}
         {!isShop && (
           <>
             {/* VIDEO + CHAT ROW */}
             <div style={{ display:"flex", height:`calc(100vh - ${NAVBAR_H}px)`, background:"#000", minHeight:400 }}>
 
-              {/* Video 60% */}
-              <div style={{ flex:"0 0 60%", display:"flex", flexDirection:"column", position:"relative", background:"#000", minWidth:0 }}>
-                <div style={{ flex:1, position:"relative", minHeight:0 }}>
+              <div style={{ flex:"0 0 641px", width:641, display:"flex", flexDirection:"column", position:"relative", background:"#000", minWidth:0 }}>
+                <div style={{ width:641, height:360.56, position:"relative", minHeight:0, flexShrink:0 }}>
                   {isLive ? (
                     <StreamPlayer username={username} color={color} emoji="😍" viewers={viewers}/>
                   ) : (
@@ -338,7 +358,7 @@ function WatchPageInner({ username }) {
                         <span style={{ display:"inline-block", background:"#fff", color:"#111", fontSize:11, fontWeight:800, letterSpacing:".05em", padding:"4px 14px", borderRadius:4, marginBottom:14 }}>OFFLINE</span>
                         <div style={{ fontSize:14, color:"rgba(255,255,255,0.65)", marginBottom:16 }}>Was online {lastOnline}</div>
                         <div style={{ display:"inline-flex", alignItems:"center", gap:8, background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.12)", borderRadius:24, padding:"8px 18px", marginBottom:14, fontStyle:"italic", fontSize:13, color:"#fff" }}>
-                          <MegaphoneIcon size={13}/> Thinking about you 😊
+                          <MegaphoneIcon size={13}/> Thinking about you
                         </div>
                         <br/>
                         <div style={{ display:"inline-flex", alignItems:"center", gap:10, background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:24, padding:"7px 16px" }}>
@@ -352,15 +372,15 @@ function WatchPageInner({ username }) {
                     </div>
                   )}
                 </div>
-                <div style={{ position:"relative", zIndex:2, display:"flex", alignItems:"center", padding:"10px 12px", gap:10, background:isLive?"linear-gradient(transparent, rgba(0,0,0,0.8))":"#0d0d0d" }}>
+                <div style={{ position:"relative", zIndex:2, display:"flex", alignItems:"center", padding:"0 12px", gap:10, background:isLive?"linear-gradient(transparent, rgba(0,0,0,0.8))":"#0d0d0d", width:641, height:60, flexShrink:0, boxSizing:"border-box" }}>
                   <button onClick={()=>setFollowing(f=>!f)} style={{ width:34, height:34, borderRadius:"50%", background:"rgba(255,255,255,0.1)", border:"1px solid rgba(255,255,255,0.2)", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", color:following?RED:"#fff" }}>
                     <HeartIcon filled={following} size={16}/>
                   </button>
-                  <span style={{ fontSize:12, color:"#fff", fontWeight:600 }}>{viewers>999?`${(viewers/1000).toFixed(1)}k`:viewers}</span>
+                  <span style={{ fontSize:12, color:"#fff", fontWeight:600 }}>{followerCount}</span>
                   <div style={{ flex:1 }}/>
                   <button onClick={()=>setShowTip(true)} style={{ background:GOLD, border:"none", color:"#000", fontWeight:800, fontSize:13, padding:"9px 24px", borderRadius:24, cursor:"pointer", fontFamily:FONT }}>Send Private Tip</button>
                 </div>
-                <div style={{ position:"relative", zIndex:2, background:"#0d0d0d", borderTop:`1px solid ${BORDER}`, display:"flex", alignItems:"center", padding:"8px 12px", gap:8, flexWrap:"wrap" }}>
+                <div style={{ position:"relative", zIndex:2, background:"#0d0d0d", borderTop:`1px solid ${BORDER}`, display:"flex", alignItems:"center", padding:"0 12px", gap:8, flexWrap:"wrap", width:641, height:82, flexShrink:0, boxSizing:"border-box" }}>
                   <div style={{ display:"flex", alignItems:"center", gap:5, flexShrink:0 }}>
                     <svg width="16" height="16" viewBox="0 0 22 22" fill={GREEN}><path d="M11 1C5.477 1 1 5.477 1 11a10 10 0 0020 0c0-1.16-.21-2.31-.61-3.39l-1.6 1.6c.14.59.21 1.19.21 1.79a8 8 0 11-8-8c.6 0 1.2.07 1.79.21L14.4 1.6C13.31 1.21 12.16 1 11 1zm7 0l-4 4v1.5l-2.55 2.55C11.3 9 11.15 9 11 9a2 2 0 102 2c0-.15 0-.3-.05-.45L15.5 8H17l4-4h-3V1zm-7 4a6 6 0 106 6h-2a4 4 0 11-4-4V5z"/></svg>
                     <span style={{ fontSize:12, color:GREEN, fontWeight:700 }}>Goal:</span>
@@ -372,19 +392,23 @@ function WatchPageInner({ username }) {
                   </div>
                   <span style={{ fontSize:11, color:MUTED, flexShrink:0 }}>{goalPct}%</span>
                   <div style={{ flex:1 }}/>
-                  <div style={{ fontSize:10, color:MUTED, textAlign:"right", flexShrink:0 }}>
-                    <div>King of the room:</div>
-                    <div style={{ color:GOLD, fontSize:11, fontWeight:700 }}>👑 Deleted Account</div>
+                  <div style={{ display:"flex", flexDirection:"column", alignItems:"flex-end", gap:3, flexShrink:0 }}>
+                    <span style={{ fontSize:10, color:MUTED }}>King of the room:</span>
+                    <div style={{ display:"flex", alignItems:"center", gap:5 }}>
+                      <span style={{ fontSize:11, color:MUTED }}>Tip</span>
+                      <span style={{ color:TEXT, fontSize:12, fontWeight:700, textDecoration:"underline" }}>500 tk</span>
+                      <span style={{ fontSize:11, color:MUTED }}>in total</span>
+                    </div>
                   </div>
                   <button style={{ background:"none", border:"none", color:MUTED, cursor:"pointer", fontSize:14, marginLeft:4 }}>∧</button>
                 </div>
                 <div style={{ position:"relative", zIndex:2, padding:"5px 12px", background:"#0d0d0d", borderTop:`1px solid ${BORDER}` }}>
-                  <span style={{ fontSize:12, color:"rgba(255,255,255,0.6)" }}>New Model, Stream Virgin 💋 35 degrees of HOT!</span>
+                  <span style={{ fontSize:12, color:"rgba(255,255,255,0.6)" }}>New Model, Stream Virgin. 35 degrees of HOT!</span>
                 </div>
               </div>
 
               {/* Chat 40% */}
-              <div style={{ flex:"0 0 40%", display:"flex", flexDirection:"column", background:"#111", borderLeft:`1px solid ${BORDER}`, overflow:"hidden", height:"100%" }}>
+              <div style={{ flex:"0 0 436px", width:436, display:"flex", flexDirection:"column", background:"#111", borderLeft:`1px solid ${BORDER}`, overflow:"hidden", height:"100%", fontSize:14 }}>
                 <div style={{ display:"flex", alignItems:"center", borderBottom:`1px solid ${BORDER}`, height:44, flexShrink:0, background:"#111" }}>
                   <button onClick={()=>setChatTab("Public")} style={{ background:"none", border:"none", cursor:"pointer", padding:"0 14px", height:"100%", fontSize:12, color:chatTab==="Public"?TEXT:MUTED, borderBottom:chatTab==="Public"?`2px solid ${RED}`:"2px solid transparent", fontFamily:FONT, fontWeight:chatTab==="Public"?600:400, display:"flex", alignItems:"center", gap:5 }}>
                     <svg width="13" height="13" viewBox="0 0 100 100" fill="currentColor"><path d="M85.5 0h-71A14.5 14.5 0 000 14.5v53.3a14.5 14.5 0 0014.5 14.5H25v17.2l23.5-17.2h37A14.5 14.5 0 00100 67.8V14.5A14.5 14.5 0 0085.5 0z"/></svg>
@@ -395,10 +419,9 @@ function WatchPageInner({ username }) {
                     Private
                   </button>
                   <button style={{ background:"none", border:"none", cursor:"pointer", padding:"0 10px", height:"100%", fontSize:12, color:MUTED, fontFamily:FONT, display:"flex", alignItems:"center", gap:4 }}>
-                    <svg width="14" height="14" viewBox="0 0 100 100" fill={MUTED}><path d="M92.6 77.4c-5.4-4.6-24.4-12.2-24.4-12.2s-12.1-6-6-12.2c2.4-2.4 3.9-6.9 4.7-11.7 1.4 0 3.3-3 4.3-7.2 1.1-4.3.8-8.1-.6-8.5-.7-.2-1.6.5-2.4 1.8v-4.8c0-6-6-18.2-18.2-18.2S31.8 16.6 31.8 22.6v4.8c-.8-1.3-1.7-2-2.4-1.8-1.4.4-1.7 4.2-.6 8.5 1 4.1 2.9 7.2 4.3 7.2.9 4.8 2.3 9.3 4.8 11.7 6 6.1-6.1 12.2-6.1 12.2s-19 7.6-24.3 12.2C2 81.9 1.4 95.6 1.4 95.6h97.2s-.7-13.7-6-18.2z"/></svg>
-                    <span>10</span>
+                    <svg width="14" height="14" viewBox="0 0 22 20" fill={MUTED}><path d="M11 20S0 12.6 0 6.5C0 2.9 2.9 0 6.5 0 8.7 0 10.6 1 11 2.6 11.4 1 13.3 0 15.5 0 19.1 0 22 2.9 22 6.5 22 12.6 11 20 11 20z"/></svg>
+                    <span>1</span>
                   </button>
-                  <button style={{ background:"none", border:"none", cursor:"pointer", padding:"0 8px", height:"100%", color:MUTED, display:"flex", alignItems:"center" }}><DiamondIcon size={16}/></button>
                   <div style={{ flex:1 }}/>
                   <button style={{ background:"none", border:"none", color:MUTED, cursor:"pointer", padding:"0 12px", fontSize:18, display:"flex", alignItems:"center" }}>⋮</button>
                 </div>
@@ -428,7 +451,7 @@ function WatchPageInner({ username }) {
 
                 <div style={{ borderTop:`1px solid ${BORDER}`, background:"#111", flexShrink:0 }}>
                   <button style={{ width:"100%", background:"none", border:"none", cursor:"pointer", padding:"8px 12px", display:"flex", alignItems:"center", gap:8 }}>
-                    <svg width="26" height="26" viewBox="0 0 32 27" fill={GOLD}><path d="M11.16.57c-2.78 0-5.3.5-7.23 1.4C2.13 2.8.76 4.04.6 5.63L.57 17.37v3.76c0 1.73 1.45 3.08 3.36 3.97 1.92.89 4.45 1.4 7.23 1.4 2.57 0 4.91-.44 6.77-1.21 1.08.38 2.25.58 3.48.58 5.46 0 9.9-4.11 9.9-9.17 0-4.95-4.26-9-9.56-9.16v-1.9h-.02c-.17-1.6-1.55-2.84-3.34-3.67a17.54 17.54 0 00-7.23-1.4zm0 1.9c2.5 0 4.76.48 6.3 1.2 1.55.71 2.24 1.57 2.24 2.28S19 7.52 17.47 8.23c-1.54.72-3.8 1.2-6.31 1.2-2.5 0-4.76-.48-6.3-1.2-1.05-.59-2.14-1.32-2.23-2.37.06-.7.74-1.5 2.22-2.2 1.55-.71 3.8-1.2 6.31-1.2zM2.63 9.2c.4.27.84.52 1.3.73 1.92.89 4.45 1.4 7.23 1.4.8 0 1.58-.05 2.34-.13a9.05 9.05 0 00-1.24 1.98 15.63 15.63 0 01-7.4-1.16c-1.5-.69-2.19-1.51-2.23-2.2V9.2zm18.78.23c4.35 0 7.85 3.24 7.85 7.27 0 4.03-3.5 7.28-7.85 7.28s-7.86-3.25-7.86-7.28 3.5-7.27 7.86-7.27z"/></svg>
+                    <svg width="26" height="26" viewBox="0 0 32 27" fill={GOLD}><path d="M11.16.57c-2.78 0-5.3.5-7.23 1.4C2.13 2.8.76 4.04.6 5.63L.57 17.37v3.76c0 1.73 1.45 3.08 3.36 3.97 1.92.89 4.45 1.4 7.23 1.4 2.57 0 4.91-.44 6.77-1.21 1.08.38 2.25.58 3.48.58 5.46 0 9.9-4.11 9.9-9.17 0-4.95-4.26-9-9.56-9.16v-1.9h-.02c-.17-1.6-1.55-2.84-3.34-3.67a17.54 17.54 0 00-7.23-1.4zm0 1.9c2.5 0 4.76.48 6.3 1.2 1.55.71 2.24 1.57 2.24 2.28S19 7.52 17.47 8.23c-1.54.72-3.8 1.2-6.31 1.2-2.5 0-4.76-.48-6.3-1.2-1.05-.59-2.14-1.32-2.23-2.37.06-.7.74-1.5 2.22-2.2 1.55-.71 3.8-1.2 6.31-1.2zM2.63 9.2c.4.27.84.52 1.3.73 1.92.89 4.45 1.4 7.23 1.4.8 0 1.58-.05 2.34-.13a9.05 9.05 0 00-1.24 1.98 15.63 15.63 0 01-7.4-1.16c-1.5-.69-2.19-1.51-2.23-2.2V9.2zm18.78.23c4.35 0 7.85 3.24 7.85 7.27 0 4.03-3.5 7.28-7.85 7.28s-7.86-3.25-7.86-7.28 3.5-7.27 7.86-7.27zM2.63 12.98c.4.27.84.52 1.3.74 1.92.88 4.45 1.4 7.23 1.4l.5-.01a8.51 8.51 0 00-.16 1.6l.01.3h-.35c-2.5 0-4.76-.47-6.3-1.19-1.52-.7-2.2-1.53-2.23-2.23v-.6zm0 3.8c.4.27.84.51 1.32.73a17.5 17.5 0 007.84 1.4c.17.65.43 1.26.75 1.85-.45.04-.91.05-1.38.05-2.5 0-4.76-.48-6.3-1.2-1.54-.7-2.23-1.55-2.24-2.26v-.58zm0 3.79c.4.27.83.52 1.3.74 1.92.89 4.45 1.4 7.23 1.4.9 0 1.78-.06 2.62-.17a9.7 9.7 0 001.76 1.54c-1.28.33-2.78.53-4.38.53-2.5 0-4.76-.48-6.3-1.2-1.55-.71-2.24-1.57-2.24-2.28v-.56z"/></svg>
                     <div style={{ textAlign:"left", flex:1 }}>
                       <div style={{ fontSize:12, color:TEXT }}><span style={{ color:GREEN, fontWeight:600 }}>Get 50 free tokens</span> in the hourly draw</div>
                       <div style={{ fontSize:11, color:MUTED }}>Winners will be announced in <span style={{ color:TEXT, fontWeight:700, background:"#222", padding:"1px 6px", borderRadius:3 }}>{lotteryTime}</span></div>
@@ -441,7 +464,7 @@ function WatchPageInner({ username }) {
 
             {/* PROFILE COVER */}
             <div style={{ background:"#111", position:"relative" }}>
-              <div style={{ width:"100%", height:180, position:"relative", overflow:"hidden", background:`linear-gradient(135deg, ${color}44 0%, #1a1a1a 100%)` }}>
+              <div style={{ width:1087, height:364, position:"relative", overflow:"hidden", background:`linear-gradient(135deg, ${color}44 0%, #1a1a1a 100%)`, maxWidth:"100%" }}>
                 <div style={{ position:"absolute", inset:0, background:"linear-gradient(to bottom, transparent 40%, #111 100%)" }}/>
                 <button style={{ position:"absolute", top:10, right:10, background:"rgba(0,0,0,0.5)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:4, color:"#fff", padding:"4px 8px", cursor:"pointer", fontSize:11, display:"flex", alignItems:"center", gap:4 }}>
                   <svg width="14" height="14" viewBox="0 0 100 100" fill="currentColor"><path d="M0 0v39h11V11h28V0H11zm11 61H0v39h39V89H11zm78 28H61v11h39V61H89zm0-89H61v11h28v28h11V0z"/></svg>
@@ -456,12 +479,10 @@ function WatchPageInner({ username }) {
                   <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:6, flexWrap:"wrap" }}>
                     <h2 style={{ fontSize:20, fontWeight:800, color:TEXT, margin:0 }}>{username}</h2>
                     <svg width="18" height="18" viewBox="0 0 100 100" fill="#d63f9b"><path d="m50 24.1c14.3 0 26 11.6 26 25.9 0 13.2-9.8 24-22.5 25.7v5.7h5.5v5.5h-5.5v5.5h-6.8v-5.5h-5.5v-5.5h5.5v-5.7c-12.8-1.7-22.6-12.5-22.6-25.7 0-14.3 11.6-25.9 25.9-25.9zm0 6.8c-10.6 0-19.1 8.5-19.1 19.1s8.5 19.1 19.1 19.1 19.1-8.5 19.1-19.1-8.5-19.1-19.1-19.1z"/></svg>
-                    <a href="#" style={{ display:"flex", alignItems:"center", gap:4, textDecoration:"none" }}>
-                      <div style={{ display:"flex", alignItems:"center", gap:4, background:"#1a1a1a", border:`1px solid ${BORDER}`, borderRadius:20, padding:"2px 10px" }}>
-                        <HexBadge level={713} league="silver" size={22}/>
-                        <span style={{ fontSize:11, color:TEXT, fontWeight:600 }}>713</span>
-                      </div>
-                    </a>
+                    <div style={{ display:"flex", alignItems:"center", gap:6, background:"#1a1a1a", border:`1px solid ${BORDER}`, borderRadius:20, padding:"4px 12px" }}>
+                      <span style={{ fontSize:11 }}>💠</span>
+                      <span style={{ fontSize:12, color:TEXT, fontWeight:700 }}>839</span>
+                    </div>
                   </div>
                 </div>
                 <div style={{ display:"flex", alignItems:"center", gap:6, paddingBottom:4, flexWrap:"wrap", justifyContent:"flex-end" }}>
@@ -474,7 +495,7 @@ function WatchPageInner({ username }) {
                 </div>
               </div>
               <div style={{ display:"flex", padding:"0 20px", borderBottom:`1px solid ${BORDER}` }}>
-                {[{label:"Profile",key:"Profile"},{label:"Videos",count:1,key:"Videos"},{label:"Photos",count:47,key:"Photos"},{label:"Fan Club & Feed",key:"Fan Club"}].map(t => {
+                {[{label:"Profile",key:"Profile"},{label:"Videos",count:VIDEOS.length,key:"Videos"},{label:"Photos",count:47,key:"Photos"},{label:"Fan Club & Feed",key:"Fan Club"}].map(t => {
                   const active = profileTab === t.key;
                   return (
                     <button key={t.key} onClick={()=>setProfileTab(t.key)} style={{ background:"none", border:"none", cursor:"pointer", padding:"10px 16px", fontSize:13, fontFamily:FONT, color:active?TEXT:MUTED, borderBottom:active?`2px solid ${RED}`:"2px solid transparent", fontWeight:active?700:400, display:"flex", alignItems:"center", gap:4 }}>
@@ -486,31 +507,50 @@ function WatchPageInner({ username }) {
             </div>
 
             {/* PROFILE BODY */}
-            <div style={{ background:BG, padding:"18px 20px", display:"grid", gridTemplateColumns:"3fr 2fr", gap:16, alignItems:"start" }}>
+            <div style={{ background:BG, padding:"18px 20px", display:"grid", gridTemplateColumns:"629.08px 445.91px", gap:16, alignItems:"start", justifyContent:"center" }}>
               <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
-                <Card>
+                <Card style={{ width:629.08, height:529.8, boxSizing:"border-box", overflowY:"auto" }}>
                   <SectionTitle>Welcome to {username}'s webcam room!</SectionTitle>
                   <div style={{ display:"grid", gridTemplateColumns:"120px 1fr", gap:"8px 0", fontSize:13 }}>
-                    {[["Languages:","English, French"],["Age:","58 years old"],["Interested in:","Everybody"],["Body type:","Medium Build"],["Ethnicity:","White"],["Eye color:","Blue"]].map(([l,v],i) => (
+                    {[
+                      ["Name:","Isabella"],
+                      ["From:","🇬🇧 United Kingdom"],
+                      ["Languages:","English"],
+                      ["Age:","43 years old"],
+                      ["Interested in:","Everybody"],
+                      ["Body type:","Curvy"],
+                      ["Specifics:","Big Ass, Big Clit, Big Nipples, Big Tits, Boots, Bubblebutt, Chubbies, Hairy Pussy, Hairy armpits, Long Hair"],
+                      ["Ethnicity:","White"],
+                      ["Hair:","Blonde"],
+                      ["Eye color:","Brown"],
+                      ["Subculture:","Housewives"],
+                    ].map(([l,v],i) => (
                       <div key={i} style={{ display:"contents" }}><span style={{ color:MUTED, fontSize:12 }}>{l}</span><span style={{ color:"#ccc", fontSize:12 }}>{v}</span></div>
                     ))}
                     <span style={{ color:MUTED, fontSize:12, paddingTop:4 }}>Interests:</span>
                     <div style={{ display:"flex", flexWrap:"wrap", gap:5, paddingTop:3 }}>
-                      {["Action","Adventure","Bars","Beach","Cafes, Restaurants","Coffee","Comedy","Concerts","Documentary","Drama","Gin","Meditation","Picnics","Seafood","Shopping"].map(i=>(
+                      {["Anal","Blowjob","Cuckold","Doggy Style","Fisting","Squirt","Anime","Chinese","Cocktails","Coffee","Fantasy","Football/Soccer","Mindfulness","Sci-Fi","Techno"].map(i=>(
                         <Tag key={i} label={i} emoji={INTEREST_EMOJI[i]}/>
                       ))}
                     </div>
                   </div>
                 </Card>
                 <Card>
+                  <span style={{ color:MUTED, fontSize:12, display:"block", marginBottom:6 }}>Social links:</span>
+                  <div style={{ display:"flex", gap:10 }}>
+                    <Tag label="X"/>
+                    <Tag label="Amazon Wishlist"/>
+                  </div>
+                </Card>
+                <Card style={{ width:629.08, height:743, boxSizing:"border-box", overflowY:"auto" }}>
                   <div style={{ display:"flex", justifyContent:"space-between", marginBottom:12 }}>
                     <div>
                       <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:2 }}><OrangeHeartIcon size={18}/><span style={{ fontSize:14, fontWeight:700, color:TEXT }}>My Private Shows</span></div>
                       <span style={{ fontSize:12, color:GOLD, fontWeight:600 }}>from {privatePrice} tk/min</span>
                     </div>
                     <div style={{ textAlign:"right" }}>
-                      <div style={{ fontSize:11, color:MUTED, marginBottom:4 }}>59 ratings</div>
-                      <div style={{ display:"flex", alignItems:"center", gap:6 }}><span style={{ fontSize:20, fontWeight:800, color:TEXT }}>4.4</span><Stars n={4} size={12}/></div>
+                      <div style={{ fontSize:11, color:MUTED, marginBottom:4 }}>97 ratings</div>
+                      <div style={{ display:"flex", alignItems:"center", gap:6 }}><span style={{ fontSize:20, fontWeight:800, color:TEXT }}>4.9</span><Stars n={5} size={12}/></div>
                     </div>
                   </div>
                   <div style={{ display:"flex", alignItems:"center", gap:10, background:"#1e1800", border:"1px solid #3a2e00", borderRadius:8, padding:"10px 12px", marginBottom:12 }}>
@@ -518,26 +558,32 @@ function WatchPageInner({ username }) {
                     <div><div style={{ fontSize:13, fontWeight:700, color:GOLD, marginBottom:2 }}>Best for Privates</div><div style={{ fontSize:12, color:MUTED }}>One of the highest-rated models for Private shows</div></div>
                   </div>
                   <div style={{ display:"flex", alignItems:"center", gap:5, marginBottom:7 }}><span style={{ fontSize:14 }}>🔥</span><span style={{ fontSize:13, fontWeight:700, color:TEXT }}>I Do in Private Shows</span></div>
-                  <p style={{ color:MUTED, fontSize:12, lineHeight:1.9, margin:0 }}>69 Position, Yoga, Upskirt, Twerk, Topless, Spanking, Smoking, Oil Show, Nylon, Handjob, Humiliation, Heels, Jerk-off Instruction, Massage, Masturbation, Cuckold, Flashing, Foot Fetish, Footjob, Tittyfuck, Mistress, Leather, Dirty Talk, Cock Rating, Blowjob, Doggy Style, Facesitting, Role Play, Striptease</p>
+                  <p style={{ color:MUTED, fontSize:12, lineHeight:1.9, margin:"0 0 16px" }}>Anal Toys, Cock Rating, Humiliation, Spanking, Dildo or Vibrator, Flashing, Gagging, Topless, Anal, Blowjob, Dirty Talk, Fingering, Foot Fetish, Jerk-off Instruction, Masturbation, Mistress, Sex Toys, Squirt</p>
+                  <div style={{ borderTop:`1px solid ${BORDER}`, paddingTop:14 }}>
+                    <SectionTitle>Users' Reviews <span style={{ color:MUTED, fontWeight:400, fontSize:13 }}>30</span></SectionTitle>
+                    {REVIEWS.map((r,i) => (
+                      <div key={i} style={{ paddingBottom:12, marginBottom:i<REVIEWS.length-1?12:0, borderBottom:i<REVIEWS.length-1?`1px solid ${BORDER}`:"none" }}>
+                        <Stars n={r.stars} size={12}/>
+                        <p style={{ color:"#ccc", fontSize:12, margin:"6px 0 3px", lineHeight:1.6 }}>{r.text}</p>
+                        <span style={{ color:SUBTLE, fontSize:11 }}>{r.date} • <span style={{ color:MUTED }}>{r.type}</span></span>
+                      </div>
+                    ))}
+                    <button style={{ width:"100%", marginTop:4, background:"none", border:"none", color:MUTED, fontSize:12, cursor:"pointer", fontFamily:FONT, display:"flex", alignItems:"center", justifyContent:"center", gap:4, padding:"6px 0" }}>
+                      See More <svg width="8" height="12" viewBox="0 0 8 13" fill={MUTED}><path d="M1 1.2a1 1 0 011.4 0L7 5.77A1 1 0 017 7.2l-4.6 4.6A1 1 0 111 10.36l3.87-3.89L1 2.6a1 1 0 010-1.4z"/></svg>
+                    </button>
+                  </div>
                 </Card>
-                <Card>
-                  <SectionTitle>Users' Reviews <span style={{ color:MUTED, fontWeight:400, fontSize:13 }}>10</span></SectionTitle>
-                  {REVIEWS.map((r,i) => (
-                    <div key={i} style={{ paddingBottom:12, marginBottom:i<REVIEWS.length-1?12:0, borderBottom:i<REVIEWS.length-1?`1px solid ${BORDER}`:"none" }}>
-                      <Stars n={r.stars} size={12}/>
-                      <p style={{ color:"#ccc", fontSize:12, margin:"6px 0 3px", lineHeight:1.6 }}>{r.text}</p>
-                      <span style={{ color:SUBTLE, fontSize:11 }}>{r.date} • <span style={{ color:MUTED }}>{r.type}</span></span>
-                    </div>
-                  ))}
-                </Card>
-                <Card>
+                <Card style={{ width:629.08, height:266.8, boxSizing:"border-box" }}>
                   <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:4 }}><span style={{ fontSize:14, fontWeight:700, color:TEXT }}>{username}'s Epic Goal</span><span style={{ color:MUTED, cursor:"pointer", fontSize:12 }}>ⓘ</span></div>
                   <p style={{ color:PURPLE, fontSize:14, fontWeight:700, margin:"0 0 12px" }}>{epicGoal.text}</p>
                   <div style={{ background:CARD2, border:`1px solid ${BORDER}`, borderRadius:8, padding:"10px 14px", marginBottom:12 }}>
                     <div style={{ display:"flex", justifyContent:"space-between", marginBottom:6 }}><span style={{ color:MUTED, fontSize:12 }}>{epicGoal.current} tk / {epicGoal.total.toLocaleString()} tk</span><span style={{ color:MUTED, fontSize:12 }}>{epicPct}%</span></div>
                     <div style={{ height:4, background:"#333", borderRadius:4, overflow:"hidden" }}><div style={{ width:`${epicPct}%`, height:"100%", background:PURPLE, borderRadius:4 }}/></div>
                   </div>
-                  <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}><span style={{ color:MUTED, fontSize:12 }}>2 contributors</span><button style={{ background:GOLD, border:"none", color:"#000", fontWeight:800, fontSize:12, padding:"7px 20px", borderRadius:20, cursor:"pointer", fontFamily:FONT }}>Contribute</button></div>
+                  <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:10 }}><span style={{ color:MUTED, fontSize:12 }}>9 contributors</span><button style={{ background:GOLD, border:"none", color:"#000", fontWeight:800, fontSize:12, padding:"7px 20px", borderRadius:20, cursor:"pointer", fontFamily:FONT }}>Contribute</button></div>
+                  <button style={{ width:"100%", background:"none", border:"none", color:MUTED, fontSize:12, cursor:"pointer", fontFamily:FONT, display:"flex", alignItems:"center", justifyContent:"center", gap:4, padding:"6px 0", borderTop:`1px solid ${BORDER}` }}>
+                    Previously Achieved Epic Goals <svg width="10" height="7" viewBox="0 0 10 7" fill={MUTED}><path d="M1 1l4 4 4-4"/></svg>
+                  </button>
                 </Card>
                 <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
                   {PANELS.map((p,i) => (
@@ -550,37 +596,28 @@ function WatchPageInner({ username }) {
                     </div>
                   ))}
                 </div>
-                <Card>
-                  <SectionTitle>{username}'s Categories</SectionTitle>
-                  {[{label:"My Specifics:",tags:MY_SPECIFICS},{label:"I Do in My Shows:",tags:I_DO_IN_SHOWS},{label:"I Exclusively Do in Private:",tags:EXCLUSIVELY_PRIVATE}].map(({label,tags}) => (
-                    <div key={label} style={{ marginBottom:12 }}>
-                      <span style={{ color:MUTED, fontSize:11, display:"block", marginBottom:6 }}>{label}</span>
-                      <div style={{ display:"flex", flexWrap:"wrap", gap:5 }}>{tags.map(t => <Tag key={t} label={t}/>)}</div>
-                    </div>
-                  ))}
-                  <div style={{ marginTop:4 }}>
-                    <p style={{ color:TEXT, fontSize:13, fontWeight:600, marginBottom:8 }}>Related Mixed Categories</p>
-                    <div style={{ display:"flex", flexWrap:"wrap", gap:5 }}>
-                      {RELATED_MIXED.map(t => <Tag key={t} label={t}/>)}
-                      <a href="#" style={{ display:"inline-block", background:"transparent", border:`1px solid ${BORDER}`, color:MUTED, fontSize:12, padding:"4px 12px", borderRadius:20, cursor:"pointer", textDecoration:"none" }}>ALL CATEGORIES +</a>
-                    </div>
-                  </div>
-                </Card>
               </div>
 
               <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
-                <Card>
+                <Card style={{ width:445.91, height:667.53, boxSizing:"border-box", overflowY:"auto" }}>
                   <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:12 }}>
-                    <div style={{ display:"flex", alignItems:"center", gap:6 }}><span style={{ fontSize:14, fontWeight:700, color:TEXT }}>Videos</span><span style={{ color:MUTED, fontSize:12 }}>1</span></div>
+                    <div style={{ display:"flex", alignItems:"center", gap:6 }}><span style={{ fontSize:14, fontWeight:700, color:TEXT }}>Videos</span><span style={{ color:MUTED, fontSize:12 }}>{VIDEOS.length}</span></div>
                     <a href="#" style={{ background:"#2a2a2a", border:"none", color:"#ccc", fontSize:11, cursor:"pointer", padding:"4px 12px", borderRadius:20, fontFamily:FONT, textDecoration:"none", display:"flex", alignItems:"center", gap:3 }}>See All <svg width="8" height="12" viewBox="0 0 8 13" fill="#ccc"><path d="M1 1.2a1 1 0 011.4 0L7 5.77A1 1 0 017 7.2l-4.6 4.6A1 1 0 111 10.36l3.87-3.89L1 2.6a1 1 0 010-1.4z"/></svg></a>
                   </div>
-                  <PlayThumb thumb="linear-gradient(160deg,#9a8a6a 0%,#5a4a3a 45%,#2a2a2a 100%)" duration="00:14"/>
-                  <div style={{ fontSize:12, color:"#ccc", marginBottom:4 }}>I celebrate Me !</div>
-                  <div style={{ display:"flex", alignItems:"center", gap:3 }}><HeartIcon size={13}/><span style={{ fontSize:11, color:MUTED }}>50</span></div>
+                  <div style={{ display:"grid", gridTemplateColumns:"197.95px 197.95px", gap:12, justifyContent:"space-between" }}>
+                    {VIDEOS.map((v,i) => (
+                      <div key={i}>
+                        <LockedThumb price={v.price} duration={v.duration} width={197.95} height={110.89}/>
+                        <div style={{ fontSize:12, color:"#ccc", marginBottom:4, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{v.title}</div>
+                        <div style={{ display:"flex", alignItems:"center", gap:3 }}><HeartIcon size={13}/><span style={{ fontSize:11, color:MUTED }}>{v.likes}</span></div>
+                      </div>
+                    ))}
+                  </div>
+                  <button style={{ width:"100%", marginTop:12, background:GREEN, border:"none", color:"#fff", fontWeight:700, fontSize:12, padding:"10px", borderRadius:8, cursor:"pointer", fontFamily:FONT }}>See All {VIDEOS.length} Videos</button>
                 </Card>
-                <Card>
+                <Card style={{ width:445.91, height:709.42, boxSizing:"border-box", overflowY:"auto" }}>
                   <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:12 }}>
-                    <div style={{ display:"flex", alignItems:"center", gap:6 }}><span style={{ fontSize:14, fontWeight:700, color:TEXT }}>Albums</span><span style={{ color:MUTED, fontSize:12 }}>11</span></div>
+                    <div style={{ display:"flex", alignItems:"center", gap:6 }}><span style={{ fontSize:14, fontWeight:700, color:TEXT }}>Albums</span><span style={{ color:MUTED, fontSize:12 }}>17</span></div>
                     <a href="#" style={{ background:"#2a2a2a", border:"none", color:"#ccc", fontSize:11, padding:"4px 12px", borderRadius:20, fontFamily:FONT, textDecoration:"none", display:"flex", alignItems:"center", gap:3 }}>See All <svg width="8" height="12" viewBox="0 0 8 13" fill="#ccc"><path d="M1 1.2a1 1 0 011.4 0L7 5.77A1 1 0 017 7.2l-4.6 4.6A1 1 0 111 10.36l3.87-3.89L1 2.6a1 1 0 010-1.4z"/></svg></a>
                   </div>
                   <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:7 }}>
@@ -588,11 +625,11 @@ function WatchPageInner({ username }) {
                       <div key={i} style={{ cursor:"pointer" }}>
                         <div style={{ borderRadius:6, overflow:"hidden", position:"relative", aspectRatio:"4/3", background:album.free?album.thumb:"#1a1a1a", display:"flex", alignItems:"center", justifyContent:"center", marginBottom:5 }}>
                           {!album.free && (
-                            <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:3, padding:6 }}>
-                              <LockedAlbumIcons size={13}/>
-                              <span style={{ color:MUTED, fontSize:9, textAlign:"center", marginTop:2 }}>Join Fan Club</span>
-                              <span style={{ color:SUBTLE, fontSize:8 }}>or</span>
-                              <div style={{ display:"flex", alignItems:"center", gap:2 }}><span style={{ fontSize:9 }}>🪙</span><span style={{ color:GOLD, fontSize:10, fontWeight:800 }}>{album.price} tk</span></div>
+                            <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:4, padding:6 }}>
+                              <TierIcons size={13}/>
+                              <span style={{ color:"#fff", fontSize:11, fontWeight:700, textAlign:"center" }}>Join Fan Club</span>
+                              <span style={{ color:SUBTLE, fontSize:9 }}>or</span>
+                              <div style={{ display:"flex", alignItems:"center", gap:3 }}><span style={{ fontSize:10 }}>🪙</span><span style={{ color:GOLD, fontSize:11, fontWeight:800 }}>{album.price} tk</span></div>
                             </div>
                           )}
                           <span style={{ position:"absolute", bottom:3, right:4, color:"rgba(255,255,255,0.5)", fontSize:9, fontWeight:600, textShadow:"0 1px 2px rgba(0,0,0,0.6)" }}>{album.count}</span>
@@ -602,7 +639,7 @@ function WatchPageInner({ username }) {
                       </div>
                     ))}
                   </div>
-                  <button style={{ width:"100%", marginTop:12, background:GREEN, border:"none", color:"#fff", fontWeight:700, fontSize:12, padding:"10px", borderRadius:8, cursor:"pointer", fontFamily:FONT }}>See all 47 photos</button>
+                  <button style={{ width:"100%", marginTop:12, background:GREEN, border:"none", color:"#fff", fontWeight:700, fontSize:12, padding:"10px", borderRadius:8, cursor:"pointer", fontFamily:FONT }}>See All 90 Photos</button>
                 </Card>
                 <Card>
                   <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", marginBottom:3 }}>
@@ -617,14 +654,14 @@ function WatchPageInner({ username }) {
                       </div>
                     </div>
                   </div>
-                  <p style={{ color:SUBTLE, fontSize:10, margin:"0 0 10px" }}>All slots are in your time zone — GMT+01:00 12:32 AM</p>
+                  <p style={{ color:SUBTLE, fontSize:10, margin:"0 0 10px" }}>All slots are in your time zone — GMT+01:00 3:01 AM</p>
                   {SCHEDULE.map(({day,slots,today},i) => (
                     <div key={day} style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", padding:"7px 0", borderBottom:i<SCHEDULE.length-1?`1px solid ${BORDER}`:"none", gap:8 }}>
-                      <span style={{ fontSize:12, minWidth:78, color:today?"#4caf50":"#ccc", fontWeight:today?700:400, flexShrink:0 }}>
-                        {today && <span style={{ fontSize:9, color:GREEN, display:"block" }}>TODAY</span>}{day}
-                      </span>
+                      <span style={{ fontSize:12, minWidth:78, color:today?"#4caf50":"#ccc", fontWeight:today?700:400, flexShrink:0 }}>{day}</span>
                       <div style={{ display:"flex", flexDirection:"column", gap:4, alignItems:"flex-end" }}>
-                        {slots.map(s => (
+                        {slots.length === 0 ? (
+                          <span style={{ fontSize:11, color:SUBTLE }}>No broadcasts</span>
+                        ) : slots.map(s => (
                           <button key={s} style={{ background:today?"rgba(76,175,80,0.08)":CARD2, border:`1px solid ${today?"rgba(76,175,80,0.3)":BORDER}`, color:today?GREEN:"#ccc", fontSize:10, padding:"2px 7px", borderRadius:4, display:"flex", alignItems:"center", gap:4, cursor:"pointer", fontFamily:FONT, whiteSpace:"nowrap" }}>
                             {s}<CalendarAddIcon size={11}/>
                           </button>
@@ -634,19 +671,24 @@ function WatchPageInner({ username }) {
                   ))}
                 </Card>
                 <Card>
-                  <SectionTitle>Knights</SectionTitle>
-                  <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:14 }}>
+                  <SectionTitle>Knights <span style={{ color:MUTED, fontWeight:400, fontSize:13 }}>({KNIGHTS.length + 18})</span></SectionTitle>
+                  <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:16 }}>
                     {KNIGHTS.map(k => (
                       <div key={k.name} style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:6, cursor:"pointer" }}>
-                        <HexBadge level={k.level} league={k.league} size={56}/>
-                        <div style={{ display:"flex", alignItems:"center", gap:3 }}><span style={{ color:GOLD, fontSize:10 }}>⭐</span><span style={{ color:MUTED, fontSize:10, textAlign:"center", maxWidth:70, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{k.name}</span></div>
+                        <div style={{ position:"relative", width:56, height:56 }}>
+                          <div style={{ width:56, height:56, borderRadius:"50%", background:k.top?"#2a1500":"#3a1414", border:`2px solid ${k.top?GOLD:RED}`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:20, fontWeight:800, color:"#fff" }}>
+                            {k.top ? <ShieldIcon size={26}/> : k.name[0]}
+                          </div>
+                          <div style={{ position:"absolute", bottom:-2, right:-2, background:k.top?GOLD:RED, color:k.top?"#000":"#fff", fontSize:10, fontWeight:800, borderRadius:"50%", width:20, height:20, display:"flex", alignItems:"center", justifyContent:"center", border:"2px solid #1e1e1e" }}>{k.level}</div>
+                        </div>
+                        <div style={{ display:"flex", alignItems:"center", gap:3 }}><span style={{ color:RED, fontSize:10 }}>★</span><span style={{ color:MUTED, fontSize:10, textAlign:"center", maxWidth:70, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{k.name}</span></div>
                       </div>
                     ))}
                   </div>
                 </Card>
                 <Card>
                   <div style={{ display:"flex", alignItems:"center", gap:7, marginBottom:12 }}>
-                    <svg width="16" height="16" viewBox="0 0 22 24" fill={TEXT}><path d="M7 4a4 4 0 108 0 4 4 0 00-8 0z"/><path fill="currentColor" fillOpacity=".6" d="M22 14c.003.218-.102.381-.316.491L11.608 18.27a1.97 1.97 0 01-.608.094v5.486c.5 0 1.5-.35 1.5-.35l9.133-3.845a.6.6 0 00.367-.553V14z"/><path fill="currentColor" fillOpacity=".4" d="M0 14c-.003.218.102.381.316.491l10.076 3.779c.195.063.397.094.608.094v5.486c-.5 0-1.5-.35-1.5-.35L.367 19.655A.6.6 0 010 19.102V14z"/><path fill="#D4D4D4" d="M.35 13.494l9.652-3.619V14a1 1 0 102 0V9.875l9.652 3.62a.54.54 0 010 1.01l-9.95 3.732a1.54 1.54 0 01-1.404 0L.35 14.506a.54.54 0 010-1.012zm5.4 1.406c.966 0 1.75-.403 1.75-.9s-.784-.9-1.75-.9S4 13.503 4 14s.784.9 1.75.9z"/></svg>
+                    <span style={{ fontSize:14 }}>📍</span>
                     <span style={{ fontSize:14, fontWeight:700, color:TEXT }}>{username}'s Tip Menu</span>
                   </div>
                   <div style={{ position:"relative" }}>
@@ -656,6 +698,9 @@ function WatchPageInner({ username }) {
                         <span style={{ color:TEXT, fontSize:12, fontWeight:700 }}>{item.tokens}</span>
                       </div>
                     ))}
+                    {!tipMenuExpanded && (
+                      <div style={{ position:"absolute", bottom:0, left:0, right:0, height:60, background:`linear-gradient(transparent, ${CARD})`, pointerEvents:"none" }}/>
+                    )}
                   </div>
                   {!tipMenuExpanded && (
                     <button onClick={()=>setTipMenuExpanded(true)} style={{ width:"100%", marginTop:10, background:"transparent", border:"none", color:MUTED, fontSize:12, cursor:"pointer", fontFamily:FONT, display:"flex", alignItems:"center", justifyContent:"center", gap:4, padding:"6px 0" }}>
@@ -666,12 +711,39 @@ function WatchPageInner({ username }) {
               </div>
             </div>
 
-            <ModelGrid title="Related Girls" models={RELATED} page={relatedPage} setPage={setRelatedPage} onModel={name=>router.push(`/watch/${name}`)}/>
-            <ModelGrid title="Featured Girls" models={FEATURED} page={featuredPage} setPage={setFeaturedPage} onModel={name=>router.push(`/watch/${name}`)} showDots/>
+            {/* FULL-WIDTH CATEGORIES */}
+            <div style={{ background:BG, padding:"0 20px 20px" }}>
+              <Card>
+                <SectionTitle>{username}'s Categories</SectionTitle>
+                {[{label:"My Specifics:",tags:["🇬🇧",...MY_SPECIFICS]},{label:"I Do in My Shows:",tags:I_DO_IN_SHOWS},{label:"I Exclusively Do in Private:",tags:EXCLUSIVELY_PRIVATE}].map(({label,tags}) => (
+                  <div key={label} style={{ marginBottom:12 }}>
+                    <span style={{ color:MUTED, fontSize:11, display:"block", marginBottom:6 }}>{label}</span>
+                    <div style={{ display:"flex", flexWrap:"wrap", gap:5 }}>{tags.map(t => <Tag key={t} label={t}/>)}</div>
+                  </div>
+                ))}
+                <div style={{ marginTop:4 }}>
+                  <p style={{ color:TEXT, fontSize:13, fontWeight:600, marginBottom:8 }}>Related Mixed Categories</p>
+                  <div style={{ display:"flex", flexWrap:"wrap", gap:5 }}>
+                    {RELATED_MIXED.map(t => <Tag key={t} label={t}/>)}
+                    <a href="#" style={{ display:"inline-block", background:"transparent", border:`1px solid ${BORDER}`, color:MUTED, fontSize:12, padding:"4px 12px", borderRadius:20, cursor:"pointer", textDecoration:"none" }}>ALL CATEGORIES +</a>
+                  </div>
+                </div>
+              </Card>
+            </div>
+
+            {/* COLLAPSE ARROW */}
+            <div style={{ display:"flex", justifyContent:"center", padding:"6px 0 18px", background:BG }}>
+              <button style={{ width:36, height:36, borderRadius:"50%", background:CARD, border:`1px solid ${BORDER}`, color:MUTED, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 15l6-6 6 6"/></svg>
+              </button>
+            </div>
+
+            <ModelGrid title="Related Couples" models={RELATED} page={relatedPage} setPage={setRelatedPage} onModel={name=>router.push(`/watch/${name}`)}/>
+            <ModelGrid title="Featured Couples" models={FEATURED} page={featuredPage} setPage={setFeaturedPage} onModel={name=>router.push(`/watch/${name}`)} showDots/>
           </>
         )}
 
-        {/* FOOTER — always visible */}
+        {/* FOOTER */}
         <footer style={{ background:"#0d0d0d", borderTop:`1px solid ${BORDER}`, padding:"32px 24px 0" }}>
           <div style={{ display:"grid", gridTemplateColumns:"2fr 1fr 1fr 1fr 1fr", gap:32, marginBottom:28 }}>
             <div>
@@ -733,28 +805,34 @@ export default function WatchPage({ username }) {
 }
 
 function ModelGrid({ title, models, page, setPage, onModel, showDots }) {
-  const visible = models.slice(0, 8);
+  const visible = models.slice(0, 6);
+  const lastPage = showDots ? 40 : 5;
   return (
     <div style={{ padding:"20px", background:"#0d0d0d", borderTop:`1px solid ${BORDER}` }}>
       <div style={{ fontSize:13, fontWeight:800, color:TEXT, marginBottom:12 }}>{title}</div>
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(8,1fr)", gap:4 }}>
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(6,1fr)", gap:6 }}>
         {visible.map((name,i) => (
-          <div key={name} onClick={()=>onModel(name)} style={{ cursor:"pointer", overflow:"hidden", borderRadius:6, border:`1px solid ${BORDER}`, background:"#1a1a1a" }}
+          <div key={name} onClick={()=>onModel(name)} style={{ cursor:"pointer", overflow:"hidden", borderRadius:6, border:`1px solid ${BORDER}`, background:"#1a1a1a", position:"relative" }}
             onMouseEnter={e=>e.currentTarget.style.borderColor="#555"} onMouseLeave={e=>e.currentTarget.style.borderColor=BORDER}>
-            <div style={{ aspectRatio:"3/4", background:`hsl(${i*37+20},14%,16%)`, display:"flex", alignItems:"center", justifyContent:"center", position:"relative" }}>
+            <div style={{ aspectRatio:"4/3", background:`hsl(${i*37+20},14%,16%)`, display:"flex", alignItems:"center", justifyContent:"center", position:"relative" }}>
               <span style={{ color:"rgba(255,255,255,0.05)", fontSize:24 }}>👤</span>
-              {i===1 && <div style={{ position:"absolute", top:4, left:4, background:"#1565c0", color:"#fff", fontSize:7, fontWeight:800, padding:"2px 5px", borderRadius:3, display:"flex", alignItems:"center", gap:2 }}>👥 Group</div>}
+              <span style={{ position:"absolute", top:4, left:4, color:"#fff", fontSize:11, opacity:.6 }}>📱</span>
+              {i%3===0 && <span style={{ position:"absolute", top:4, right:4, background:GREEN, color:"#000", fontSize:8, fontWeight:800, padding:"2px 5px", borderRadius:2 }}>NEW</span>}
+              <span style={{ position:"absolute", top:4, right:4, fontSize:12 }}>{["🇬🇧","🇺🇸","🇫🇷","🇿🇦","🇨🇴","🇷🇴","🇺🇦"][i%7]}</span>
             </div>
             <div style={{ padding:"4px 6px" }}><span style={{ fontSize:10, color:"#999", display:"block", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{name}</span></div>
           </div>
         ))}
       </div>
-      <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:4, marginTop:14 }}>
+      <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:6, marginTop:14 }}>
         {[1,2,3,4,5].map(n => (
-          <button key={n} onClick={()=>setPage(n)} style={{ width:28, height:28, borderRadius:5, border:`1px solid ${BORDER}`, cursor:"pointer", background:page===n?RED:"#1a1a1a", color:page===n?"#fff":MUTED, fontSize:12, fontWeight:page===n?700:400, fontFamily:FONT }}>{n}</button>
+          <button key={n} onClick={()=>setPage(n)} style={{ width:28, height:28, borderRadius:"50%", border:"none", cursor:"pointer", background:page===n?"#e53935":"transparent", color:page===n?"#fff":MUTED, fontSize:12, fontWeight:page===n?700:400, fontFamily:FONT }}>{n}</button>
         ))}
-        {showDots && <><span style={{ color:SUBTLE, fontSize:12, padding:"0 2px" }}>…</span><button style={{ width:28, height:28, borderRadius:5, border:`1px solid ${BORDER}`, cursor:"pointer", background:"#1a1a1a", color:MUTED, fontSize:11, fontFamily:FONT }}>100</button></>}
-        <button style={{ background:"#1a1a1a", border:`1px solid ${BORDER}`, color:MUTED, fontSize:11, padding:"5px 12px", borderRadius:5, cursor:"pointer", fontFamily:FONT, display:"flex", alignItems:"center", gap:3 }}>
+        {showDots && <>
+          <span style={{ color:SUBTLE, fontSize:12, padding:"0 2px" }}>…</span>
+          <button onClick={()=>setPage(lastPage)} style={{ width:28, height:28, borderRadius:"50%", border:"none", cursor:"pointer", background:page===lastPage?"#e53935":"transparent", color:page===lastPage?"#fff":MUTED, fontSize:11, fontFamily:FONT }}>{lastPage}</button>
+        </>}
+        <button style={{ background:"transparent", border:"none", color:MUTED, fontSize:12, padding:"5px 10px", borderRadius:5, cursor:"pointer", fontFamily:FONT, display:"flex", alignItems:"center", gap:3 }}>
           Next <svg width="8" height="12" viewBox="0 0 8 13" fill={MUTED}><path d="M1 1.2a1 1 0 011.4 0L7 5.77A1 1 0 017 7.2l-4.6 4.6A1 1 0 111 10.36l3.87-3.89L1 2.6a1 1 0 010-1.4z"/></svg>
         </button>
       </div>
