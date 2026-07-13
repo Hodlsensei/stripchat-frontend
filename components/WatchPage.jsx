@@ -65,10 +65,23 @@ const TIP_MENU = [
 ];
 
 const KNIGHTS = [
-  { name:"SXSAARFEND", level:87, top:true },{ name:"prankman1", level:39 },
-  { name:"bat21Lubricant", level:85 },{ name:"Stanley_the_m", level:85 },
-  { name:"hammers1266", level:62 },{ name:"w1ldheart", level:83 },
+  { name:"Dino_dick_1", level:53, top:true },
+  { name:"whath", level:93 },
+  { name:"daffty1974", level:83 },
+  { name:"Bigdick137819", level:90 },
+  { name:"hooligan68", level:88, live:true },
+  { name:"MauiMan72", level:89 },
+  { name:"ItsMyTurnNow", level:86 },
+  { name:"Tommyboy347", level:50, ring:"gold" },
+  { name:"1982MnBv", star:true },
 ];
+const KNIGHTS_TOTAL = 24;
+function chunkRows(arr, size) {
+  const rows = [];
+  for (let i=0;i<arr.length;i+=size) rows.push(arr.slice(i,i+size));
+  return rows;
+}
+const KNIGHT_ROWS = chunkRows([...KNIGHTS, { dots:true }], 3);
 
 const KING = { name:"Hejhejheja2", level:94, ultimate:true };
 
@@ -94,12 +107,14 @@ const ALBUMS = [
 ];
 
 const PANELS = [
-  { col:0, title:"My schedule\n7 am to 10 am\nI'm a morning gal\n4pm to 7pm\nAnd sometimes MORE", body:"Just saying!\nI looooooove Flowers especially Lillie's", thumb:"linear-gradient(135deg,#6a7a4a,#3a4a2a)" },
-  { col:1, title:"Love summer Days Poolside", body:"One day I will take you to the lake or beach with me, Lush & Domi", thumb:"linear-gradient(135deg,#4a8aa5,#2a5570)" },
-  { col:0, title:"Do You Like A Foot Show or Nylons too ?", thumb:"linear-gradient(135deg,#4a4a4a,#2a2a2a)" },
-  { col:1, title:"Things I love & like", body:"Things I like, Cappuccino, apero Spritz, flowers!\nRunning, 3 times London marathon 1 x Robin Hood but now I love trail running.\nAnd of course I love to be here with you !" },
-  { col:0, title:"Always love a morning with you! But I try to find you later in the day too" },
-  { col:1, title:"See you tomorrow gorgeous guys", body:"Can't wait!", thumb:"linear-gradient(135deg,#5a4a5a,#332a33)" },
+  { col:0, title:"Squirting goddess", body:"I am like no other on stripchat, your no 1 squirting goddess, others dribble I am your super jet queen, take me private but make sure you pack your goggles", thumb:"linear-gradient(135deg,#6a7a4a,#3a4a2a)", bodyHeight:120 },
+  { col:1, title:"Amazon wishlist", body:"Hey everyone amazon wishlist is back click the picture to go to wishlist, if you would like to give a little treat, any gifts are appreciated, and if you gift me a dildo it will be named after you xxx", thumb:"linear-gradient(135deg,#ff9dc4,#c23b7a)", bodyHeight:180 },
+  { col:0, title:"Throne wishlist", body:"You can safely buy me gifts on Throne, the privacy-first wishlist for creators! Should you feel like you want to spoil me and show how much you like me there is lots on my wishlist for you.", thumb:"linear-gradient(135deg,#8a3fd6,#3f7fd6)", bodyHeight:220, imgRatio:"302.52/222.45", bodyFontSize:13 },
+  { col:1, title:"Lovense wishlist", body:"Hey everyone, I have set up my lovense wish list, even though I have bought half the shop lol there are a few things I would still love, please click the link to look through. Thanks!", thumb:"linear-gradient(135deg,#ff9dc4,#ffd9e8)", bodyHeight:260, imgRatio:"302.52/260" },
+  { col:0, title:"Welcome to my room", body:"Bossy scouse sassy full of banta x. Please take a moment to go though my profile to see what i offer, tip list and wish lists.", thumb:"linear-gradient(135deg,#5a7a3a,#2a3a1a)", bodyHeight:280, imgRatio:"302.52/406.33" },
+  { col:1, title:"About me", body:"Well hello handsome men and sexy ladies xx\n\nI'm a young age of 43 year old and full natural 36 ff breasts and Blonde wavey Hair.\n\nI adore role play and indulging your fantasies and love showing my naughty side.\n\nI'm your Girl next door, your boss, your good girl and your super squirter\n\nYou will not stop thinking about me i will become your addiction and cosume your every waking moment and in your naughty dreams.\n\nCome over to my room and say Hello, i am fun and bubbly have a banging sense of humour and love a chat.\n\nBella xxx", thumb:"linear-gradient(135deg,#8aa5c0,#e8c9d8)", bodyHeight:520, imgRatio:"302.52/537.78", bodyFontSize:13 },
+  { col:0, title:"Leather fetish", body:"If you love leather, I always have my brown leather jacket and leather pants to hand ready to blow your mind in private", thumb:"linear-gradient(135deg,#2a2a2a,#0d0d0d)", bodyHeight:100, imgRatio:"302.53/537.78", bodyFontSize:20 },
+  { col:1, title:"Room Rules", thumb:"linear-gradient(135deg,#c9d6e8,#e8c9d8)", imgRatio:"302.53/302.53" },
 ];
 
 const BG = "#111111";
@@ -107,7 +122,7 @@ const CARD = "#1e1e1e";
 const CARD2 = "#252525";
 const BORDER = "#2e2e2e";
 const TEXT = "#f0f0f0";
-const MUTED = "#888";
+const MUTED = "#FFFFFFCC";
 const SUBTLE = "#555";
 const RED = "#FCA311";
 const GOLD = "#f5a623";
@@ -345,10 +360,10 @@ function WatchPageInner({ username }) {
         {!isShop && (
           <>
             {/* VIDEO + CHAT ROW */}
-            <div style={{ display:"flex", height:`calc(100vh - ${NAVBAR_H}px)`, background:"#000", minHeight:400 }}>
+            <div style={{ display:"flex", height:`calc(100vh - ${NAVBAR_H}px)`, background:"#000", minHeight:400, justifyContent:"center" }}>
 
-              <div style={{ flex:"0 0 641px", width:641, display:"flex", flexDirection:"column", position:"relative", background:"#000", minWidth:0 }}>
-                <div style={{ width:641, height:360.56, position:"relative", minHeight:0, flexShrink:0 }}>
+              <div style={{ flex:"0 1 60%", display:"flex", flexDirection:"column", position:"relative", background:"#000", minWidth:0 }}>
+                <div style={{ width:"100%", aspectRatio:"16/9", position:"relative", minHeight:0, flexShrink:0 }}>
                   {isLive ? (
                     <StreamPlayer username={username} color={color} emoji="😍" viewers={viewers}/>
                   ) : (
@@ -372,7 +387,7 @@ function WatchPageInner({ username }) {
                     </div>
                   )}
                 </div>
-                <div style={{ position:"relative", zIndex:2, display:"flex", alignItems:"center", padding:"0 12px", gap:10, background:isLive?"linear-gradient(transparent, rgba(0,0,0,0.8))":"#0d0d0d", width:641, height:60, flexShrink:0, boxSizing:"border-box" }}>
+                <div style={{ position:"relative", zIndex:2, display:"flex", alignItems:"center", padding:"14px 12px", gap:10, background:isLive?"linear-gradient(transparent, rgba(0,0,0,0.8))":"#0d0d0d", width:"100%", flexShrink:0, boxSizing:"border-box" }}>
                   <button onClick={()=>setFollowing(f=>!f)} style={{ width:34, height:34, borderRadius:"50%", background:"rgba(255,255,255,0.1)", border:"1px solid rgba(255,255,255,0.2)", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", color:following?RED:"#fff" }}>
                     <HeartIcon filled={following} size={16}/>
                   </button>
@@ -380,7 +395,7 @@ function WatchPageInner({ username }) {
                   <div style={{ flex:1 }}/>
                   <button onClick={()=>setShowTip(true)} style={{ background:GOLD, border:"none", color:"#000", fontWeight:800, fontSize:13, padding:"9px 24px", borderRadius:24, cursor:"pointer", fontFamily:FONT }}>Send Private Tip</button>
                 </div>
-                <div style={{ position:"relative", zIndex:2, background:"#0d0d0d", borderTop:`1px solid ${BORDER}`, display:"flex", alignItems:"center", padding:"0 12px", gap:8, flexWrap:"wrap", width:641, height:82, flexShrink:0, boxSizing:"border-box" }}>
+                <div style={{ position:"relative", zIndex:2, background:"#0d0d0d", borderTop:`1px solid ${BORDER}`, display:"flex", alignItems:"center", padding:"14px 12px", gap:8, flexWrap:"wrap", width:"100%", flexShrink:0, boxSizing:"border-box" }}>
                   <div style={{ display:"flex", alignItems:"center", gap:5, flexShrink:0 }}>
                     <svg width="16" height="16" viewBox="0 0 22 22" fill={GREEN}><path d="M11 1C5.477 1 1 5.477 1 11a10 10 0 0020 0c0-1.16-.21-2.31-.61-3.39l-1.6 1.6c.14.59.21 1.19.21 1.79a8 8 0 11-8-8c.6 0 1.2.07 1.79.21L14.4 1.6C13.31 1.21 12.16 1 11 1zm7 0l-4 4v1.5l-2.55 2.55C11.3 9 11.15 9 11 9a2 2 0 102 2c0-.15 0-.3-.05-.45L15.5 8H17l4-4h-3V1zm-7 4a6 6 0 106 6h-2a4 4 0 11-4-4V5z"/></svg>
                     <span style={{ fontSize:12, color:GREEN, fontWeight:700 }}>Goal:</span>
@@ -408,7 +423,7 @@ function WatchPageInner({ username }) {
               </div>
 
               {/* Chat 40% */}
-              <div style={{ flex:"0 0 436px", width:436, display:"flex", flexDirection:"column", background:"#111", borderLeft:`1px solid ${BORDER}`, overflow:"hidden", height:"100%", fontSize:14 }}>
+              <div style={{ flex:"0 1 40%", minWidth:340, display:"flex", flexDirection:"column", background:"#111", borderLeft:`1px solid ${BORDER}`, overflow:"hidden", height:"100%", fontSize:14 }}>
                 <div style={{ display:"flex", alignItems:"center", borderBottom:`1px solid ${BORDER}`, height:44, flexShrink:0, background:"#111" }}>
                   <button onClick={()=>setChatTab("Public")} style={{ background:"none", border:"none", cursor:"pointer", padding:"0 14px", height:"100%", fontSize:12, color:chatTab==="Public"?TEXT:MUTED, borderBottom:chatTab==="Public"?`2px solid ${RED}`:"2px solid transparent", fontFamily:FONT, fontWeight:chatTab==="Public"?600:400, display:"flex", alignItems:"center", gap:5 }}>
                     <svg width="13" height="13" viewBox="0 0 100 100" fill="currentColor"><path d="M85.5 0h-71A14.5 14.5 0 000 14.5v53.3a14.5 14.5 0 0014.5 14.5H25v17.2l23.5-17.2h37A14.5 14.5 0 00100 67.8V14.5A14.5 14.5 0 0085.5 0z"/></svg>
@@ -464,7 +479,7 @@ function WatchPageInner({ username }) {
 
             {/* PROFILE COVER */}
             <div style={{ background:"#111", position:"relative" }}>
-              <div style={{ width:1087, height:364, position:"relative", overflow:"hidden", background:`linear-gradient(135deg, ${color}44 0%, #1a1a1a 100%)`, maxWidth:"100%" }}>
+              <div style={{ width:"100%", aspectRatio:"1087/364", position:"relative", overflow:"hidden", background:`linear-gradient(135deg, ${color}44 0%, #1a1a1a 100%)` }}>
                 <div style={{ position:"absolute", inset:0, background:"linear-gradient(to bottom, transparent 40%, #111 100%)" }}/>
                 <button style={{ position:"absolute", top:10, right:10, background:"rgba(0,0,0,0.5)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:4, color:"#fff", padding:"4px 8px", cursor:"pointer", fontSize:11, display:"flex", alignItems:"center", gap:4 }}>
                   <svg width="14" height="14" viewBox="0 0 100 100" fill="currentColor"><path d="M0 0v39h11V11h28V0H11zm11 61H0v39h39V89H11zm78 28H61v11h39V61H89zm0-89H61v11h28v28h11V0z"/></svg>
@@ -507,9 +522,9 @@ function WatchPageInner({ username }) {
             </div>
 
             {/* PROFILE BODY */}
-            <div style={{ background:BG, padding:"18px 20px", display:"grid", gridTemplateColumns:"629.08px 445.91px", gap:16, alignItems:"start", justifyContent:"center" }}>
+            <div style={{ background:BG, padding:"18px 20px", display:"grid", gridTemplateColumns:"58.5% 41.5%", gap:16, alignItems:"start" }}>
               <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
-                <Card style={{ width:629.08, height:529.8, boxSizing:"border-box", overflowY:"auto" }}>
+                <Card style={{ width:"100%", boxSizing:"border-box" }}>
                   <SectionTitle>Welcome to {username}'s webcam room!</SectionTitle>
                   <div style={{ display:"grid", gridTemplateColumns:"120px 1fr", gap:"8px 0", fontSize:13 }}>
                     {[
@@ -542,7 +557,7 @@ function WatchPageInner({ username }) {
                     <Tag label="Amazon Wishlist"/>
                   </div>
                 </Card>
-                <Card style={{ width:629.08, height:743, boxSizing:"border-box", overflowY:"auto" }}>
+                <Card style={{ width:"100%", boxSizing:"border-box" }}>
                   <div style={{ display:"flex", justifyContent:"space-between", marginBottom:12 }}>
                     <div>
                       <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:2 }}><OrangeHeartIcon size={18}/><span style={{ fontSize:14, fontWeight:700, color:TEXT }}>My Private Shows</span></div>
@@ -573,7 +588,7 @@ function WatchPageInner({ username }) {
                     </button>
                   </div>
                 </Card>
-                <Card style={{ width:629.08, height:266.8, boxSizing:"border-box" }}>
+                <Card style={{ width:"100%", boxSizing:"border-box" }}>
                   <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:4 }}><span style={{ fontSize:14, fontWeight:700, color:TEXT }}>{username}'s Epic Goal</span><span style={{ color:MUTED, cursor:"pointer", fontSize:12 }}>ⓘ</span></div>
                   <p style={{ color:PURPLE, fontSize:14, fontWeight:700, margin:"0 0 12px" }}>{epicGoal.text}</p>
                   <div style={{ background:CARD2, border:`1px solid ${BORDER}`, borderRadius:8, padding:"10px 14px", marginBottom:12 }}>
@@ -587,27 +602,31 @@ function WatchPageInner({ username }) {
                 </Card>
                 <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
                   {PANELS.map((p,i) => (
-                    <div key={i} style={{ background:CARD, borderRadius:8, overflow:"hidden", cursor:"pointer" }}>
-                      {p.thumb && <div style={{ width:"100%", aspectRatio:"4/3", background:p.thumb }}/>}
-                      <div style={{ padding:"10px 12px" }}>
-                        <p style={{ color:TEXT, fontSize:12, fontWeight:p.thumb?400:600, margin:0, lineHeight:1.5, whiteSpace:"pre-line" }}>{p.title}</p>
-                        {p.body && <p style={{ color:MUTED, fontSize:11, margin:"7px 0 0", lineHeight:1.7, whiteSpace:"pre-line" }}>{p.body}</p>}
+                    <div key={i} style={{ display:"flex", flexDirection:"column", gap:0 }}>
+                      <div style={{ background:CARD, borderRadius:"8px 8px 0 0", width:"100%", minHeight:61, boxSizing:"border-box", padding:"10px 12px", display:"flex", alignItems:"center", cursor:"pointer" }}>
+                        <p style={{ color:TEXT, fontSize:13, fontWeight:700, margin:0, lineHeight:1.3, whiteSpace:"pre-line" }}>{p.title}</p>
                       </div>
+                      {p.thumb && <div style={{ width:"100%", aspectRatio:p.imgRatio||"302.52/314.47", borderRadius:p.body?0:"0 0 8px 8px", overflow:"hidden", background:p.thumb, cursor:"pointer", boxSizing:"border-box" }}/>}
+                      {p.body && (
+                        <div style={{ background:CARD, borderRadius:"0 0 8px 8px", width:"100%", minHeight:p.bodyHeight||120, boxSizing:"border-box", padding:"10px 12px" }}>
+                          <p style={{ color:MUTED, fontSize:p.bodyFontSize||11, margin:0, lineHeight:1.7, whiteSpace:"pre-line" }}>{p.body}</p>
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
               </div>
 
               <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
-                <Card style={{ width:445.91, height:667.53, boxSizing:"border-box", overflowY:"auto" }}>
+                <Card style={{ width:"100%", boxSizing:"border-box" }}>
                   <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:12 }}>
                     <div style={{ display:"flex", alignItems:"center", gap:6 }}><span style={{ fontSize:14, fontWeight:700, color:TEXT }}>Videos</span><span style={{ color:MUTED, fontSize:12 }}>{VIDEOS.length}</span></div>
                     <a href="#" style={{ background:"#2a2a2a", border:"none", color:"#ccc", fontSize:11, cursor:"pointer", padding:"4px 12px", borderRadius:20, fontFamily:FONT, textDecoration:"none", display:"flex", alignItems:"center", gap:3 }}>See All <svg width="8" height="12" viewBox="0 0 8 13" fill="#ccc"><path d="M1 1.2a1 1 0 011.4 0L7 5.77A1 1 0 017 7.2l-4.6 4.6A1 1 0 111 10.36l3.87-3.89L1 2.6a1 1 0 010-1.4z"/></svg></a>
                   </div>
-                  <div style={{ display:"grid", gridTemplateColumns:"197.95px 197.95px", gap:12, justifyContent:"space-between" }}>
+                  <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
                     {VIDEOS.map((v,i) => (
                       <div key={i}>
-                        <LockedThumb price={v.price} duration={v.duration} width={197.95} height={110.89}/>
+                        <LockedThumb price={v.price} duration={v.duration}/>
                         <div style={{ fontSize:12, color:"#ccc", marginBottom:4, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{v.title}</div>
                         <div style={{ display:"flex", alignItems:"center", gap:3 }}><HeartIcon size={13}/><span style={{ fontSize:11, color:MUTED }}>{v.likes}</span></div>
                       </div>
@@ -615,7 +634,7 @@ function WatchPageInner({ username }) {
                   </div>
                   <button style={{ width:"100%", marginTop:12, background:GREEN, border:"none", color:"#fff", fontWeight:700, fontSize:12, padding:"10px", borderRadius:8, cursor:"pointer", fontFamily:FONT }}>See All {VIDEOS.length} Videos</button>
                 </Card>
-                <Card style={{ width:445.91, height:709.42, boxSizing:"border-box", overflowY:"auto" }}>
+                <Card style={{ width:"100%", boxSizing:"border-box" }}>
                   <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:12 }}>
                     <div style={{ display:"flex", alignItems:"center", gap:6 }}><span style={{ fontSize:14, fontWeight:700, color:TEXT }}>Albums</span><span style={{ color:MUTED, fontSize:12 }}>17</span></div>
                     <a href="#" style={{ background:"#2a2a2a", border:"none", color:"#ccc", fontSize:11, padding:"4px 12px", borderRadius:20, fontFamily:FONT, textDecoration:"none", display:"flex", alignItems:"center", gap:3 }}>See All <svg width="8" height="12" viewBox="0 0 8 13" fill="#ccc"><path d="M1 1.2a1 1 0 011.4 0L7 5.77A1 1 0 017 7.2l-4.6 4.6A1 1 0 111 10.36l3.87-3.89L1 2.6a1 1 0 010-1.4z"/></svg></a>
@@ -670,28 +689,43 @@ function WatchPageInner({ username }) {
                     </div>
                   ))}
                 </Card>
-                <Card>
-                  <SectionTitle>Knights <span style={{ color:MUTED, fontWeight:400, fontSize:13 }}>({KNIGHTS.length + 18})</span></SectionTitle>
-                  <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:16 }}>
-                    {KNIGHTS.map(k => (
-                      <div key={k.name} style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:6, cursor:"pointer" }}>
-                        <div style={{ position:"relative", width:56, height:56 }}>
-                          <div style={{ width:56, height:56, borderRadius:"50%", background:k.top?"#2a1500":"#3a1414", border:`2px solid ${k.top?GOLD:RED}`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:20, fontWeight:800, color:"#fff" }}>
-                            {k.top ? <ShieldIcon size={26}/> : k.name[0]}
+                <Card style={{ width:"100%", aspectRatio:"445.91/689", boxSizing:"border-box", overflowY:"auto" }}>
+                  <SectionTitle>Knights <span style={{ color:MUTED, fontWeight:400, fontSize:13 }}>({KNIGHTS_TOTAL})</span></SectionTitle>
+                  <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
+                    {KNIGHT_ROWS.map((row, ri) => (
+                      <div key={ri} style={{ display:"flex", gap:16 }}>
+                        {row.map((k, ci) => k.dots ? (
+                          <div key="dots" style={{ flex:"0 0 calc(25% - 12px)", minWidth:0, display:"flex", flexDirection:"column", alignItems:"center", gap:6, cursor:"pointer" }}>
+                            <div style={{ position:"relative", width:"100%", paddingTop:"100%" }}>
+                              <div style={{ position:"absolute", inset:0, borderRadius:"50%", background:"#2a2a2a", display:"flex", alignItems:"center", justifyContent:"center", boxSizing:"border-box" }}>
+                                <span style={{ color:MUTED, fontSize:20, letterSpacing:2 }}>•••</span>
+                              </div>
+                            </div>
                           </div>
-                          <div style={{ position:"absolute", bottom:-2, right:-2, background:k.top?GOLD:RED, color:k.top?"#000":"#fff", fontSize:10, fontWeight:800, borderRadius:"50%", width:20, height:20, display:"flex", alignItems:"center", justifyContent:"center", border:"2px solid #1e1e1e" }}>{k.level}</div>
-                        </div>
-                        <div style={{ display:"flex", alignItems:"center", gap:3 }}><span style={{ color:RED, fontSize:10 }}>★</span><span style={{ color:MUTED, fontSize:10, textAlign:"center", maxWidth:70, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{k.name}</span></div>
+                        ) : (
+                          <div key={k.name} style={{ flex:"0 0 calc(25% - 12px)", minWidth:0, display:"flex", flexDirection:"column", alignItems:"center", gap:6, cursor:"pointer" }}>
+                            <div style={{ position:"relative", width:"100%", paddingTop:"100%" }}>
+                              <div style={{ position:"absolute", inset:0, borderRadius:"50%", background:k.top?"#2a1500":k.live?"#000":"#3a1414", border:`2px solid ${k.top||k.ring==="gold"?GOLD:RED}`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:26, fontWeight:800, color:"#fff", boxSizing:"border-box" }}>
+                                {k.top ? <ShieldIcon size={26}/> : !k.live && k.name[0]}
+                              </div>
+                              {k.live && <div style={{ position:"absolute", top:"4%", left:"4%", width:10, height:10, borderRadius:"50%", background:GREEN }}/>}
+                              <div style={{ position:"absolute", bottom:-2, right:-2, background:k.top||k.ring==="gold"?GOLD:RED, color:k.top||k.ring==="gold"?"#000":"#fff", fontSize:10, fontWeight:800, borderRadius:"50%", width:20, height:20, display:"flex", alignItems:"center", justifyContent:"center", border:"2px solid #1e1e1e", boxSizing:"border-box" }}>
+                                {k.star ? "★" : k.level}
+                              </div>
+                            </div>
+                            <div style={{ display:"flex", alignItems:"center", gap:3 }}><span style={{ color:RED, fontSize:10 }}>★</span><span style={{ color:MUTED, fontSize:10, textAlign:"center", maxWidth:70, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{k.name}</span></div>
+                          </div>
+                        ))}
                       </div>
                     ))}
                   </div>
                 </Card>
-                <Card>
-                  <div style={{ display:"flex", alignItems:"center", gap:7, marginBottom:12 }}>
+                <Card style={{ width:"100%", boxSizing:"border-box" }}>
+                  <div style={{ display:"flex", alignItems:"center", gap:7, width:"100%", minHeight:47, boxSizing:"border-box" }}>
                     <span style={{ fontSize:14 }}>📍</span>
                     <span style={{ fontSize:14, fontWeight:700, color:TEXT }}>{username}'s Tip Menu</span>
                   </div>
-                  <div style={{ position:"relative" }}>
+                  <div style={{ position:"relative", width:"100%", minHeight:464, boxSizing:"border-box" }}>
                     {visibleTipMenu.map((item,i) => (
                       <div key={i} style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"8px 0", borderBottom:i<visibleTipMenu.length-1?`1px solid ${BORDER}`:"none" }}>
                         <span style={{ color:"#ccc", fontSize:12 }}>{item.label}</span>
@@ -711,8 +745,18 @@ function WatchPageInner({ username }) {
               </div>
             </div>
 
+            {/* COLLAPSE ARROW */}
+            <div style={{ display:"flex", justifyContent:"center", padding:"6px 0 18px", background:BG }}>
+              <button style={{ width:36, height:36, borderRadius:"50%", background:CARD, border:`1px solid ${BORDER}`, color:MUTED, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 15l6-6 6 6"/></svg>
+              </button>
+            </div>
+
+            <ModelGrid title="Related Couples" models={RELATED} page={relatedPage} setPage={setRelatedPage} onModel={name=>router.push(`/watch/${name}`)} itemCount={10}/>
+            <ModelGrid title="Featured Couples" models={FEATURED} page={featuredPage} setPage={setFeaturedPage} onModel={name=>router.push(`/watch/${name}`)} showDots itemCount={10}/>
+
             {/* FULL-WIDTH CATEGORIES */}
-            <div style={{ background:BG, padding:"0 20px 20px" }}>
+            <div style={{ background:"#0d0d0d", padding:"20px", borderTop:`1px solid ${BORDER}` }}>
               <Card>
                 <SectionTitle>{username}'s Categories</SectionTitle>
                 {[{label:"My Specifics:",tags:["🇬🇧",...MY_SPECIFICS]},{label:"I Do in My Shows:",tags:I_DO_IN_SHOWS},{label:"I Exclusively Do in Private:",tags:EXCLUSIVELY_PRIVATE}].map(({label,tags}) => (
@@ -730,16 +774,6 @@ function WatchPageInner({ username }) {
                 </div>
               </Card>
             </div>
-
-            {/* COLLAPSE ARROW */}
-            <div style={{ display:"flex", justifyContent:"center", padding:"6px 0 18px", background:BG }}>
-              <button style={{ width:36, height:36, borderRadius:"50%", background:CARD, border:`1px solid ${BORDER}`, color:MUTED, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 15l6-6 6 6"/></svg>
-              </button>
-            </div>
-
-            <ModelGrid title="Related Couples" models={RELATED} page={relatedPage} setPage={setRelatedPage} onModel={name=>router.push(`/watch/${name}`)}/>
-            <ModelGrid title="Featured Couples" models={FEATURED} page={featuredPage} setPage={setFeaturedPage} onModel={name=>router.push(`/watch/${name}`)} showDots/>
           </>
         )}
 
@@ -804,17 +838,17 @@ export default function WatchPage({ username }) {
   );
 }
 
-function ModelGrid({ title, models, page, setPage, onModel, showDots }) {
-  const visible = models.slice(0, 6);
+function ModelGrid({ title, models, page, setPage, onModel, showDots, itemCount=6 }) {
+  const visible = models.slice(0, itemCount);
   const lastPage = showDots ? 40 : 5;
   return (
     <div style={{ padding:"20px", background:"#0d0d0d", borderTop:`1px solid ${BORDER}` }}>
-      <div style={{ fontSize:13, fontWeight:800, color:TEXT, marginBottom:12 }}>{title}</div>
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(6,1fr)", gap:6 }}>
+      <div style={{ fontSize:13, fontWeight:800, color:TEXT, marginBottom:12, minHeight:30, boxSizing:"border-box", display:"flex", alignItems:"center" }}>{title}</div>
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(5,1fr)", gap:6 }}>
         {visible.map((name,i) => (
           <div key={name} onClick={()=>onModel(name)} style={{ cursor:"pointer", overflow:"hidden", borderRadius:6, border:`1px solid ${BORDER}`, background:"#1a1a1a", position:"relative" }}
             onMouseEnter={e=>e.currentTarget.style.borderColor="#555"} onMouseLeave={e=>e.currentTarget.style.borderColor=BORDER}>
-            <div style={{ aspectRatio:"4/3", background:`hsl(${i*37+20},14%,16%)`, display:"flex", alignItems:"center", justifyContent:"center", position:"relative" }}>
+            <div style={{ aspectRatio:"209.59/157.19", background:`hsl(${i*37+20},14%,16%)`, display:"flex", alignItems:"center", justifyContent:"center", position:"relative" }}>
               <span style={{ color:"rgba(255,255,255,0.05)", fontSize:24 }}>👤</span>
               <span style={{ position:"absolute", top:4, left:4, color:"#fff", fontSize:11, opacity:.6 }}>📱</span>
               {i%3===0 && <span style={{ position:"absolute", top:4, right:4, background:GREEN, color:"#000", fontSize:8, fontWeight:800, padding:"2px 5px", borderRadius:2 }}>NEW</span>}
