@@ -12,6 +12,18 @@ import { CartProvider } from "./CartContext";
 const FONT = "'Inter', 'Helvetica Neue', Roboto, sans-serif";
 const COLORS = ["#c0392b","#8e24aa","#1e88e5","#00acc1","#43a047","#fb8c00"];
 
+const PANEL_IMAGES = [
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxhlbn0BKNraN8lihJSs97TsRt61LzgPow1doE2iwRTQ&s=10",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZTvNmiIBlotsBkJ1hXFB8HKhX6MWC-2cJb8svL8K7jA&s=10",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdxVsOhXJOfvweFhXmDHNVmEYhs03sbKkoMicLIc1Rfw&s=10",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-egUP-eyvIU8Qiic7jzEDWQVzV20bbxm6coWcUcGZQg&s",
+];
+const GALLERY_IMAGES = [
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUFuKfDxXT0e5i_TTS4eobgyWCe9oLTTiwsS5028uQ8g&s=10",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjCCsgJpLPGGvfTNoDa1RR244xEJrvRgrGIrmr6hzrEg&s=10",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFe2Fz8aZcfSFAvYkFrlA1VkA4KrmC9ktDPvuzpw8QlA&s=10",
+];
+
 const RELATED = ["Molliexo","Lwhite1","Amy01112","Catababa67","Scarlett_girlnextdoor","misstroubleme","siennadiamond","MelisaSwan611","MONA_W","MissLolly92","Nimah_","Recura","michellycherryxx24","BonnyMolhada","SexyPetitex25","Freaky_CardiXX"];
 const FEATURED = ["Nisha_102","Lisabrown_","PervyboyXX","CurvyDesire1","Nimah_","Recura","michellycherryxx24","BonnyMolhada","SexyPetitex25","Freaky_CardiXX","Molliexo","Lwhite1","Amy01112","Catababa67","Scarlett_girlnextdoor","misstroubleme"];
 
@@ -155,9 +167,9 @@ function TierIcons({ size=13 }) {
   );
 }
 
-function Tag({ label, emoji, onClick }) {
+function Tag({ label, emoji, onClick, color }) {
   return (
-    <a href="#" onClick={e=>{e.preventDefault();onClick&&onClick();}} style={{ display:"inline-flex", alignItems:"center", gap:6, background:"transparent", border:`1px solid ${BORDER}`, color:"#ccc", fontSize:12, padding:"4px 12px", borderRadius:20, cursor:"pointer", fontFamily:FONT, textDecoration:"none", transition:"border-color .15s" }}
+    <a href="#" onClick={e=>{e.preventDefault();onClick&&onClick();}} style={{ display:"inline-flex", alignItems:"center", gap:6, background:"transparent", border:`1px solid ${BORDER}`, color:color||"#ccc", fontSize:13, height:32, padding:"0 12px", borderRadius:20, boxSizing:"border-box", cursor:"pointer", fontFamily:FONT, textDecoration:"none", transition:"border-color .15s" }}
       onMouseEnter={e=>e.currentTarget.style.borderColor="#555"} onMouseLeave={e=>e.currentTarget.style.borderColor=BORDER}>
       {emoji && <span style={{ fontSize:13 }}>{emoji}</span>}{label}
     </a>
@@ -360,10 +372,10 @@ function WatchPageInner({ username }) {
         {!isShop && (
           <>
             {/* VIDEO + CHAT ROW */}
-            <div style={{ display:"flex", height:`calc(100vh - ${NAVBAR_H}px)`, background:"#000", minHeight:400, justifyContent:"center" }}>
+            <div style={{ display:"flex", background:"#000", gap:8, height:`calc(100vh - ${NAVBAR_H}px)`, minHeight:400 }}>
 
-              <div style={{ flex:"0 1 60%", display:"flex", flexDirection:"column", position:"relative", background:"#000", minWidth:0 }}>
-                <div style={{ width:"100%", aspectRatio:"16/9", position:"relative", minHeight:0, flexShrink:0 }}>
+              <div style={{ flex:"1 1 50%", display:"flex", flexDirection:"column", position:"relative", background:"#000", minWidth:0, minHeight:0 }}>
+                <div style={{ width:"100%", flex:1, position:"relative", minHeight:0 }}>
                   {isLive ? (
                     <StreamPlayer username={username} color={color} emoji="😍" viewers={viewers}/>
                   ) : (
@@ -423,7 +435,7 @@ function WatchPageInner({ username }) {
               </div>
 
               {/* Chat 40% */}
-              <div style={{ flex:"0 1 40%", minWidth:340, display:"flex", flexDirection:"column", background:"#111", borderLeft:`1px solid ${BORDER}`, overflow:"hidden", height:"100%", fontSize:14 }}>
+              <div style={{ flex:"1 1 50%", minWidth:320, display:"flex", flexDirection:"column", background:"#111", borderLeft:`1px solid ${BORDER}`, overflow:"hidden", fontSize:14, minHeight:0 }}>
                 <div style={{ display:"flex", alignItems:"center", borderBottom:`1px solid ${BORDER}`, height:44, flexShrink:0, background:"#111" }}>
                   <button onClick={()=>setChatTab("Public")} style={{ background:"none", border:"none", cursor:"pointer", padding:"0 14px", height:"100%", fontSize:12, color:chatTab==="Public"?TEXT:MUTED, borderBottom:chatTab==="Public"?`2px solid ${RED}`:"2px solid transparent", fontFamily:FONT, fontWeight:chatTab==="Public"?600:400, display:"flex", alignItems:"center", gap:5 }}>
                     <svg width="13" height="13" viewBox="0 0 100 100" fill="currentColor"><path d="M85.5 0h-71A14.5 14.5 0 000 14.5v53.3a14.5 14.5 0 0014.5 14.5H25v17.2l23.5-17.2h37A14.5 14.5 0 00100 67.8V14.5A14.5 14.5 0 0085.5 0z"/></svg>
@@ -442,7 +454,9 @@ function WatchPageInner({ username }) {
                 </div>
 
                 {chatTab === "Public" ? (
-                  <LiveChat username={username} viewers={viewers} onTipClick={()=>setShowTip(true)} dark/>
+                  <div style={{ flex:1, minHeight:0, display:"flex", flexDirection:"column", overflowY:"auto" }}>
+                    <LiveChat username={username} viewers={viewers} onTipClick={()=>setShowTip(true)} dark/>
+                  </div>
                 ) : (
                   <div style={{ flex:1, display:"flex", alignItems:"center", justifyContent:"center", padding:20, overflowY:"auto" }}>
                     <div style={{ textAlign:"center", maxWidth:300 }}>
@@ -606,7 +620,7 @@ function WatchPageInner({ username }) {
                       <div style={{ background:CARD, borderRadius:"8px 8px 0 0", width:"100%", minHeight:61, boxSizing:"border-box", padding:"10px 12px", display:"flex", alignItems:"center", cursor:"pointer" }}>
                         <p style={{ color:TEXT, fontSize:13, fontWeight:700, margin:0, lineHeight:1.3, whiteSpace:"pre-line" }}>{p.title}</p>
                       </div>
-                      {p.thumb && <div style={{ width:"100%", aspectRatio:p.imgRatio||"302.52/314.47", borderRadius:p.body?0:"0 0 8px 8px", overflow:"hidden", background:p.thumb, cursor:"pointer", boxSizing:"border-box" }}/>}
+                      {p.thumb && <div style={{ width:"100%", aspectRatio:p.imgRatio||"302.52/314.47", borderRadius:p.body?0:"0 0 8px 8px", overflow:"hidden", backgroundImage:`url(${PANEL_IMAGES[i % PANEL_IMAGES.length]})`, backgroundSize:"cover", backgroundPosition:"center", cursor:"pointer", boxSizing:"border-box" }}/>}
                       {p.body && (
                         <div style={{ background:CARD, borderRadius:"0 0 8px 8px", width:"100%", minHeight:p.bodyHeight||120, boxSizing:"border-box", padding:"10px 12px" }}>
                           <p style={{ color:MUTED, fontSize:p.bodyFontSize||11, margin:0, lineHeight:1.7, whiteSpace:"pre-line" }}>{p.body}</p>
@@ -757,46 +771,71 @@ function WatchPageInner({ username }) {
 
             {/* FULL-WIDTH CATEGORIES */}
             <div style={{ background:"#0d0d0d", padding:"20px", borderTop:`1px solid ${BORDER}` }}>
-              <Card>
-                <SectionTitle>{username}'s Categories</SectionTitle>
-                {[{label:"My Specifics:",tags:["🇬🇧",...MY_SPECIFICS]},{label:"I Do in My Shows:",tags:I_DO_IN_SHOWS},{label:"I Exclusively Do in Private:",tags:EXCLUSIVELY_PRIVATE}].map(({label,tags}) => (
-                  <div key={label} style={{ marginBottom:12 }}>
-                    <span style={{ color:MUTED, fontSize:11, display:"block", marginBottom:6 }}>{label}</span>
-                    <div style={{ display:"flex", flexWrap:"wrap", gap:5 }}>{tags.map(t => <Tag key={t} label={t}/>)}</div>
-                  </div>
-                ))}
-                <div style={{ marginTop:4 }}>
-                  <p style={{ color:TEXT, fontSize:13, fontWeight:600, marginBottom:8 }}>Related Mixed Categories</p>
-                  <div style={{ display:"flex", flexWrap:"wrap", gap:5 }}>
-                    {RELATED_MIXED.map(t => <Tag key={t} label={t}/>)}
-                    <a href="#" style={{ display:"inline-block", background:"transparent", border:`1px solid ${BORDER}`, color:MUTED, fontSize:12, padding:"4px 12px", borderRadius:20, cursor:"pointer", textDecoration:"none" }}>ALL CATEGORIES +</a>
-                  </div>
+              <div style={{ marginBottom:14 }}>
+                <span style={{ fontSize:18, fontWeight:700, color:"#F8F8F8" }}>{username}</span>
+                <span style={{ fontSize:18, fontWeight:700, color:"#8D8D8D" }}>'s Categories</span>
+              </div>
+              {[{label:"My Specifics:",tags:["🇬🇧",...MY_SPECIFICS],rowHeight:80},{label:"I Do in My Shows:",tags:I_DO_IN_SHOWS,rowHeight:80},{label:"I Exclusively Do in Private:",tags:EXCLUSIVELY_PRIVATE,rowHeight:80}].map(({label,tags,rowHeight}) => (
+                <div key={label} style={{ display:"flex", alignItems:"center", flexWrap:"wrap", gap:5, width:"100%", minHeight:rowHeight, boxSizing:"border-box" }}>
+                  <span style={{ color:"#8D8D8D", fontSize:12, marginRight:4 }}>{label}</span>
+                  {tags.map(t => <Tag key={t} label={t}/>)}
                 </div>
-              </Card>
+              ))}
+              <div style={{ width:"100%", minHeight:121, boxSizing:"border-box" }}>
+                <p style={{ color:TEXT, fontSize:15, fontWeight:700, marginBottom:10 }}>Related Mixed Categories</p>
+                <div style={{ display:"flex", flexWrap:"wrap", gap:5 }}>
+                  {RELATED_MIXED.map(t => <Tag key={t} label={t} color="#F0F0F0"/>)}
+                  <a href="#" style={{ display:"inline-flex", alignItems:"center", background:"transparent", border:`1px solid ${BORDER}`, color:"#8D8D8D", fontSize:13, height:32, padding:"0 12px", borderRadius:20, boxSizing:"border-box", cursor:"pointer", textDecoration:"none" }}>ALL CATEGORIES +</a>
+                </div>
+              </div>
             </div>
           </>
         )}
 
         {/* FOOTER */}
-        <footer style={{ background:"#0d0d0d", borderTop:`1px solid ${BORDER}`, padding:"32px 24px 0" }}>
+        <footer style={{ background:"#171717", padding:"32px 24px 0" }}>
           <div style={{ display:"grid", gridTemplateColumns:"2fr 1fr 1fr 1fr 1fr", gap:32, marginBottom:28 }}>
             <div>
-              <div style={{ fontSize:16, fontWeight:900, marginBottom:10 }}>
-                <img src="/images/logo.jpg" alt="Stripchatbate" style={{ height:28, objectFit:"contain" }}/>
+              <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:16 }}>
+                <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+                  <svg width="22" height="22" viewBox="0 0 100 100" fill={TEXT}><path d="M85.5 0h-71A14.5 14.5 0 000 14.5v53.3a14.5 14.5 0 0014.5 14.5H25v17.2l23.5-17.2h37A14.5 14.5 0 00100 67.8V14.5A14.5 14.5 0 0085.5 0z"/></svg>
+                  <span style={{ fontSize:16, fontWeight:900, color:TEXT, letterSpacing:".02em" }}>STRIPCHAT</span>
+                </div>
+                <button style={{ display:"flex", alignItems:"center", gap:6, background:"transparent", border:`1px solid ${BORDER}`, color:TEXT, fontSize:12, padding:"6px 12px", borderRadius:20, cursor:"pointer", fontFamily:FONT }}>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 010 20 15 15 0 010-20"/></svg>
+                  English
+                  <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+                </button>
               </div>
-              <p style={{ fontSize:12, color:MUTED, lineHeight:1.8, margin:"0 0 12px" }}>The world's premier 18+ LIVE adult entertainment destination for real connection and adult play.</p>
-              <p style={{ fontSize:10, color:SUBTLE, margin:0 }}>All models are 18 years of age or older.</p>
+              <p style={{ fontSize:12, color:"#9a9a9a", lineHeight:1.8, margin:"0 0 14px" }}>Stripchat is the world's premier 18+ LIVE adult entertainment destination for real connection and adult play. Watch, chat, and explore your desires with real people streaming live every day, and over 150,000 amateurs, professionals, and couples to choose from every month. You're guaranteed to find your dream match on Stripchat. Experience real live sex and sex live shows without scripts, filters, or bots. Every show is live and interactive: talk, tip, take control of interactive toys, or go private to share the moment. This is adult entertainment built on real attention and human connection — where you're not just watching, you're part of it.</p>
+              <p style={{ fontSize:11, color:SUBTLE, margin:"0 0 16px" }}>All models appearing on this site have contractually confirmed to us that they are 18 years of age or older.</p>
+              <button style={{ background:"transparent", border:`1px solid #444`, color:TEXT, fontSize:12, fontWeight:600, padding:"9px 18px", borderRadius:20, cursor:"pointer", fontFamily:FONT }}>I Have Questions Left</button>
             </div>
             {[
-              {title:"STRIPCHATBATE",links:["About","Blog","Media Inquiries"]},
-              {title:"LEGAL & SAFETY",links:["Privacy Policy","Terms of Use","DMCA Policy","Cookies Policy"]},
-              {title:"WORK WITH US",links:["Become a Model","Studio Signup","Webcam Affiliate Program"]},
-              {title:"HELP & SUPPORT",links:["Support & FAQ","Billing Support","DMCA Protection"]},
+              {title:"STRIPCHAT",links:[
+                {label:"About Stripchat", icon:"info"},
+                {label:"Blog", icon:"chat"},
+                {label:"X", icon:"x"},
+                {label:"Media Inquiries", icon:"doc"},
+              ]},
+              {title:"LEGAL & SAFETY",links:[
+                {label:"Privacy Policy"},{label:"Terms of Use"},{label:"DMCA Policy"},
+                {label:"Cookies Policy", underline:true},{label:"Parental Control Guide", underline:true},{label:"Anti-Slavery Help", underline:true},
+              ]},
+              {title:"WORK WITH US",links:[{label:"Become a Model"},{label:"Studio Signup"},{label:"Webcam Affiliate Program"}]},
+              {title:"HELP & SUPPORT",links:[{label:"Support & FAQ"},{label:"Billing Support", underline:true},{label:"DMCA Protection"}]},
             ].map(col => (
               <div key={col.title}>
-                <div style={{ fontSize:9, fontWeight:800, color:SUBTLE, letterSpacing:".1em", marginBottom:10 }}>{col.title}</div>
+                <div style={{ fontSize:11, fontWeight:800, color:TEXT, letterSpacing:".08em", marginBottom:10, paddingBottom:10, borderBottom:`1px solid ${BORDER}` }}>{col.title}</div>
                 {col.links.map(link => (
-                  <div key={link} style={{ fontSize:12, color:SUBTLE, marginBottom:7, cursor:"pointer" }} onMouseEnter={e=>e.currentTarget.style.color="#aaa"} onMouseLeave={e=>e.currentTarget.style.color=SUBTLE}>{link}</div>
+                  <div key={link.label} style={{ display:"flex", alignItems:"center", gap:8, fontSize:12, color:link.underline?"#5b9bd5":"#9a9a9a", marginBottom:12, cursor:"pointer", textDecoration:link.underline?"underline":"none" }}
+                    onMouseEnter={e=>e.currentTarget.style.color="#ddd"} onMouseLeave={e=>e.currentTarget.style.color=link.underline?"#5b9bd5":"#9a9a9a"}>
+                    {link.icon==="info" && <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>}
+                    {link.icon==="chat" && <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>}
+                    {link.icon==="x" && <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 1.9h3.7l-8 9.2 9.5 12.5h-7.4l-5.8-7.6-6.6 7.6H.6l8.6-9.8L0 1.9h7.6l5.3 7 6-7z"/></svg>}
+                    {link.icon==="doc" && <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg>}
+                    {link.label}
+                  </div>
                 ))}
               </div>
             ))}
@@ -848,13 +887,12 @@ function ModelGrid({ title, models, page, setPage, onModel, showDots, itemCount=
         {visible.map((name,i) => (
           <div key={name} onClick={()=>onModel(name)} style={{ cursor:"pointer", overflow:"hidden", borderRadius:6, border:`1px solid ${BORDER}`, background:"#1a1a1a", position:"relative" }}
             onMouseEnter={e=>e.currentTarget.style.borderColor="#555"} onMouseLeave={e=>e.currentTarget.style.borderColor=BORDER}>
-            <div style={{ aspectRatio:"209.59/157.19", background:`hsl(${i*37+20},14%,16%)`, display:"flex", alignItems:"center", justifyContent:"center", position:"relative" }}>
-              <span style={{ color:"rgba(255,255,255,0.05)", fontSize:24 }}>👤</span>
+            <div style={{ aspectRatio:"209.59/157.19", backgroundImage:`url(${GALLERY_IMAGES[i % GALLERY_IMAGES.length]})`, backgroundSize:"cover", backgroundPosition:"center", display:"flex", alignItems:"center", justifyContent:"center", position:"relative" }}>
               <span style={{ position:"absolute", top:4, left:4, color:"#fff", fontSize:11, opacity:.6 }}>📱</span>
               {i%3===0 && <span style={{ position:"absolute", top:4, right:4, background:GREEN, color:"#000", fontSize:8, fontWeight:800, padding:"2px 5px", borderRadius:2 }}>NEW</span>}
               <span style={{ position:"absolute", top:4, right:4, fontSize:12 }}>{["🇬🇧","🇺🇸","🇫🇷","🇿🇦","🇨🇴","🇷🇴","🇺🇦"][i%7]}</span>
             </div>
-            <div style={{ padding:"4px 6px" }}><span style={{ fontSize:10, color:"#999", display:"block", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{name}</span></div>
+            <div style={{ padding:"4px 6px" }}><span style={{ fontSize:10, color:"#F8F8F8", display:"block", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{name}</span></div>
           </div>
         ))}
       </div>
